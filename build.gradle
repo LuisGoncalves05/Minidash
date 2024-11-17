@@ -1,0 +1,24 @@
+plugins {
+    id 'java'
+    id 'info.solidsoft.pitest' version '1.15.0'
+    id 'groovy'
+    id 'application'
+}
+
+group = 'com.t10g01.minidash'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.spockframework:spock-core:2.0-groovy-3.0'
+    testImplementation 'org.codehaus.groovy:groovy-all:3.0.21'
+    implementation group: 'com.googlecode.lanterna', name: 'lanterna', version: '3.1.1'
+
+}
+
+application {
+    mainClass.set("Game")
+}
