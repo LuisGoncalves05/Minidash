@@ -22,8 +22,8 @@ class PlayerControllerSpec extends Specification {
 
         where:
         xi  | yi  | vx  | vy  | g    | dt  | xf  | yf  | vxf | vyf
-        0   | 1   | 1   | 0   | 10   | 0.1 | 0.1 | 0.9 | 1   | -1
-        0   | 1   | 0   | 1   | 20   | 0.1 | 0   | 0.8 | 0   | -2
+        0   | 1   | 1   | 0   | 10   | 0.1 | 0.1 | 0.9 | 1   |-1
+        0   | 1   | 0   | 1   | 20   | 0.1 | 0   | 0.9 | 0   |-1
         2   | 2   |-0.5 | 2   | 4    | 0.5 | 1.75| 2   |-0.5 | 0
     }
 
@@ -63,8 +63,8 @@ class PlayerControllerSpec extends Specification {
         where:
         vxi | vyi | height | time | vxf | vyf
         0   | 0   | 10     | 2    | 0   | 20
-        2   | 5   | 8      | 4    | 2   | 20
-        3   | 0   | 6      | 4    | 3   | 15
+        2   | 5   | 8      | 4    | 2   | 8
+        3   | 0   | 6      | 4    | 3   | 6
     }
 
     def "jump updates g"(vxi, vyi, height, time, vxf, vyf, g) {
@@ -105,7 +105,7 @@ class PlayerControllerSpec extends Specification {
         3 | 5  | 1  | 5  | 3
     }
 
-    def "setGrounded sets isGrounded"(h) {
+    def "setGrounded sets grounded"(h) {
         given:
         def player = Mock(Player)
         player.getPosition() >> new Position(xi, yi)
@@ -115,7 +115,7 @@ class PlayerControllerSpec extends Specification {
         controller.setGrounded(h)
 
         then:
-        1 * controller.setGrounded(0)
+        1 * player.setGrounded(true)
 
         where:
         h | xi | yi
@@ -128,8 +128,7 @@ class PlayerControllerSpec extends Specification {
         given:
         def player = Mock(Player)
         player.getPosition() >> new Position(xi, yi)
-        player.
-                def controller = new PlayerController(player)
+        def controller = new PlayerController(player)
 
         when:
         controller.setGrounded(h)
