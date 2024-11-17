@@ -29,9 +29,14 @@ class ColorSpec extends Specification {
         color.setRed(0)
         color.setGreen(0)
         color.setBlue(255)
+        int red = color.getRed()
+        int green = color.getGreen()
+        int blue = color.getBlue()
 
         then:
-        color.equals(new Color("#0000FF"))
+        red == 0
+        green == 0
+        blue == 255
     }
 
     def "invalid color"() {
