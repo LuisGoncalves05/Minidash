@@ -6,7 +6,9 @@ public class Player {
     private Position position;
     private Position previousPosition = new Position(0, 0);
     private Position speed = new Position(0, 0);
-    private boolean isGrounded = false;
+    private boolean grounded = false;
+    public static final double defaultG = 9.8; // g used while falling
+    double g = defaultG;
 
     public Player(double x, double y) {
         previousPosition = new Position(x, y);
@@ -25,8 +27,12 @@ public class Player {
         return speed;
     }
 
-    public boolean isGrounded() {
-        return isGrounded;
+    public boolean getGrounded() {
+        return grounded;
+    }
+
+    public double getG() {
+        return g;
     }
 
     public void setPosition(Position position) {
@@ -42,6 +48,10 @@ public class Player {
     }
 
     public void setGrounded(boolean grounded) {
-        isGrounded = grounded;
+        this.grounded = grounded;
+    }
+
+    public void setG(double g) {
+        this.g = g;
     }
 }
