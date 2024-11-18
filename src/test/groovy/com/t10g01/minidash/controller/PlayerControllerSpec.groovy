@@ -1,7 +1,7 @@
 package com.t10g01.minidash.controller
 
 import com.t10g01.minidash.model.Player
-import com.t10g01.minidash.shared.Position
+import com.t10g01.minidash.model.Position
 import spock.lang.Specification
 
 class PlayerControllerSpec extends Specification {

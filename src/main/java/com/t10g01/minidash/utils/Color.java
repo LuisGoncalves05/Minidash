@@ -1,6 +1,4 @@
-package com.t10g01.minidash.shared;
-
-import java.util.Objects;
+package com.t10g01.minidash.utils;
 
 public class Color {
     private int red;

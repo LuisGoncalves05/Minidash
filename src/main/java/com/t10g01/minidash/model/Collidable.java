@@ -1,7 +1,5 @@
 package com.t10g01.minidash.model;
 
-import com.t10g01.minidash.shared.Position;
-
 public abstract class Collidable {
     private final Position position;
 

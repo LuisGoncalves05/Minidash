@@ -1,7 +1,6 @@
 package com.t10g01.minidash.view;
 
-import com.t10g01.minidash.shared.Color;
-import com.t10g01.minidash.shared.Position;
+import com.t10g01.minidash.utils.Color;
 
 import java.io.IOException;
 
