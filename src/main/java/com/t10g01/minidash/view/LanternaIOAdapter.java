@@ -38,27 +38,14 @@ public class LanternaIOAdapter implements Input, Output {
         this.screenHeight = screenHeight;
         this.screenWidth = screenWidth;
         this.backgroundColor = backgroundColor;
+
         terminal = createTerminal();
         screen = createScreen();
         graphics = screen.newTextGraphics();
+
         clear();
         refresh();
-
-        KeyAdapter keyAdapter = new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                pressedKeys.add(e.getKeyChar());
-                System.out.println(pressedKeys);
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-                pressedKeys.remove(e.getKeyChar());
-                System.out.println(pressedKeys);
-            }
-        };
-
-        ((AWTTerminalFrame) terminal).getComponent(0).addKeyListener(keyAdapter);
+        addKeyAdapter();
     }
 
     public boolean isPressed(char c) {
@@ -111,5 +98,23 @@ public class LanternaIOAdapter implements Input, Output {
         screen.doResizeIfNecessary();
 
         return screen;
+    }
+
+    private void addKeyAdapter() {
+        KeyAdapter keyAdapter = new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                pressedKeys.add(e.getKeyChar());
+                System.out.println(pressedKeys);
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                pressedKeys.remove(e.getKeyChar());
+                System.out.println(pressedKeys);
+            }
+        };
+
+        ((AWTTerminalFrame) terminal).getComponent(0).addKeyListener(keyAdapter);
     }
 }
