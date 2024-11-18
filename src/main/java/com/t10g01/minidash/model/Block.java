@@ -9,10 +9,14 @@ public class Block extends Collidable {
 
     @Override
     public boolean collides(Position playerPosition) {
-        return false;
+        Position blockPosition = this.getPosition();
+        boolean xOut = playerPosition.getX() > blockPosition.getX() + 1.0d || playerPosition.getX() + 1.0d < blockPosition.getX();
+        boolean yOut = playerPosition.getY() > blockPosition.getY() + 1.0d || playerPosition.getY() + 1.0d < blockPosition.getY();
+        return !(xOut || yOut);
     }
 
     public boolean topCollision(Position currentPlayerPosition, Position previousPlayerPosition) {
-        return false;
+        Position blockPosition = this.getPosition();
+        return this.collides(currentPlayerPosition) && previousPlayerPosition.getY() >= blockPosition.getY() + 1.0d;
     }
 }
