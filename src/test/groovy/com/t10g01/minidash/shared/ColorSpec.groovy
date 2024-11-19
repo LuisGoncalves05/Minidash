@@ -1,4 +1,4 @@
-package com.t10g01.minidash.shared
+package com.t10g01.minidash.utils
 
 import spock.lang.Specification
 

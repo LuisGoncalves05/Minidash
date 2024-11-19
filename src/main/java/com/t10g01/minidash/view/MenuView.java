@@ -1,11 +1,11 @@
 package com.t10g01.minidash.view;
 
 import com.t10g01.minidash.ioadapter.IOAdapter;
-import com.t10g01.minidash.model.LevelModel;
+import com.t10g01.minidash.model.MenuModel;
 
-public class LevelView extends View<LevelModel>{
+public class MenuView extends View<MenuModel> {
 
-    public LevelView(LevelModel model, IOAdapter ioAdapter) {
+    public MenuView(MenuModel model, IOAdapter ioAdapter) {
         super(model, ioAdapter);
     }
 

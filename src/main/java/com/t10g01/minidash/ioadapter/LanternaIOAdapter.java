@@ -1,4 +1,14 @@
-package com.t10g01.minidash.view;
+package com.t10g01.minidash.ioadapter;
+
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.HashSet;
+import java.util.Set;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TerminalSize;
@@ -10,19 +20,10 @@ import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 import com.googlecode.lanterna.terminal.swing.AWTTerminalFontConfiguration;
 import com.googlecode.lanterna.terminal.swing.AWTTerminalFrame;
-import com.t10g01.minidash.shared.Color;
+import com.t10g01.minidash.utils.Color;
 
-import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.HashSet;
-import java.util.Set;
+public class LanternaIOAdapter implements IOAdapter {
 
-public class LanternaIOAdapter implements Input, Output {
     private final int screenHeight;
     private final int screenWidth;
     private final Color backgroundColor;
