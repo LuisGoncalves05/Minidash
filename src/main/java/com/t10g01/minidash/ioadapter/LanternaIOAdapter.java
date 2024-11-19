@@ -40,13 +40,13 @@ public class LanternaIOAdapter implements IOAdapter {
         this.screenWidth = screenWidth;
         this.backgroundColor = backgroundColor;
 
-        terminal = createTerminal();
-        screen = createScreen();
-        graphics = screen.newTextGraphics();
+        this.terminal = createTerminal();
+        this.screen = createScreen();
+        this.graphics = screen.newTextGraphics();
 
         clear();
         refresh();
-        addKeyAdapter();
+        ((AWTTerminalFrame) terminal).getComponent(0).addKeyListener(createKeyAdapter());
     }
 
     public boolean isPressed(char c) {
@@ -101,21 +101,35 @@ public class LanternaIOAdapter implements IOAdapter {
         return screen;
     }
 
-    private void addKeyAdapter() {
-        KeyAdapter keyAdapter = new KeyAdapter() {
+    private KeyAdapter createKeyAdapter() {
+        return new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                pressedKeys.add(e.getKeyChar());
-                System.out.println(pressedKeys);
+                LanternaIOAdapter.this.keyPressed(e.getKeyChar());
             }
 
             @Override
             public void keyReleased(KeyEvent e) {
-                pressedKeys.remove(e.getKeyChar());
-                System.out.println(pressedKeys);
+                LanternaIOAdapter.this.keyReleased(e.getKeyChar());
             }
         };
+    }
 
-        ((AWTTerminalFrame) terminal).getComponent(0).addKeyListener(keyAdapter);
+    public void keyPressed(char c) {
+        pressedKeys.add(c);
+    }
+
+    public void keyReleased(char c) {
+        pressedKeys.remove(c);
+    }
+
+    // Constructor used for testing
+    public LanternaIOAdapter(Terminal terminal, Screen screen, TextGraphics graphics) {
+        this.screenHeight = 0;
+        this.screenWidth = 0;
+        this.backgroundColor = null;
+        this.terminal = terminal;
+        this.screen = screen;
+        this.graphics = graphics;
     }
 }
