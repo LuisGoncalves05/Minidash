@@ -14,7 +14,7 @@ import java.awt.event.KeyEvent;
 class LanternaIOAdapterSpec extends Specification {
     def "isPressed test"() {
         given:
-        def lanternaIOAdapter = new LanternaIOAdapter(Mock(Terminal), Mock(Screen), Mock(TextGraphics), 0, 0)
+        def lanternaIOAdapter = new LanternaIOAdapter(Mock(Terminal), Mock(Screen), Mock(TextGraphics), 0, 0, new Color("#000000"))
 
         expect:
         !lanternaIOAdapter.isPressed(' ' as char)
@@ -39,7 +39,7 @@ class LanternaIOAdapterSpec extends Specification {
         given:
         def screen = Mock(Screen)
         def graphics = Mock(TextGraphics)
-        def lanternaIOAdapter = new LanternaIOAdapter(Mock(Terminal), screen, graphics, 0, 0)
+        def lanternaIOAdapter = new LanternaIOAdapter(Mock(Terminal), screen, graphics, 0, 0, new Color("#000000"))
 
         when:
         lanternaIOAdapter.clear()
@@ -53,7 +53,7 @@ class LanternaIOAdapterSpec extends Specification {
     def "refresh test"() {
         given:
         def screen = Mock(Screen);
-        def lanternaIOAdapter = new LanternaIOAdapter(Mock(Terminal), screen, Mock(TextGraphics), 0, 0)
+        def lanternaIOAdapter = new LanternaIOAdapter(Mock(Terminal), screen, Mock(TextGraphics), 0, 0, new Color("#000000"))
 
         when:
         lanternaIOAdapter.refresh()
@@ -62,10 +62,10 @@ class LanternaIOAdapterSpec extends Specification {
         1 * screen.refresh()
     }
 
-    def "drawPixel test"(height, width, x, y, xf, yf, color, colorf) {
+    def "drawPixel test"(x, y, xf, yf, color, colorf) {
         given:
         def graphics = Mock(TextGraphics)
-        def lanternaIOAdapter = new LanternaIOAdapter(Mock(Terminal), Mock(Screen), graphics, height, width)
+        def lanternaIOAdapter = new LanternaIOAdapter(Mock(Terminal), Mock(Screen), graphics, 10, 10, new Color("#000000"))
 
         when:
         lanternaIOAdapter.drawPixel(x, y, color)
@@ -75,9 +75,28 @@ class LanternaIOAdapterSpec extends Specification {
         1 * graphics.fillRectangle(new TerminalPosition(xf, yf), new TerminalSize(1, 1), ' ' as char)
 
         where:
+        x | y | xf | yf | color                | colorf
+        1 | 1 | 1  | 8  | new Color("#000000") | new TextColor.RGB(0, 0, 0)
+        5 | 6 | 5  | 3  | new Color("#FFFFFF") | new TextColor.RGB(255, 255, 255)
+        3 | 9 | 3  | 0  | new Color("#FF0000") | new TextColor.RGB(255, 0, 0)
+    }
+
+    def "drawRectangle test"(height, width, x, y, xf, yf, color, colorf) {
+        given:
+        def graphics = Mock(TextGraphics)
+        def lanternaIOAdapter = new LanternaIOAdapter(Mock(Terminal), Mock(Screen), graphics, 10, 10, new Color("#000000"))
+
+        when:
+        lanternaIOAdapter.drawRectangle(x, y, width, height, color)
+
+        then:
+        1 * graphics.setBackgroundColor(colorf)
+        1 * graphics.fillRectangle(new TerminalPosition(xf, yf), new TerminalSize(width, height), Character.valueOf(' ' as char))
+
+        where:
         height | width | x | y | xf | yf | color                | colorf
-        10     | 10    | 1 | 1 | 1  | 8  | new Color("#000000") | new TextColor.RGB(0, 0, 0)
-        10     | 10    | 5 | 6 | 5  | 3  | new Color("#FFFFFF") | new TextColor.RGB(255, 255, 255)
-        6      | 4     | 3 | 5 | 3  | 0  | new Color("#FF0000") | new TextColor.RGB(255, 0, 0)
+        2      | 3     | 1 | 1 | 1  | 6  | new Color("#000000") | new TextColor.RGB(0, 0, 0)
+        4      | 4     | 5 | 5 | 5  | 0  | new Color("#FFFFFF") | new TextColor.RGB(255, 255, 255)
+        6      | 2     | 3 | 2 | 3  | 1  | new Color("#FF0000") | new TextColor.RGB(255, 0, 0)
     }
 }
