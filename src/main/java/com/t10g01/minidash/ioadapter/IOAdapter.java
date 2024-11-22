@@ -11,6 +11,8 @@ public interface IOAdapter {
 
     public void drawPixel(int x, int y, Color color);
 
+    public void drawRectangle(int x, int y, int width, int height, Color color);
+
     public boolean isPressed(char key);
 
 }
