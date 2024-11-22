@@ -129,10 +129,10 @@ public class LanternaIOAdapter implements IOAdapter {
     }
 
     // Constructor used for testing
-    public LanternaIOAdapter(Terminal terminal, Screen screen, TextGraphics graphics) {
-        this.screenHeight = 0;
-        this.screenWidth = 0;
-        this.backgroundColor = null;
+    public LanternaIOAdapter(Terminal terminal, Screen screen, TextGraphics graphics, int screenHeight, int screenWidth, Color backgroundColor) {
+        this.screenHeight = screenHeight;
+        this.screenWidth = screenWidth;
+        this.backgroundColor = backgroundColor;
         this.terminal = terminal;
         this.screen = screen;
         this.graphics = graphics;
