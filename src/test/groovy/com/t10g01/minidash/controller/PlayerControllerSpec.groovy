@@ -68,10 +68,32 @@ class PlayerControllerSpec extends Specification {
         2   | 2   |-0.5 | 2   | 4    | 0.5 | 1.75| 2   |-0.5 | 0
     }
 
+    def "jump doesn't jump if not grounded"(vxi, vyi, height, time) {
+        given:
+        def player = Mock(Player)
+        player.getSpeed() >> new Position(vxi, vyi)
+        player.getGrounded() >> false
+        def controller = new PlayerController(player)
+
+        when:
+        controller.jump(height, time)
+
+        then:
+        0 * player.setSpeed(_)
+        0 * player.setG();
+
+        where:
+        vxi | vyi | height | time
+        0   | 0   | 10     | 2
+        2   | 5   | 8      | 4
+        3   | 0   | 6      | 4
+    }
+
     def "jump updates speed"(vxi, vyi, height, time, vxf, vyf) {
         given:
         def player = Mock(Player)
         player.getSpeed() >> new Position(vxi, vyi)
+        player.getGrounded() >> true
         def controller = new PlayerController(player)
 
         when:
@@ -91,6 +113,7 @@ class PlayerControllerSpec extends Specification {
         given:
         def player = Mock(Player)
         player.getSpeed() >> new Position(vxi, vyi)
+        player.getGrounded() >> true
         def controller = new PlayerController(player)
 
         when:
