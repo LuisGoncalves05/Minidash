@@ -47,7 +47,7 @@ class LanternaIOAdapterSpec extends Specification {
         then:
         1 * screen.clear()
         1 * graphics.setBackgroundColor(_)
-        1 * graphics.fill(' ' as char)
+        1 * graphics.fill(Character.valueOf(' ' as char))
     }
 
     def "close test"() {
@@ -84,7 +84,7 @@ class LanternaIOAdapterSpec extends Specification {
 
         then:
         1 * graphics.setBackgroundColor(colorf)
-        1 * graphics.fillRectangle(new TerminalPosition(xf, yf), new TerminalSize(1, 1), ' ' as char)
+        1 * graphics.fillRectangle(new TerminalPosition(xf, yf), new TerminalSize(1, 1), Character.valueOf(' ' as char))
 
         where:
         x | y | xf | yf | color                | colorf
