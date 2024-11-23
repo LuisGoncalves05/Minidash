@@ -1,11 +1,8 @@
 package com.t10g01.minidash.view;
 
 import com.t10g01.minidash.Game;
-import com.t10g01.minidash.model.Collidable;
-import com.t10g01.minidash.model.Position;
+import com.t10g01.minidash.model.*;
 import com.t10g01.minidash.ioadapter.IOAdapter;
-import com.t10g01.minidash.model.Block;
-import com.t10g01.minidash.model.LevelModel;
 import com.t10g01.minidash.utils.Color;
 import com.t10g01.minidash.utils.GameSettings;
 
@@ -25,11 +22,11 @@ public class LevelView extends View<LevelModel> implements CollidableVisitor {
 
     public void draw() throws IOException {
         ioAdapter.clear();
+        drawPlayer(model.getPlayer());
         for(Collidable collidable: model.getCollidables()) {
             collidable.accept(this);
         }
         ioAdapter.refresh();
-        // TODO: draw player
     }
 
     public void visitBlock(Block block) {
@@ -52,6 +49,16 @@ public class LevelView extends View<LevelModel> implements CollidableVisitor {
         } else {
             ioAdapter.drawRectangle(x_pixels, y_pixels, resolution, resolution, gameSettings.getBlockColor());
         }
+    }
+
+    public void drawPlayer(Player player) {
+        Position position = player.getPosition();
+        int resolution = gameSettings.getResolution();
+
+        int x_pixels = (int)(cameraOffset * resolution);
+        int y_pixels = (int)(position.getY() * resolution);
+
+        ioAdapter.drawRectangle(x_pixels, y_pixels, resolution, resolution, gameSettings.getPlayerColor());
     }
 
 }

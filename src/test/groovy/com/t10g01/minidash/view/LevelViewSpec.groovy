@@ -88,4 +88,31 @@ class LevelViewSpec extends Specification {
         0  | 0  | 10 | 1
         50 | 0  | 10 | 1
     }
+
+    def "drawing a player"(xp, yp, xf, yf, side) {
+        given:
+        def playerPosition = Mock(Position)
+        player.getPosition() >> playerPosition
+        playerPosition.getX >> xp
+        playerPosition.getY() >> yp
+
+        def playerColorMock = Mock(Color)
+        settings.getPlayerColor() >> playerColorMock
+
+        when:
+        def levelView = new LevelView(model, ioAdapter, settings)
+        levelView.drawPlayer(model.getPlayer())
+
+        then:
+        1 * ioAdapter.drawRectangle(xf, yf, side, side, playerColorMock)
+
+        where:
+        xp | yp | xf | yf | side
+        0  | 0  | 40 | 0  | 10
+        10 | 0  | 40 | 0  | 10
+        0  | 1  | 40 | 10 | 10
+        50 | 3  | 40 | 30 | 10
+
+    }
+
 }
