@@ -107,8 +107,8 @@ class LanternaIOAdapterSpec extends Specification {
 
         where:
         height | width | x | y | xf | yf | color                | colorf
-        2      | 3     | 1 | 1 | 1  | 6  | new Color("#000000") | new TextColor.RGB(0, 0, 0)
-        4      | 4     | 5 | 5 | 5  | 0  | new Color("#FFFFFF") | new TextColor.RGB(255, 255, 255)
-        6      | 2     | 3 | 2 | 3  | 1  | new Color("#FF0000") | new TextColor.RGB(255, 0, 0)
+        2      | 3     | 1 | 1 | 1  | 7  | new Color("#000000") | new TextColor.RGB(0, 0, 0)
+        4      | 4     | 5 | 5 | 5  | 1  | new Color("#FFFFFF") | new TextColor.RGB(255, 255, 255)
+        6      | 2     | 3 | 2 | 3  | 2  | new Color("#FF0000") | new TextColor.RGB(255, 0, 0)
     }
 }
