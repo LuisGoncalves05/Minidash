@@ -2,6 +2,8 @@ package com.t10g01.minidash.view;
 
 import com.t10g01.minidash.ioadapter.IOAdapter;
 
+import java.io.IOException;
+
 public abstract class View<T> {
 
     protected final T model;
@@ -13,5 +15,5 @@ public abstract class View<T> {
         this.ioAdapter = ioAdapter;
     }
 
-    public abstract void draw();
+    public abstract void draw() throws IOException;
 }

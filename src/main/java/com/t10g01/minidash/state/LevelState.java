@@ -9,8 +9,10 @@ import com.t10g01.minidash.utils.GameSettings;
 import com.t10g01.minidash.view.LevelView;
 import com.t10g01.minidash.view.View;
 
+import java.io.IOException;
+
 public class LevelState extends State<LevelModel> {
-    public LevelState(LevelModel model, Game game, IOAdapter ioAdapter, GameSettings gameSettings) {
+    public LevelState(LevelModel model, Game game, IOAdapter ioAdapter, GameSettings gameSettings) throws IOException {
         super(model, game, ioAdapter, gameSettings);
     }
 
@@ -20,7 +22,7 @@ public class LevelState extends State<LevelModel> {
     }
 
     @Override
-    protected View<LevelModel> getView() {
+    protected View<LevelModel> getView() throws IOException {
         return new LevelView(this.getModel(), this.getIOAdapter(), this.getGameSettings());
     }
 

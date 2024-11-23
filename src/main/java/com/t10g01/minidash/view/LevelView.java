@@ -9,6 +9,8 @@ import com.t10g01.minidash.model.LevelModel;
 import com.t10g01.minidash.utils.Color;
 import com.t10g01.minidash.utils.GameSettings;
 
+import java.io.IOException;
+
 public class LevelView extends View<LevelModel> implements CollidableVisitor {
 
     private GameSettings gameSettings;
@@ -21,11 +23,12 @@ public class LevelView extends View<LevelModel> implements CollidableVisitor {
         this.cameraOffset = cameraWidth * 0.4;
     }
 
-    public void draw() {
+    public void draw() throws IOException {
+        ioAdapter.clear();
         for(Collidable collidable: model.getCollidables()) {
             collidable.accept(this);
         }
-
+        ioAdapter.refresh();
         // TODO: draw player
     }
 
