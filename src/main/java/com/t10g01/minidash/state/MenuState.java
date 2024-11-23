@@ -5,24 +5,44 @@ import com.t10g01.minidash.controller.Controller;
 import com.t10g01.minidash.controller.MenuController;
 import com.t10g01.minidash.ioadapter.IOAdapter;
 import com.t10g01.minidash.model.MenuModel;
+import com.t10g01.minidash.utils.MenuAction;
 import com.t10g01.minidash.view.MenuView;
 import com.t10g01.minidash.view.View;
 
-public class MenuState extends State<MenuModel> {
-    public MenuState(MenuModel model, Game game, IOAdapter ioAdapter) {
-        super(model, game, ioAdapter);
+public class MenuState extends State<MenuModel, MenuAction> {
+    public MenuState(Game game, IOAdapter ioAdapter) {
+        super(game, ioAdapter);
     }
 
     @Override
-    protected Controller<MenuModel> getController() {
-        return new MenuController(this.getModel(), this.getGame());
+    protected MenuModel createModel() {
+        return new MenuModel();
     }
 
     @Override
-    protected View<MenuModel> getView() {
-        return new MenuView(this.getModel(), this.getIOAdapter());
+    protected Controller<MenuModel, MenuAction> createController() {
+        return new MenuController(this.createModel(), this.game);
     }
 
     @Override
-    public void step() {}
+    protected View<MenuModel> createView() {
+        return new MenuView(this.createModel(), this.ioAdapter);
+    }
+
+    @Override
+    protected MenuAction getAction() {
+        if (ioAdapter.isPressed('w') || ioAdapter.isPressed('k'))
+            return MenuAction.UP;
+        if (ioAdapter.isPressed('s') || ioAdapter.isPressed('j'))
+            return MenuAction.DOWN;
+        if (ioAdapter.isPressed('q'))
+            return MenuAction.EXIT;
+        if (ioAdapter.isPressed(' ')) return MenuAction.SELECT;
+        return MenuAction.NULL;
+    }
+
+    @Override
+    public void step(double deltaTime) {
+        this.createController().step(getAction(), deltaTime);
+    }
 }

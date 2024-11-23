@@ -1,9 +1,8 @@
 package com.t10g01.minidash.controller;
 
 import com.t10g01.minidash.Game;
-import com.t10g01.minidash.utils.Action;
 
-public abstract class Controller<T> {
+public abstract class Controller<T, U> {
 
     private final T model;
 
@@ -22,6 +21,6 @@ public abstract class Controller<T> {
         return game;
     }
 
-    public abstract void step(Action action, double deltaTime);
+    public abstract void step(U action, double deltaTime);
 
 }

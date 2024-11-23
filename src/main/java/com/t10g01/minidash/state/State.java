@@ -5,42 +5,29 @@ import com.t10g01.minidash.controller.Controller;
 import com.t10g01.minidash.ioadapter.IOAdapter;
 import com.t10g01.minidash.view.View;
 
-public abstract class State<T> {
+public abstract class State<T, U> {
 
-    private final T model;
+    protected final T model;
+    protected final Controller<T, U> controller;
+    protected final View<T> view;
+    protected final IOAdapter ioAdapter;
+    protected final Game game;
 
-    private final Controller<T> controller;
-
-    private final View<T> view;
-
-    private final IOAdapter ioAdapter;
-
-    private final Game game;
-
-    public State(T model, Game game, IOAdapter ioAdapter) {
-        this.model = model;
-        this.controller = getController();
-        this.view = getView();
+    public State(Game game, IOAdapter ioAdapter) {
+        this.model = createModel();
+        this.controller = createController();
+        this.view = createView();
         this.ioAdapter = ioAdapter;
         this.game = game;
     }
 
-    public T getModel() {
-        return model;
+    public void step(double deltaTime) {
+        controller.step(getAction(), deltaTime);
     }
 
-    protected abstract Controller<T> getController();
+    protected abstract T createModel();
+    protected abstract Controller<T, U> createController();
+    protected abstract View<T> createView();
 
-    protected abstract View<T> getView();
-
-    protected IOAdapter getIOAdapter() {
-        return ioAdapter;
-    }
-
-    protected Game getGame() {
-        return game;
-    }
-
-    public abstract void step();
-
+    protected abstract U getAction();
 }
