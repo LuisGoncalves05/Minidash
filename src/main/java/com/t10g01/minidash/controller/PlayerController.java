@@ -15,6 +15,7 @@ public class PlayerController {
         Position newSpeed = new Position(speed.getX(), speed.getY() - player.getG() * deltaTime);
 
         Position position = player.getPosition();
+        player.setPreviousPosition(position);
         Position newPosition = new Position(position.getX() + newSpeed.getX() * deltaTime, position.getY() + newSpeed.getY() * deltaTime);
 
         player.setSpeed(newSpeed);

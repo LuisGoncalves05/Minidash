@@ -27,6 +27,26 @@ class PlayerControllerSpec extends Specification {
         2   | 2   |-0.5 | 2   | 4    | 0.5 | 1.75| 2   |-0.5 | 0
     }
 
+    def "update correctly sets previousPosition"(x, y) {
+        given:
+        def player = Mock(Player)
+        player.getPosition() >> new Position(x, y)
+        player.getSpeed() >> new Position(0, 0)
+        def controller = new PlayerController(player)
+
+        when:
+        controller.update(0.1)
+
+        then:
+        1 * player.setPreviousPosition(new Position(x, y))
+
+        where:
+        x | y
+        0 | 1
+        0 | 1
+        2 | 2
+    }
+
     def "update unsets isGrounded"(xi, yi, vx, vy, g, dt, xf, yf, vxf, vyf) {
         given:
         def player = Mock(Player)
