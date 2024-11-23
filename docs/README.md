@@ -1,5 +1,5 @@
-<p style='text-align: center'>
-    <img src='./minidash.png' width='50%' />
+<p align="center">
+    <img align='center' src='./docs/minidash.png' width='50%' />
 </p>
 
 MiniDash is a simple version os [Geometry Dash](https://geometrygame.org/) implemented using Java's Lanterna. We follow SOLID principles and implement several programming patterns such as State, Game Loop and Visitor.
