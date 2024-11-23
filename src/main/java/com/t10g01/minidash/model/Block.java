@@ -1,5 +1,7 @@
 package com.t10g01.minidash.model;
 
+import com.t10g01.minidash.view.CollidableVisitor;
+
 public class Block extends Collidable {
     public Block(double x, double y) {
         super(x, y);
@@ -16,5 +18,9 @@ public class Block extends Collidable {
     public boolean topCollision(Position currentPlayerPosition, Position previousPlayerPosition) {
         Position blockPosition = this.getPosition();
         return this.collides(currentPlayerPosition) && previousPlayerPosition.getY() >= blockPosition.getY() + 1.0d;
+    }
+
+    public void accept(CollidableVisitor visitor) {
+        visitor.visitBlock(this);
     }
 }
