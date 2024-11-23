@@ -21,12 +21,12 @@ public abstract class State<T> {
     private final GameSettings gameSettings;
 
     public State(T model, Game game, IOAdapter ioAdapter, GameSettings gameSettings) {
+        this.game = game;
+        this.gameSettings = gameSettings;
         this.model = model;
         this.controller = getController();
         this.view = getView();
         this.ioAdapter = ioAdapter;
-        this.game = game;
-        this.gameSettings = gameSettings;
     }
 
     public T getModel() {
@@ -45,7 +45,9 @@ public abstract class State<T> {
         return game;
     }
 
-    protected GameSettings getGameSettings() {}
+    protected GameSettings getGameSettings() {
+        return gameSettings;
+    }
 
     public abstract void step();
 
