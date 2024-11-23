@@ -76,6 +76,10 @@ public class LanternaIOAdapter implements IOAdapter {
         screen.refresh();
     }
 
+    public void close() throws IOException {
+        screen.close();
+    }
+
     Terminal createTerminal() throws IOException, FontFormatException, URISyntaxException {
         URL resource = getClass().getClassLoader().getResource(FONT_PATH);
         assert resource != null;

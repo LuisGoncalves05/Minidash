@@ -50,6 +50,18 @@ class LanternaIOAdapterSpec extends Specification {
         1 * graphics.fill(' ' as char)
     }
 
+    def "close test"() {
+        given:
+        def screen = Mock(Screen)
+        def lanternaIOAdapter = new LanternaIOAdapter(Mock(Terminal), screen, Mock(TextGraphics), 0, 0, new Color("#000000"))
+
+        when:
+        lanternaIOAdapter.close()
+
+        then:
+        1 * screen.close()
+    }
+
     def "refresh test"() {
         given:
         def screen = Mock(Screen);
