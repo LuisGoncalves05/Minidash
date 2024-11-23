@@ -21,7 +21,7 @@ public class LevelState extends State<LevelModel> {
 
     @Override
     protected View<LevelModel> getView() {
-        return new LevelView(this.getModel(), this.getIOAdapter(), this.getGameSettings);
+        return new LevelView(this.getModel(), this.getIOAdapter(), this.getGameSettings());
     }
 
     @Override

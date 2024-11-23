@@ -1,6 +1,7 @@
 package com.t10g01.minidash.view;
 
 import com.t10g01.minidash.Game;
+import com.t10g01.minidash.model.Collidable;
 import com.t10g01.minidash.model.Position;
 import com.t10g01.minidash.ioadapter.IOAdapter;
 import com.t10g01.minidash.model.Block;
@@ -10,8 +11,14 @@ import com.t10g01.minidash.utils.GameSettings;
 
 public class LevelView extends View<LevelModel> implements CollidableVisitor {
 
+    private GameSettings gameSettings;
+    private double cameraOffset;
+
     public LevelView(LevelModel model, IOAdapter ioAdapter, GameSettings gameSettings) {
         super(model, ioAdapter);
+        this.gameSettings = gameSettings;
+        int cameraWidth = gameSettings.getCameraWidth();
+        this.cameraOffset = cameraWidth * 0.4;
     }
 
     public void draw() {
