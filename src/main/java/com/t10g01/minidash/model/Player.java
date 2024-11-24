@@ -3,7 +3,7 @@ package com.t10g01.minidash.model;
 public class Player {
     private Position position;
     private Position previousPosition = new Position(0, 0);
-    private Position speed = new Position(0, 0);
+    private Position speed = new Position(5, 0);
     private boolean grounded = false;
     public static final double defaultG = 9.8; // g used while falling
     double g = defaultG;

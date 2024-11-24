@@ -109,7 +109,7 @@ class LevelControllerSpec extends Specification {
         levelController.visitBlock(block)
 
         then:
-        playerController.setGrounded(h)
+        playerController.setGrounded(h + 1)
 
         where:
         h | _

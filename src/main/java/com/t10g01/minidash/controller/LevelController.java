@@ -36,7 +36,7 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
         Position previousPlayerPosition = player.getPreviousPosition();
 
         if (block.topCollision(playerPosition, previousPlayerPosition)) {
-            double height = block.getPosition().getY();
+            double height = block.getPosition().getY() + 1;
             playerController.setGrounded(height);
         } else if (block.collides(playerPosition)) {
             game.setState(null);
