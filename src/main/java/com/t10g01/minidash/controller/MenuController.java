@@ -11,7 +11,6 @@ public class MenuController extends Controller<MenuModel, MenuAction> {
     }
 
     @Override
-    public void step(MenuAction action, double deltaTime) {
+    public void step(MenuAction action, double deltaTime) {}
 
-    }
 }

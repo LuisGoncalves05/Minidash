@@ -5,6 +5,8 @@ import com.t10g01.minidash.controller.Controller;
 import com.t10g01.minidash.ioadapter.IOAdapter;
 import com.t10g01.minidash.view.View;
 
+import java.io.IOException;
+
 public abstract class State<T, U> {
 
     protected final T model;
@@ -21,8 +23,9 @@ public abstract class State<T, U> {
         this.game = game;
     }
 
-    public void step(double deltaTime) {
+    public void step(double deltaTime) throws IOException {
         controller.step(getAction(), deltaTime);
+        view.draw();
     }
 
     protected abstract T createModel();

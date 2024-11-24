@@ -9,6 +9,8 @@ import com.t10g01.minidash.utils.MenuAction;
 import com.t10g01.minidash.view.MenuView;
 import com.t10g01.minidash.view.View;
 
+import java.io.IOException;
+
 public class MenuState extends State<MenuModel, MenuAction> {
     public MenuState(Game game, IOAdapter ioAdapter) {
         super(game, ioAdapter);
@@ -42,7 +44,7 @@ public class MenuState extends State<MenuModel, MenuAction> {
     }
 
     @Override
-    public void step(double deltaTime) {
+    public void step(double deltaTime) throws IOException {
         this.createController().step(getAction(), deltaTime);
     }
 }

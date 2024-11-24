@@ -2,9 +2,6 @@ package com.t10g01.minidash;
 
 import com.t10g01.minidash.ioadapter.IOAdapter;
 import com.t10g01.minidash.ioadapter.LanternaIOAdapter;
-import com.t10g01.minidash.model.Collidable;
-import com.t10g01.minidash.model.LevelModel;
-import com.t10g01.minidash.model.Player;
 import com.t10g01.minidash.state.LevelState;
 import com.t10g01.minidash.state.State;
 import com.t10g01.minidash.utils.Color;
@@ -12,7 +9,6 @@ import com.t10g01.minidash.utils.Color;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 
 public class Game {
 
@@ -34,6 +30,10 @@ public class Game {
 
     public void setState(State state) {
         this.state = state;
+    }
+
+    public IOAdapter getIoAdapter() {
+        return ioAdapter;
     }
 
     private void start() throws InterruptedException, IOException {

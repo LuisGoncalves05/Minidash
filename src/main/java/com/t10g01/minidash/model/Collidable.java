@@ -12,4 +12,8 @@ public abstract class Collidable {
     }
 
     public abstract boolean collides(Position position);
-}
+
+    public abstract boolean topCollision(Position currentPlayerPosition, Position previousPlayerPosition);
+
+    public abstract void accept(CollidableVisitor visitor);
+    }
