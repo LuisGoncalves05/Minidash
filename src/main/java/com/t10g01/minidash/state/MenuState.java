@@ -24,12 +24,12 @@ public class MenuState extends State<MenuModel, MenuAction> {
 
     @Override
     protected Controller<MenuModel, MenuAction> createController() {
-        return new MenuController(this.createModel(), this.game);
+        return new MenuController(model, this.game);
     }
 
     @Override
     protected View<MenuModel> createView() {
-        return new MenuView(this.createModel(), this.ioAdapter);
+        return new MenuView(model, this.ioAdapter);
     }
 
     @Override

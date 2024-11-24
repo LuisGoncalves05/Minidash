@@ -28,12 +28,13 @@ public class LevelState extends State<LevelModel, LevelAction> {
         Player player = new Player(10, 1);
         List<Collidable> collidables = new ArrayList<>();
         for (int i = 0; i < 50; i++) collidables.add(new Block(i, 0));
+        for (int i = 0; i < 50; i++) if (i % 2 == 0) collidables.add(new Block(i, 4));
         return new LevelModel(10, 50, player, collidables);
     }
 
     @Override
     protected Controller<LevelModel, LevelAction> createController() {
-        return new LevelController(this.createModel(), this.game);
+        return new LevelController(model, this.game);
     }
 
     @Override
