@@ -4,7 +4,6 @@ import com.t10g01.minidash.ioadapter.IOAdapter;
 import com.t10g01.minidash.ioadapter.LanternaIOAdapter;
 import com.t10g01.minidash.state.LevelState;
 import com.t10g01.minidash.state.State;
-import com.t10g01.minidash.utils.Color;
 import com.t10g01.minidash.utils.GameSettings;
 
 import java.awt.*;
@@ -13,23 +12,28 @@ import java.net.URISyntaxException;
 
 public class Game {
 
-    private final IOAdapter ioAdapter;
     private final GameSettings gameSettings;
-
+    private final IOAdapter ioAdapter;
     private State state;
 
-    public Game(IOAdapter ioAdapter) throws IOException, URISyntaxException, FontFormatException {
+    public Game() throws IOException, URISyntaxException, FontFormatException {
         this.gameSettings = new GameSettings(10, 15, 7);
         this.ioAdapter = new LanternaIOAdapter(
-            gameSettings.getCameraHeight() * gameSettings.getResolution(),
-            gameSettings.getCameraWidth() * gameSettings.getResolution(),
-            gameSettings.getBackgroundColor()
+                gameSettings.getCameraHeight() * gameSettings.getResolution(),
+                gameSettings.getCameraWidth() * gameSettings.getResolution(),
+                gameSettings.getBackgroundColor()
         );
         this.state = new LevelState(this, ioAdapter, gameSettings);
     }
 
+    public Game(GameSettings gameSettings, IOAdapter ioAdapter, State state) {
+        this.gameSettings = gameSettings;
+        this.ioAdapter = ioAdapter;
+        this.state = state;
+    }
+
     public static void main(String[] args) throws IOException, URISyntaxException, FontFormatException, InterruptedException {
-        new Game(new LanternaIOAdapter(10, 10, new Color("#ffffff"))).start();
+        new Game().start();
     }
 
     public void setState(State state) {
@@ -40,14 +44,14 @@ public class Game {
         return ioAdapter;
     }
 
-    private void start() throws InterruptedException, IOException {
+    public void start() throws InterruptedException, IOException {
         int FPS = 100;
         int frameTime = 1000 / FPS; // milliseconds per frame
 
         while (state != null) {
             long startTime = System.currentTimeMillis();
 
-            state.step(startTime);
+            state.step(frameTime / 1000.0);
 
             long elapsedTime = System.currentTimeMillis() - startTime;
             long sleepTime = frameTime - elapsedTime;

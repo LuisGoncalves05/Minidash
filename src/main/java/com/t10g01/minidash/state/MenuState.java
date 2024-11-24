@@ -40,7 +40,8 @@ public class MenuState extends State<MenuModel, MenuAction> {
             return MenuAction.DOWN;
         if (ioAdapter.isPressed('q'))
             return MenuAction.EXIT;
-        if (ioAdapter.isPressed(' ')) return MenuAction.SELECT;
+        if (ioAdapter.isPressed(' '))
+            return MenuAction.SELECT;
         return MenuAction.NULL;
     }
 

@@ -27,7 +27,6 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
         for (Collidable collidable : model.getCollidables()) {
             collidable.accept(this);
         }
-
     }
 
     @Override
@@ -36,11 +35,17 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
         Position playerPosition = player.getPosition();
         Position previousPlayerPosition = player.getPreviousPosition();
 
-        double height = block.getPosition().getY();
         if (block.topCollision(playerPosition, previousPlayerPosition)) {
+            double height = block.getPosition().getY();
             playerController.setGrounded(height);
         } else if (block.collides(playerPosition)) {
             game.setState(null);
         }
+    }
+
+    // Constructor used for testing
+    public LevelController(LevelModel levelModel, Game game, PlayerController playerController) {
+        super(levelModel, game);
+        this.playerController = playerController;
     }
 }
