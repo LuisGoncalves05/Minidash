@@ -21,7 +21,7 @@ We intend MiniDash to be a simplified version of the original game. The player a
     - if the player doesn't jump, it falls through the double-jumper 
 
 
-<img src='./mocks.png' />
+<img src='./mocks.jpg' />
 
 ## Implementation
 
@@ -30,3 +30,7 @@ The game will have two different states of operation: Menu and Level. Using the 
 The MVC pattern is used to separate game data, logic and rendering.
 
 Since we represent all of the game elements as a list of Collidables inside our Model, we faced the problem of drawing those elements without violating the Open-Closed principle. This occurred again when calculating collisions, which have different outcomes depending on the Collidable. To solve that problem, we implemented the Visitor pattern.
+
+## UML
+
+<img src='./uml.png' />
