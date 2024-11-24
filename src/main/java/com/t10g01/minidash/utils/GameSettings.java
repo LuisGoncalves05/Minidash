@@ -2,14 +2,14 @@ package com.t10g01.minidash.utils;
 
 public class GameSettings {
 
-    private int resolution;
+    private final int resolution;
 
-    private int cameraWidth;
-    private int cameraHeight;
+    private final int cameraWidth;
+    private final int cameraHeight;
 
-    private Color backgroundColor;
-    private Color blockColor;
-    private Color playerColor;
+    private final Color backgroundColor;
+    private final Color blockColor;
+    private final Color playerColor;
 
     public GameSettings(int resolution, int cameraWidth, int cameraHeight) {
         this.resolution = resolution;

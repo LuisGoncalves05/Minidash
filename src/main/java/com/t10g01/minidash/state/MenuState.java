@@ -44,9 +44,4 @@ public class MenuState extends State<MenuModel, MenuAction> {
             return MenuAction.SELECT;
         return MenuAction.NULL;
     }
-
-    @Override
-    public void step(double deltaTime) throws IOException {
-        this.createController().step(getAction(), deltaTime);
-    }
 }

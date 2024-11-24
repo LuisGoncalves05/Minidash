@@ -10,8 +10,8 @@ import java.io.IOException;
 
 public class LevelView extends View<LevelModel> implements CollidableVisitor {
 
-    private GameSettings gameSettings;
-    private double cameraOffset;
+    private final GameSettings gameSettings;
+    private final double cameraOffset;
 
     public LevelView(LevelModel model, IOAdapter ioAdapter, GameSettings gameSettings) {
         super(model, ioAdapter);
