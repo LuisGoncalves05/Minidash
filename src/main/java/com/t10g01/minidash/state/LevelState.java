@@ -28,7 +28,11 @@ public class LevelState extends State<LevelModel, LevelAction> {
         Player player = new Player(10, 1);
         List<Collidable> collidables = new ArrayList<>();
         for (int i = 0; i < 50; i++) collidables.add(new Block(i, 0));
-        for (int i = 0; i < 50; i++) if (i % 2 == 0) collidables.add(new Block(i, 4));
+        collidables.add(new Block(20, 2));
+        collidables.add(new Block(23, 3));
+        for (int i = 26; i < 50; i++) collidables.add(new Block(i, 3));
+        for (int i = 0; i < 6; i++) collidables.add(new Block(45, i));
+        for (int i = 0; i < 8; i++) collidables.add(new Block(50, i));
         return new LevelModel(10, 50, player, collidables);
     }
 

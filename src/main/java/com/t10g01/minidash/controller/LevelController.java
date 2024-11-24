@@ -21,7 +21,7 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
             return;
         }
 
-        if (levelAction == LevelAction.JUMP) playerController.jump(2, 0.2d);
+        if (levelAction == LevelAction.JUMP) playerController.jump(3, 0.5);
         playerController.update(deltaTime);
 
         for (Collidable collidable : model.getCollidables()) {
