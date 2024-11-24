@@ -2,11 +2,11 @@
     <img align='center' src='./minidash.png' width='50%' />
 </p>
 
-MiniDash is a simple version of [Geometry Dash](https://geometrygame.org/) implemented using Java's Lanterna. We follow SOLID principles and implement several programming patterns such as State, Game Loop and Visitor.
+MiniDash is a simple version of [Geometry Dash](https://geometrygame.org/), implemented using Java's Lanterna. We follow SOLID principles and integrate several programming patterns such as State, Game Loop and Visitor.
 
 ## Description
 
-We intend MiniDash to be a simplified version of the original game. The player advances from left to right and and is allowed to jump. The game is composed of various elements:
+We intend MiniDash to be a simplified version of the original game. The player advances from left to right and is allowed to jump. The game is composed of various elements the player interacts with:
 
 - Blocks
     - platforms where the player can land
@@ -14,15 +14,23 @@ We intend MiniDash to be a simplified version of the original game. The player a
 - Spikes
     - colliding with a spike causes the game to end
 - Boosts
-    - boosts force the player to jump
-    - boost jumps are higher than normal jumps
-- Double jumpers
-    - the player may choose to jump mid-air if touching a double jumper
+    - boosts make the player jump higher than normal
+    - boosts force the player to jump, even without jump button action
+- Double-jumpers
+    - double-jumpers allow the player to jump mid-air
+    - if the player doesn't jump, it falls through the double-jumper 
 
-<img src='./mocks.png' />
+
+<img src='./mocks.jpg' />
 
 ## Implementation
 
-The game will have two different modes of operation: Menu and Level. We have implemented these two modes, and the logic of switching between them, using the State pattern. In order to separate game data, logic and rendering, we use the MVC pattern.
+The game will have two different states of operation: Menu and Level. Using the State pattern, we have implemented these two modes and the logic behind switching between them.
 
-Since we are representing all of the game elements as a list of Colliders inside our Model, we faced the problem of drawing those elements without violating the Open-Closed principle. We implemented the Visitor pattern to solve that problem.
+The MVC pattern is used to separate game data, logic and rendering.
+
+Since we represent all of the game elements as a list of Collidables inside our Model, we faced the problem of drawing those elements without violating the Open-Closed principle. This occurred again when calculating collisions, which have different outcomes depending on the Collidable. To solve that problem, we implemented the Visitor pattern.
+
+## UML
+
+<img src='./uml.png' />
