@@ -1,9 +1,7 @@
 package com.t10g01.minidash.controller;
 
 import com.t10g01.minidash.Game;
-import com.t10g01.minidash.ioadapter.IOAdapter;
 import com.t10g01.minidash.model.*;
-import com.t10g01.minidash.utils.Color;
 import com.t10g01.minidash.utils.LevelAction;
 
 import java.io.IOException;
@@ -38,9 +36,8 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
         Position playerPosition = player.getPosition();
         Position previousPlayerPosition = player.getPreviousPosition();
 
-        block.topCollision(playerPosition, previousPlayerPosition);
         double height = block.getPosition().getY();
-        if (block.collides(playerPosition)) {
+        if (block.topCollision(playerPosition, previousPlayerPosition)) {
             playerController.setGrounded(height);
         } else if (block.collides(playerPosition)) {
             game.setState(null);

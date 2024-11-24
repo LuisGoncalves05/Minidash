@@ -8,16 +8,18 @@ import com.t10g01.minidash.model.Block;
 import com.t10g01.minidash.model.Collidable;
 import com.t10g01.minidash.model.LevelModel;
 import com.t10g01.minidash.model.Player;
+import com.t10g01.minidash.utils.GameSettings;
 import com.t10g01.minidash.utils.LevelAction;
-import com.t10g01.minidash.view.LevelView;
 import com.t10g01.minidash.view.View;
+import com.t10g01.minidash.view.LevelView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class LevelState extends State<LevelModel, LevelAction> {
-    public LevelState(Game game, IOAdapter ioAdapter) {
-        super(game, ioAdapter);
+    public LevelState(Game game, IOAdapter ioAdapter, GameSettings gameSettings) throws IOException {
+        super(game, ioAdapter, gameSettings);
     }
 
     @Override
@@ -36,7 +38,7 @@ public class LevelState extends State<LevelModel, LevelAction> {
 
     @Override
     protected View<LevelModel> createView() {
-        return new LevelView(this.model, this.ioAdapter);
+        return new LevelView(this.model, this.ioAdapter, this.gameSettings);
     }
 
     @Override

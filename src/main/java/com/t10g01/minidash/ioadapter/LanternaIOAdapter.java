@@ -69,7 +69,7 @@ public class LanternaIOAdapter implements IOAdapter {
     public void drawRectangle(int x, int y, int width, int height, Color color) {
         TextColor pixelColor = new TextColor.RGB(color.getRed(), color.getGreen(), color.getBlue());
         graphics.setBackgroundColor(pixelColor);
-        graphics.fillRectangle(new TerminalPosition(x, screenHeight - y - height - 1), new TerminalSize(width, height), ' ');
+        graphics.fillRectangle(new TerminalPosition(x, screenHeight - y - height), new TerminalSize(width, height), ' ');
     }
 
     public void refresh() throws IOException {
