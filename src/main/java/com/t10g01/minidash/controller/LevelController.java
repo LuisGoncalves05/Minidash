@@ -32,13 +32,11 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
     @Override
     public void visitBlock(Block block) {
         Player player = model.getPlayer();
-        Vector2D playerPosition = player.getPosition();
-        Vector2D previousPlayerPosition = player.getPreviousPosition();
 
-        if (block.topCollision(playerPosition, previousPlayerPosition)) {
+        if (block.topCollision(player)) {
             double height = block.getPosition().getY() + 1;
             playerController.setGrounded(height);
-        } else if (block.collides(playerPosition)) {
+        } else if (block.collision(player)) {
             game.setState(null);
         }
     }

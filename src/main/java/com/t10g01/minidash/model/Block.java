@@ -1,20 +1,19 @@
 package com.t10g01.minidash.model;
 
 public class Block extends Element {
-    public Block(double x, double y) {
+    private final BoxCollider collider;
+
+    public Block(int x, int y) {
         super(x, y);
+        collider = new BoxCollider(x, y, 1, 1);
     }
 
-    public boolean collides(Vector2D playerPosition) {
-        Vector2D blockPosition = this.getPosition();
-        boolean xOut = playerPosition.getX() > blockPosition.getX() + 1.0d || playerPosition.getX() + 1.0d < blockPosition.getX();
-        boolean yOut = playerPosition.getY() > blockPosition.getY() + 1.0d || playerPosition.getY() + 1.0d < blockPosition.getY();
-        return !(xOut || yOut);
+    public boolean collision(Player player) {
+        return collider.collision(player);
     }
 
-    public boolean topCollision(Vector2D currentPlayerPosition, Vector2D previousPlayerPosition) {
-        Vector2D blockPosition = this.getPosition();
-        return this.collides(currentPlayerPosition) && previousPlayerPosition.getY() >= blockPosition.getY() + 1.0d;
+    public boolean topCollision(Player player) {
+        return collider.topCollision(player);
     }
 
     public void accept(ElementVisitor visitor) {

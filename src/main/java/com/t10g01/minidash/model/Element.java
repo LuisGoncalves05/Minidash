@@ -3,7 +3,7 @@ package com.t10g01.minidash.model;
 public abstract class Element {
     private final Vector2D position;
 
-    public Element(double x, double y) {
+    public Element(int x, int y) {
         this.position = new Vector2D(x, y);
     }
 

@@ -84,7 +84,7 @@ class LevelControllerSpec extends Specification {
     def "visitCollider does nothing if no collisions"() {
         given:
         def block = Mock(Block)
-        block.collides(_) >> false
+        block.collision(_) >> false
         block.topCollision(_) >> false
 
         when:
@@ -119,7 +119,7 @@ class LevelControllerSpec extends Specification {
         given:
         def block = Mock(Block)
         block.topCollision(_) >> false
-        block.collides(_) >> true
+        block.collision(_) >> true
 
         when:
         levelController.visitBlock(block)
