@@ -4,6 +4,7 @@ import com.t10g01.minidash.Game
 import com.t10g01.minidash.model.Element
 import com.t10g01.minidash.model.LevelModel
 import com.t10g01.minidash.model.Block
+import com.t10g01.minidash.model.Spike
 import com.t10g01.minidash.model.Player
 import com.t10g01.minidash.model.Vector2D
 import com.t10g01.minidash.utils.LevelAction
@@ -81,11 +82,11 @@ class LevelControllerSpec extends Specification {
         3 * collidable.accept(_)
     }
 
-    def "visitCollider does nothing if no collisions"() {
+    def "visitBlock does nothing if no collisions"() {
         given:
         def block = Mock(Block)
-        block.collision(_) >> false
-        block.topCollision(_) >> false
+        block.collision(player) >> false
+        block.topCollision(player) >> false
 
         when:
         levelController.visitBlock(block)
@@ -98,7 +99,7 @@ class LevelControllerSpec extends Specification {
     def "visitBlock grounds player"(h) {
         given:
         def block = Mock(Block)
-        block.topCollision(_) >> true
+        block.topCollision(player) >> true
         def position = Mock(Vector2D)
         position.getY() >> h
         block.getPosition() >> position
@@ -118,11 +119,36 @@ class LevelControllerSpec extends Specification {
     def "visitBlock ends game"() {
         given:
         def block = Mock(Block)
-        block.topCollision(_) >> false
-        block.collision(_) >> true
+        block.topCollision(player) >> false
+        block.collision(player) >> true
 
         when:
         levelController.visitBlock(block)
+
+        then:
+        1 * game.setState(null)
+    }
+
+    def "visitSpike does nothing if no collisions"() {
+        given:
+        def spike = Mock(Spike)
+        spike.collision(player) >> false
+
+        when:
+        levelController.visitSpike(spike)
+
+        then:
+        0 * playerController.setGrounded(_)
+        0 * game.setState(_)
+    }
+
+    def "visitSpike ends game"() {
+        given:
+        def spike = Mock(Spike)
+        spike.collision(player) >> true
+
+        when:
+        levelController.visitSpike(spike)
 
         then:
         1 * game.setState(null)

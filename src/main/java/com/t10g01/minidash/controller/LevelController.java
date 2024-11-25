@@ -43,7 +43,7 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
 
     @Override
     public void visitSpike(Spike spike) {
-
+        if (spike.collision(model.getPlayer())) game.setState(null);
     }
 
     // Constructor used for testing
