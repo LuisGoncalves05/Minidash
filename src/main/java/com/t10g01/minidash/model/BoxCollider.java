@@ -1,7 +1,7 @@
 package com.t10g01.minidash.model;
 
 public class BoxCollider {
-    public BoxCollider(int x, int y, int width, int height) {
+    public BoxCollider(int x, int y, double width, double height) {
 
     }
 

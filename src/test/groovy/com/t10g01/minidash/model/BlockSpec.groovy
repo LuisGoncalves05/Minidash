@@ -3,7 +3,7 @@ package com.t10g01.minidash.model
 import spock.lang.Shared
 import spock.lang.Specification
 
-class BlockTest extends Specification {
+class BlockSpec extends Specification {
 
     @Shared
     def block = new Block(2.0d, 2.0d)
