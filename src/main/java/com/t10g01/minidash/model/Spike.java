@@ -29,4 +29,11 @@ public class Spike extends Element {
     public void accept(ElementVisitor visitor) {
         visitor.visitSpike(this);
     }
+
+    // Constructor used for testing
+    public Spike(BoxCollider boundingBox, List<BoxCollider> colliders) {
+        super(0, 0);
+        this.boundingBox = boundingBox;
+        this.colliders = colliders;
+    }
 }
