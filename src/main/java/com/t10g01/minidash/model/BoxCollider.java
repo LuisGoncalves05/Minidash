@@ -4,7 +4,7 @@ public class BoxCollider {
     private final Vector2D lowerLeft;
     private final Vector2D upperRight;
 
-    public BoxCollider(int x, int y, double width, double height) {
+    public BoxCollider(double x, double y, double width, double height) {
         lowerLeft = new Vector2D(x, y);
         upperRight = new Vector2D(x + width, y + height);
     }
