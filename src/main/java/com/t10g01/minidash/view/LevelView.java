@@ -49,6 +49,10 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
         }
     }
 
+    public void visitSpike(Spike spike) {
+
+    }
+
     public void drawPlayer(Player player) {
         Vector2D position = player.getPosition();
         int resolution = gameSettings.getResolution();
