@@ -3,7 +3,7 @@ package com.t10g01.minidash.view
 import com.t10g01.minidash.ioadapter.*
 import com.t10g01.minidash.model.Player
 import com.t10g01.minidash.model.Block
-import com.t10g01.minidash.model.Position
+import com.t10g01.minidash.model.Vector2D
 import com.t10g01.minidash.utils.*
 import com.t10g01.minidash.model.LevelModel
 import spock.lang.Specification
@@ -32,14 +32,14 @@ class LevelViewSpec extends Specification {
     def "block visitor"(x, y, xp, yp, xf, yf, width, height) {
         given:
         def block = Mock(Block)
-        def blockPosition = Mock(Position)
+        def blockPosition = Mock(Vector2D)
         block.getPosition() >> blockPosition
         blockPosition.getX() >> x
         blockPosition.getY() >> y
         def blockColorMock = Mock(Color)
         settings.getBlockColor() >> blockColorMock
 
-        def playerPosition = Mock(Position)
+        def playerPosition = Mock(Vector2D)
         player.getPosition() >> playerPosition
         playerPosition.getX() >> xp
         playerPosition.getY() >> yp
@@ -64,14 +64,14 @@ class LevelViewSpec extends Specification {
     def "out of sight block visitor"(x, y, xp, yp) {
         given:
         def block = Mock(Block)
-        def blockPosition = Mock(Position)
+        def blockPosition = Mock(Vector2D)
         block.getPosition() >> blockPosition
         blockPosition.getX() >> x
         blockPosition.getY() >> y
         def blockColorMock = Mock(Color)
         settings.getBlockColor() >> blockColorMock
 
-        def playerPosition = Mock(Position)
+        def playerPosition = Mock(Vector2D)
         player.getPosition() >> playerPosition
         playerPosition.getX() >> xp
         playerPosition.getY() >> yp
@@ -91,7 +91,7 @@ class LevelViewSpec extends Specification {
 
     def "drawing a player"(xp, yp, xf, yf, side) {
         given:
-        def playerPosition = Mock(Position)
+        def playerPosition = Mock(Vector2D)
         player.getPosition() >> playerPosition
         playerPosition.getX >> xp
         playerPosition.getY() >> yp

@@ -1,15 +1,13 @@
 package com.t10g01.minidash.controller
 
 import com.t10g01.minidash.Game
-import com.t10g01.minidash.model.Collidable
+import com.t10g01.minidash.model.Element
 import com.t10g01.minidash.model.LevelModel
 import com.t10g01.minidash.model.Block
 import com.t10g01.minidash.model.Player
-import com.t10g01.minidash.model.Position
+import com.t10g01.minidash.model.Vector2D
 import com.t10g01.minidash.utils.LevelAction
 import spock.lang.Specification
-
-import java.util.ArrayList
 
 class LevelControllerSpec extends Specification {
     LevelModel model
@@ -20,7 +18,7 @@ class LevelControllerSpec extends Specification {
 
     def setup() {
         model = Mock(LevelModel)
-        model.getCollidables() >> new ArrayList<Collidable>()
+        model.getElements() >> new ArrayList<Element>()
         player = Mock(Player)
         model.getPlayer() >> player
         game = Mock(Game)
@@ -70,9 +68,9 @@ class LevelControllerSpec extends Specification {
 
     def "step visits colliders"() {
         given:
-        def collidable = Mock(Collidable)
+        def collidable = Mock(Element)
         def model = Mock(LevelModel)
-        model.getCollidables() >> Arrays.asList(collidable, collidable, collidable)
+        model.getElements() >> Arrays.asList(collidable, collidable, collidable)
         def levelController = new LevelController(model, game, playerController)
         LevelAction action = LevelAction.NULL
 
@@ -101,7 +99,7 @@ class LevelControllerSpec extends Specification {
         given:
         def block = Mock(Block)
         block.topCollision(_) >> true
-        def position = Mock(Position)
+        def position = Mock(Vector2D)
         position.getY() >> h
         block.getPosition() >> position
 

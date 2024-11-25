@@ -1,15 +1,15 @@
 package com.t10g01.minidash.controller
 
 import com.t10g01.minidash.model.Player
-import com.t10g01.minidash.model.Position
+import com.t10g01.minidash.model.Vector2D
 import spock.lang.Specification
 
 class PlayerControllerSpec extends Specification {
     def "update updates position and speed"(xi, yi, vx, vy, g, dt, xf, yf, vxf, vyf) {
         given:
         def player = Mock(Player)
-        player.getPosition() >> new Position(xi, yi)
-        player.getSpeed() >> new Position(vx, vy)
+        player.getPosition() >> new Vector2D(xi, yi)
+        player.getSpeed() >> new Vector2D(vx, vy)
         player.getG() >> g
         def controller = new PlayerController(player)
 
@@ -17,8 +17,8 @@ class PlayerControllerSpec extends Specification {
         controller.update(dt)
 
         then:
-        1 * player.setSpeed(new Position(vxf, vyf))
-        1 * player.setPosition(new Position(xf, yf))
+        1 * player.setSpeed(new Vector2D(vxf, vyf))
+        1 * player.setPosition(new Vector2D(xf, yf))
 
         where:
         xi  | yi  | vx  | vy  | g    | dt  | xf  | yf  | vxf | vyf
@@ -30,15 +30,15 @@ class PlayerControllerSpec extends Specification {
     def "update correctly sets previousPosition"(x, y) {
         given:
         def player = Mock(Player)
-        player.getPosition() >> new Position(x, y)
-        player.getSpeed() >> new Position(0, 0)
+        player.getPosition() >> new Vector2D(x, y)
+        player.getSpeed() >> new Vector2D(0, 0)
         def controller = new PlayerController(player)
 
         when:
         controller.update(0.1)
 
         then:
-        1 * player.setPreviousPosition(new Position(x, y))
+        1 * player.setPreviousPosition(new Vector2D(x, y))
 
         where:
         x | y
@@ -50,8 +50,8 @@ class PlayerControllerSpec extends Specification {
     def "update unsets isGrounded"(xi, yi, vx, vy, g, dt, xf, yf, vxf, vyf) {
         given:
         def player = Mock(Player)
-        player.getPosition() >> new Position(xi, yi)
-        player.getSpeed() >> new Position(vx, vy)
+        player.getPosition() >> new Vector2D(xi, yi)
+        player.getSpeed() >> new Vector2D(vx, vy)
         player.getG() >> g
         def controller = new PlayerController(player)
 
@@ -71,7 +71,7 @@ class PlayerControllerSpec extends Specification {
     def "jump doesn't jump if not grounded"(vxi, vyi, height, time) {
         given:
         def player = Mock(Player)
-        player.getSpeed() >> new Position(vxi, vyi)
+        player.getSpeed() >> new Vector2D(vxi, vyi)
         player.getGrounded() >> false
         def controller = new PlayerController(player)
 
@@ -92,7 +92,7 @@ class PlayerControllerSpec extends Specification {
     def "jump updates speed"(vxi, vyi, height, time, vxf, vyf) {
         given:
         def player = Mock(Player)
-        player.getSpeed() >> new Position(vxi, vyi)
+        player.getSpeed() >> new Vector2D(vxi, vyi)
         player.getGrounded() >> true
         def controller = new PlayerController(player)
 
@@ -100,7 +100,7 @@ class PlayerControllerSpec extends Specification {
         controller.jump(height, time)
 
         then:
-        1 * player.setSpeed(new Position(vxf, vyf))
+        1 * player.setSpeed(new Vector2D(vxf, vyf))
 
         where:
         vxi | vyi | height | time | vxf | vyf
@@ -112,7 +112,7 @@ class PlayerControllerSpec extends Specification {
     def "jump updates g"(vxi, vyi, height, time, vxf, vyf, g) {
         given:
         def player = Mock(Player)
-        player.getSpeed() >> new Position(vxi, vyi)
+        player.getSpeed() >> new Vector2D(vxi, vyi)
         player.getGrounded() >> true
         def controller = new PlayerController(player)
 
@@ -132,14 +132,14 @@ class PlayerControllerSpec extends Specification {
     def "setGrounded sets player height"(h, xi, yi, xf, yf) {
         given:
         def player = Mock(Player)
-        player.getPosition() >> new Position(xi, yi)
+        player.getPosition() >> new Vector2D(xi, yi)
         def controller = new PlayerController(player)
 
         when:
         controller.setGrounded(h)
 
         then:
-        1 * player.setPosition(new Position(xf, yf))
+        1 * player.setPosition(new Vector2D(xf, yf))
 
         where:
         h | xi | yi | xf | yf
@@ -151,7 +151,7 @@ class PlayerControllerSpec extends Specification {
     def "setGrounded sets grounded"(h) {
         given:
         def player = Mock(Player)
-        player.getPosition() >> new Position(xi, yi)
+        player.getPosition() >> new Vector2D(xi, yi)
         def controller = new PlayerController(player)
 
         when:
@@ -170,7 +170,7 @@ class PlayerControllerSpec extends Specification {
     def "setGrounded resets g"(h) {
         given:
         def player = Mock(Player)
-        player.getPosition() >> new Position(xi, yi)
+        player.getPosition() >> new Vector2D(xi, yi)
         def controller = new PlayerController(player)
 
         when:

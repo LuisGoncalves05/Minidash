@@ -16,7 +16,7 @@ class BlockTest extends Specification {
 
     def "collides upperleft"() {
         expect:
-            block.collides(new Position(playerX, playerY)) == collides
+            block.collides(new Vector2D(playerX, playerY)) == collides
         where:
             playerX   | playerY   | collides
             1.0d + dx | 3.0d      | true
@@ -32,7 +32,7 @@ class BlockTest extends Specification {
 
     def "collides upperright"() {
         expect:
-            block.collides(new Position(playerX, playerY)) == collides
+            block.collides(new Vector2D(playerX, playerY)) == collides
         where:
             playerX   | playerY   | collides
             3.0d + dx | 3.0d      | false
@@ -48,7 +48,7 @@ class BlockTest extends Specification {
 
     def "collides lowerleft"() {
         expect:
-            block.collides(new Position(playerX, playerY)) == collides
+            block.collides(new Vector2D(playerX, playerY)) == collides
         where:
             playerX   | playerY   | collides
             1.0d + dx | 1.0d      | true
@@ -64,7 +64,7 @@ class BlockTest extends Specification {
 
     def "collides lowerright"() {
         expect:
-            block.collides(new Position(playerX, playerY)) == collides
+            block.collides(new Vector2D(playerX, playerY)) == collides
         where:
             playerX   | playerY   | collides
             3.0d + dx | 1.0d      | false
@@ -80,7 +80,7 @@ class BlockTest extends Specification {
 
     def "collidesWithTop doesn't collide"() {
         expect:
-            !block.topCollision(new Position(currentPlayerX, currentPlayerY), new Position(previousPlayerX, previousPlayerY))
+            !block.topCollision(new Vector2D(currentPlayerX, currentPlayerY), new Vector2D(previousPlayerX, previousPlayerY))
         where:
             previousPlayerX | previousPlayerY | currentPlayerX | currentPlayerY
             0.0d            |  1.0d           | 0.0d           |  0.2d
@@ -93,7 +93,7 @@ class BlockTest extends Specification {
 
    def "collidesWithTop collides from bottom"() {
         expect:
-            !block.topCollision(new Position(currentPlayerX, currentPlayerY), new Position(previousPlayerX, previousPlayerY))
+            !block.topCollision(new Vector2D(currentPlayerX, currentPlayerY), new Vector2D(previousPlayerX, previousPlayerY))
         where:
             previousPlayerX | previousPlayerY | currentPlayerX | currentPlayerY
             0.0d            |  1.0d           | 1.0d           |  1.0d
@@ -106,7 +106,7 @@ class BlockTest extends Specification {
 
        def "collidesWithTop collides from top"() {
         expect:
-            block.topCollision(new Position(currentPlayerX, currentPlayerY), new Position(previousPlayerX, previousPlayerY))
+            block.topCollision(new Vector2D(currentPlayerX, currentPlayerY), new Vector2D(previousPlayerX, previousPlayerY))
         where:
             previousPlayerX | previousPlayerY | currentPlayerX | currentPlayerY
             0.0d            |  5.0d           | 1.0d           |  1.0d

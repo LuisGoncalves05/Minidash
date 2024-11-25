@@ -1,27 +1,27 @@
 package com.t10g01.minidash.model;
 
 public class Player {
-    private Position position;
-    private Position previousPosition = new Position(0, 0);
-    private Position speed = new Position(7, 0);
+    private Vector2D position;
+    private Vector2D previousPosition = new Vector2D(0, 0);
+    private Vector2D speed = new Vector2D(7, 0);
     private boolean grounded = false;
     public static final double defaultG = 5; // g used while falling
     double g = defaultG;
 
     public Player(double x, double y) {
-        previousPosition = new Position(x, y);
-        position = new Position(x, y);
+        previousPosition = new Vector2D(x, y);
+        position = new Vector2D(x, y);
     }
 
-    public Position getPosition() {
+    public Vector2D getPosition() {
         return position;
     }
 
-    public Position getPreviousPosition() {
+    public Vector2D getPreviousPosition() {
         return previousPosition;
     }
 
-    public Position getSpeed() {
+    public Vector2D getSpeed() {
         return speed;
     }
 
@@ -33,15 +33,15 @@ public class Player {
         return g;
     }
 
-    public void setPosition(Position position) {
+    public void setPosition(Vector2D position) {
         this.position = position;
     }
 
-    public void setPreviousPosition(Position previousPosition) {
+    public void setPreviousPosition(Vector2D previousPosition) {
         this.previousPosition = previousPosition;
     }
 
-    public void setSpeed(Position speed) {
+    public void setSpeed(Vector2D speed) {
         this.speed = speed;
     }
 

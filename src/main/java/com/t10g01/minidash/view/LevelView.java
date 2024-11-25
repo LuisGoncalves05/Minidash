@@ -1,14 +1,12 @@
 package com.t10g01.minidash.view;
 
-import com.t10g01.minidash.Game;
 import com.t10g01.minidash.model.*;
 import com.t10g01.minidash.ioadapter.IOAdapter;
-import com.t10g01.minidash.utils.Color;
 import com.t10g01.minidash.utils.GameSettings;
 
 import java.io.IOException;
 
-public class LevelView extends View<LevelModel> implements CollidableVisitor {
+public class LevelView extends View<LevelModel> implements ElementVisitor {
 
     private GameSettings gameSettings;
     private double cameraOffset;
@@ -23,14 +21,14 @@ public class LevelView extends View<LevelModel> implements CollidableVisitor {
     public void draw() throws IOException {
         ioAdapter.clear();
         drawPlayer(model.getPlayer());
-        for(Collidable collidable: model.getCollidables()) {
-            collidable.accept(this);
+        for(Element element : model.getElements()) {
+            element.accept(this);
         }
         ioAdapter.refresh();
     }
 
     public void visitBlock(Block block) {
-        Position position = block.getPosition();
+        Vector2D position = block.getPosition();
         int resolution = gameSettings.getResolution();
         double x = position.getX() - model.getPlayer().getPosition().getX() + cameraOffset;
         double y = position.getY();
@@ -52,7 +50,7 @@ public class LevelView extends View<LevelModel> implements CollidableVisitor {
     }
 
     public void drawPlayer(Player player) {
-        Position position = player.getPosition();
+        Vector2D position = player.getPosition();
         int resolution = gameSettings.getResolution();
 
         int x_pixels = (int)(cameraOffset * resolution);

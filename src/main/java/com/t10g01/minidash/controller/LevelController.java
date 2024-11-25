@@ -6,7 +6,7 @@ import com.t10g01.minidash.utils.LevelAction;
 
 import java.io.IOException;
 
-public class LevelController extends Controller<LevelModel, LevelAction> implements CollidableVisitor {
+public class LevelController extends Controller<LevelModel, LevelAction> implements ElementVisitor {
     PlayerController playerController;
 
     public LevelController(LevelModel levelModel, Game game) {
@@ -24,16 +24,16 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
         if (levelAction == LevelAction.JUMP) playerController.jump(3, 0.5);
         playerController.update(deltaTime);
 
-        for (Collidable collidable : model.getCollidables()) {
-            collidable.accept(this);
+        for (Element element : model.getElements()) {
+            element.accept(this);
         }
     }
 
     @Override
     public void visitBlock(Block block) {
         Player player = model.getPlayer();
-        Position playerPosition = player.getPosition();
-        Position previousPlayerPosition = player.getPreviousPosition();
+        Vector2D playerPosition = player.getPosition();
+        Vector2D previousPlayerPosition = player.getPreviousPosition();
 
         if (block.topCollision(playerPosition, previousPlayerPosition)) {
             double height = block.getPosition().getY() + 1;

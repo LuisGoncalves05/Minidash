@@ -6,13 +6,13 @@ public class LevelModel {
     private int height;
     private int width;
     private Player player;
-    private List<Collidable> collidables;
+    private List<Element> elements;
 
-    public LevelModel(int height, int width, Player player, List<Collidable> collidables) {
+    public LevelModel(int height, int width, Player player, List<Element> elements) {
         this.height = height;
         this.width = width;
         this.player = player;
-        this.collidables = collidables;
+        this.elements = elements;
     }
 
     public int getHeight() {
@@ -27,7 +27,7 @@ public class LevelModel {
         return player;
     }
 
-    public List<Collidable> getCollidables() {
-        return collidables;
+    public List<Element> getElements() {
+        return elements;
     }
 }

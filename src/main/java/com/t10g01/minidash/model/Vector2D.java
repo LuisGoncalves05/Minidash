@@ -2,11 +2,11 @@ package com.t10g01.minidash.model;
 
 import java.util.Objects;
 
-public class Position {
+public class Vector2D {
     private double x;
     private double y;
 
-    public Position(double x, double y) {
+    public Vector2D(double x, double y) {
         this.x = x;
         this.y = y;
     }
@@ -23,7 +23,7 @@ public class Position {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Position position = (Position) o;
+        Vector2D position = (Vector2D) o;
         return Double.compare(x, position.x) == 0 && Double.compare(y, position.y) == 0;
     }
 
