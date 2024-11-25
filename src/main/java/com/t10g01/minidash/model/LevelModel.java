@@ -3,10 +3,10 @@ package com.t10g01.minidash.model;
 import java.util.List;
 
 public class LevelModel {
-    private int height;
-    private int width;
-    private Player player;
-    private List<Element> elements;
+    private final int height;
+    private final int width;
+    private final Player player;
+    private final List<Element> elements;
 
     public LevelModel(int height, int width, Player player, List<Element> elements) {
         this.height = height;

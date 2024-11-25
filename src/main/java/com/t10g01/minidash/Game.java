@@ -5,7 +5,6 @@ import com.t10g01.minidash.ioadapter.LanternaIOAdapter;
 import com.t10g01.minidash.state.LevelState;
 import com.t10g01.minidash.state.State;
 import com.t10g01.minidash.utils.GameSettings;
-
 import java.awt.*;
 import java.io.IOException;
 import java.net.URISyntaxException;

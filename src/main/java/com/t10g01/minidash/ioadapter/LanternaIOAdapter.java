@@ -9,7 +9,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-
 import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
@@ -91,13 +90,12 @@ public class LanternaIOAdapter implements IOAdapter {
         Font newfont = font.deriveFont(Font.PLAIN, 4);
 
         AWTTerminalFontConfiguration cfg = AWTTerminalFontConfiguration.newInstance(newfont);
-        Terminal terminal = new DefaultTerminalFactory()
+
+        return new DefaultTerminalFactory()
                 .setInitialTerminalSize(new TerminalSize(screenWidth, screenHeight))
                 .setTerminalEmulatorFontConfiguration(cfg)
                 .setForceAWTOverSwing(true)
                 .createTerminal();
-
-        return terminal;
     }
 
     Screen createScreen() throws IOException {
