@@ -50,7 +50,20 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
     }
 
     public void visitSpike(Spike spike) {
+        Vector2D position = spike.getPosition();
+        int resolution = gameSettings.getResolution();
+        int x = (int)((spike.getPosition().getX() - model.getPlayer().getPosition().getX() + cameraOffset) * resolution);
+        int y = (int)(spike.getPosition().getY() * resolution);
 
+        if (x <= -resolution || x >= gameSettings.getCameraWidth() * resolution) return;
+
+        for (int i = 0; i < resolution / 2; i++) {
+            int left = Math.max(x + i, 0);
+            int right = Math.min(x + resolution - i, gameSettings.getCameraWidth() * resolution);
+            if (right < left) continue;
+
+            ioAdapter.drawRectangle(left, y + i, right - left, 1, gameSettings.getSpikeColor());
+        }
     }
 
     public void drawPlayer(Player player) {

@@ -3,6 +3,7 @@ package com.t10g01.minidash.view
 import com.t10g01.minidash.ioadapter.*
 import com.t10g01.minidash.model.Player
 import com.t10g01.minidash.model.Block
+import com.t10g01.minidash.model.Spike
 import com.t10g01.minidash.model.Vector2D
 import com.t10g01.minidash.utils.*
 import com.t10g01.minidash.model.LevelModel
@@ -48,7 +49,7 @@ class LevelViewSpec extends Specification {
         def levelView = new LevelView(model, ioAdapter, settings)
         levelView.visitBlock(block)
 
-        then:
+        then: 
         1 * ioAdapter.drawRectangle(xf, yf, width, height, blockColorMock)
 
         where:
@@ -87,6 +88,127 @@ class LevelViewSpec extends Specification {
         x  | y  | xp | yp
         0  | 0  | 10 | 1
         50 | 0  | 10 | 1
+    }
+
+    def "spike visitor"(x, y, xp, yp, xf, yf) {
+        given:
+        def spike = Mock(Spike)
+        def spikePosition = Mock(Vector2D)
+        spike.getPosition() >> spikePosition
+        spikePosition.getX() >> x
+        spikePosition.getY() >> y
+        def spikeColor = Mock(Color)
+        settings.getSpikeColor() >> spikeColor
+
+        def playerPosition = Mock(Vector2D)
+        player.getPosition() >> playerPosition
+        playerPosition.getX() >> xp
+        playerPosition.getY() >> yp
+
+        def levelView = new LevelView(model, ioAdapter, settings)
+
+        when:
+        levelView.visitSpike(spike)
+
+        then:
+        1 * ioAdapter.drawRectangle(xf, yf, 10, 1, spikeColor)
+        1 * ioAdapter.drawRectangle(xf + 1, yf + 1, 8, 1, spikeColor)
+        1 * ioAdapter.drawRectangle(xf + 2, yf + 2, 6, 1, spikeColor)
+        1 * ioAdapter.drawRectangle(xf + 3, yf + 3, 4, 1, spikeColor)
+        1 * ioAdapter.drawRectangle(xf + 4, yf + 4, 2, 1, spikeColor)
+
+        where:
+        x  | y  | xp   | yp  | xf  | yf
+        0  | 0  | 0    | 1   | 40  | 0
+        0  | 0  | 4    | 1   | 0   | 0
+        5  | 3  | 0    | 1   | 90  | 30
+        50 | 1  | 48   | 3   | 60  | 10
+        50 | 1  | 54.7 | 1   | 0   | 10
+        50 | 1  | 44.8 | 1   | 92  | 10
+    }
+
+    def "spike visitor edge case left"() {
+        given:
+        def spike = Mock(Spike)
+        def spikePosition = Mock(Vector2D)
+        spike.getPosition() >> spikePosition
+        spikePosition.getX() >> 50
+        spikePosition.getY() >> 1
+        def spikeColor = Mock(Color)
+        settings.getSpikeColor() >> spikeColor
+
+        def playerPosition = Mock(Vector2D)
+        player.getPosition() >> playerPosition
+        playerPosition.getX() >> 54.7
+        playerPosition.getY() >> 1
+
+        def levelView = new LevelView(model, ioAdapter, settings)
+
+        when:
+        levelView.visitSpike(spike)
+
+        then:
+        1 * ioAdapter.drawRectangle(0, 10, 3, 1, spikeColor)
+        1 * ioAdapter.drawRectangle(0, 11, 2, 1, spikeColor)
+        1 * ioAdapter.drawRectangle(0, 12, 1, 1, spikeColor)
+    }
+
+    def "spike visitor edge case right"() {
+        given:
+        def spike = Mock(Spike)
+        def spikePosition = Mock(Vector2D)
+        spike.getPosition() >> spikePosition
+        spikePosition.getX() >> 50
+        spikePosition.getY() >> 1
+        def spikeColor = Mock(Color)
+        settings.getSpikeColor() >> spikeColor
+
+        def playerPosition = Mock(Vector2D)
+        player.getPosition() >> playerPosition
+        playerPosition.getX() >> 44.8
+        playerPosition.getY() >> 1
+
+        def levelView = new LevelView(model, ioAdapter, settings)
+
+        when:
+        levelView.visitSpike(spike)
+
+        then:
+        1 * ioAdapter.drawRectangle(92, 10, 8, 1, spikeColor)
+        1 * ioAdapter.drawRectangle(93, 11, 7, 1, spikeColor)
+        1 * ioAdapter.drawRectangle(94, 12, 6, 1, spikeColor)
+        1 * ioAdapter.drawRectangle(95, 13, 4, 1, spikeColor)
+        1 * ioAdapter.drawRectangle(96, 14, 2, 1, spikeColor)
+    }
+
+    def "out of sight spike visitor"(x, y, xp, yp) {
+        given:
+        def spike = Mock(Spike)
+        def spikePosition = Mock(Vector2D)
+        spike.getPosition() >> spikePosition
+        spikePosition.getX() >> x
+        spikePosition.getY() >> y
+        def spikeColor = Mock(Color)
+        settings.getSpikeColor() >> spikeColor
+
+        def playerPosition = Mock(Vector2D)
+        player.getPosition() >> playerPosition
+        playerPosition.getX() >> xp
+        playerPosition.getY() >> yp
+
+        when:
+        def levelView = new LevelView(model, ioAdapter, settings)
+        levelView.visitSpike(spike)
+
+        then:
+        0 * ioAdapter.drawRectangle(_, _, _, _, _)
+
+        where:
+        x  | y  | xp | yp
+        0  | 0  | 10 | 1
+        50 | 0  | 10 | 1
+        0  | 0  | 5  | 1
+        10  | 4  | 4 | 1
     }
 
     def "drawing a player"(xp, yp, xf, yf, side) {

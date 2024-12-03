@@ -10,15 +10,17 @@ public class GameSettings {
     private final Color backgroundColor;
     private final Color blockColor;
     private final Color playerColor;
+    private final Color spikeColor;
 
     public GameSettings(int resolution, int cameraWidth, int cameraHeight) {
         this.resolution = resolution;
         this.cameraWidth = cameraWidth;
         this.cameraHeight = cameraHeight;
 
-        backgroundColor = new Color("#ebebeb");
-        blockColor = new Color("#307098");
-        playerColor = new Color("#e87713");
+        backgroundColor = new Color("#d5cdbc");
+        blockColor = new Color("#645d3b");
+        playerColor = new Color("#ba8b68");
+        spikeColor = new Color("#31331f");
     }
 
     public int getResolution() {
@@ -43,5 +45,9 @@ public class GameSettings {
 
     public Color getPlayerColor() {
         return playerColor;
+    }
+
+    public Color getSpikeColor() {
+        return spikeColor;
     }
 }
