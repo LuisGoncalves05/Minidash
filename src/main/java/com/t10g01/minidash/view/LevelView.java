@@ -10,13 +10,15 @@ import java.io.IOException;
 public class LevelView extends View<LevelModel> implements ElementVisitor {
 
     private final GameSettings gameSettings;
-    private final double cameraOffset;
+    private final double cameraXOffset;
+    private final double cameraY;
 
     public LevelView(LevelModel model, IOAdapter ioAdapter, GameSettings gameSettings) {
         super(model, ioAdapter);
         int cameraWidth = gameSettings.getCameraWidth();
         this.gameSettings = gameSettings;
-        this.cameraOffset = cameraWidth * 0.4;
+        this.cameraXOffset = cameraWidth * 0.4;
+        this.cameraY = 0;
     }
 
     public void draw() throws IOException {
@@ -31,8 +33,9 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
     public void visitBlock(Block block) {
         Vector2D position = block.getPosition();
         int resolution = gameSettings.getResolution();
-        double x = position.getX() - model.getPlayer().getPosition().getX() + cameraOffset;
+        double x = position.getX() - model.getPlayer().getPosition().getX() + cameraXOffset;
         double y = position.getY();
+        // TODO change y positions to adjust to proper cameraY
 
         int x_pixels = (int)(x * resolution);
         int y_pixels = (int)(y * resolution);
@@ -53,8 +56,9 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
     public void visitSpike(Spike spike) {
         Vector2D position = spike.getPosition();
         int resolution = gameSettings.getResolution();
-        int x = (int)((spike.getPosition().getX() - model.getPlayer().getPosition().getX() + cameraOffset) * resolution);
+        int x = (int)((spike.getPosition().getX() - model.getPlayer().getPosition().getX() + cameraXOffset) * resolution);
         int y = (int)(spike.getPosition().getY() * resolution);
+        // TODO change y positions to adjust to proper cameraY
 
         if (x <= -resolution || x >= gameSettings.getCameraWidth() * resolution) return;
 
@@ -68,21 +72,13 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
     }
 
     public void drawPlayer(Player player) {
-        /*
-        Vector2D position = player.getPosition();
-        int resolution = gameSettings.getResolution();
-
-        int x_pixels = (int)(cameraOffset * resolution);
-        int y_pixels = (int)(position.getY() * resolution);
-
-        ioAdapter.drawRectangle(x_pixels, y_pixels, resolution, resolution, gameSettings.getPlayerColor());
-        */
 
         int resolution = gameSettings.getResolution();
 
         Vector2D playerPosition = player.getPosition();
-        double x_player = cameraOffset * resolution;
+        double x_player = cameraXOffset * resolution;
         double y_player = (double) playerPosition.getY() * resolution;
+        // TODO change y positions to adjust to proper cameraY
 
         double rotation = player.getRotation();
         Color playerColor = gameSettings.getPlayerColor();

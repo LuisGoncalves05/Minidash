@@ -26,7 +26,7 @@ class LevelViewSpec extends Specification {
         settings = Mock(GameSettings)
         settings.getResolution() >> 10
         settings.getCameraWidth() >> 10
-        settings.getCameraHeight() >> 5
+        settings.getCameraHeight() >> 6
 
     }
 
@@ -60,6 +60,11 @@ class LevelViewSpec extends Specification {
         50 | 1  | 48   | 3   | 60  | 10  | 10    | 10
         50 | 1  | 54.7 | 1   | 0   | 10  | 3     | 10
         50 | 1  | 44.8 | 1   | 92  | 10  | 8     | 10
+        0  | 1  | 0    | 4   | 40  | 0   | 10    | 10
+        0  | 0  | 0    | 3.5 | 40  | 0   | 10    | 5
+        0  | 3  | 0    | 5   | 40  | 10  | 10    | 10
+        11 | 3  | 10   | 4   | 50  | 20  | 10    | 10
+
     }
 
     def "out of sight block visitor"(x, y, xp, yp) {
@@ -88,6 +93,9 @@ class LevelViewSpec extends Specification {
         x  | y  | xp | yp
         0  | 0  | 10 | 1
         50 | 0  | 10 | 1
+        0  | 0  | 0  | 4
+        50 | 0  | 50 | 5
+
     }
 
     def "spike visitor"(x, y, xp, yp, xf, yf) {
@@ -121,6 +129,8 @@ class LevelViewSpec extends Specification {
         x  | y  | xp   | yp  | xf  | yf
         0  | 0  | 0    | 1   | 40  | 0
         0  | 0  | 4    | 1   | 0   | 0
+        0  | 1  | 4    | 4   | 0   | 0
+        0  | 1  | 0    | 4   | 40  | 0
         5  | 3  | 0    | 1   | 90  | 30
         50 | 1  | 48   | 3   | 60  | 10
     }
@@ -206,34 +216,11 @@ class LevelViewSpec extends Specification {
         0  | 0  | 10 | 1
         50 | 0  | 10 | 1
         0  | 0  | 5  | 1
-        10  | 4  | 4 | 1
+        10 | 4  | 4  | 1
+        0  | 0  | 0  | 4
+        10 | 4  | 10 | 8
     }
 
-    /* def "drawing a player"(xp, yp, xf, yf, side) {
-        given:
-        def playerPosition = Mock(Vector2D)
-        player.getPosition() >> playerPosition
-        playerPosition.getX >> xp
-        playerPosition.getY() >> yp
-
-        def playerColorMock = Mock(Color)
-        settings.getPlayerColor() >> playerColorMock
-
-        when:
-        def levelView = new LevelView(model, ioAdapter, settings)
-        levelView.drawPlayer(model.getPlayer())
-
-        then:
-        1 * ioAdapter.drawRectangle(xf, yf, side, side, playerColorMock)
-
-        where:
-        xp | yp | xf | yf | side
-        0  | 0  | 40 | 0  | 10
-        10 | 0  | 40 | 0  | 10
-        0  | 1  | 40 | 10 | 10
-        50 | 3  | 40 | 30 | 10
-
-    } */
 
     def "drawing a player: drawing all pixels"() {
         given:
@@ -278,6 +265,7 @@ class LevelViewSpec extends Specification {
         10 | 0  | 0   | 10 | 0  | 40 | 0
         0  | 1  | 0   | 0  | 1  | 40 | 10
         50 | 3  | 0   | 50 | 3  | 40 | 30
+        50 | 4  | 0   | 50 | 3  | 40 | 30
 
     }
 
@@ -306,6 +294,7 @@ class LevelViewSpec extends Specification {
         10 | 0  | 45  | 10 | 0  | 40 | 0
         0  | 1  | 135 | 0  | 1  | 40 | 10
         50 | 3  | 50  | 50 | 3  | 40 | 30
+        50 | 4  | 30  | 50 | 3  | 40 | 30
 
     }
 
