@@ -19,6 +19,10 @@ public class Vector2D {
         return y;
     }
 
+    public void rotate(double angle) {
+        // implement
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
