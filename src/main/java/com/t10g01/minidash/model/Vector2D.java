@@ -3,8 +3,8 @@ package com.t10g01.minidash.model;
 import java.util.Objects;
 
 public class Vector2D {
-    private final double x;
-    private final double y;
+    private double x;
+    private double y;
 
     public Vector2D(double x, double y) {
         this.x = x;
