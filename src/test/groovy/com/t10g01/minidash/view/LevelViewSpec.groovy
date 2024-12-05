@@ -209,7 +209,7 @@ class LevelViewSpec extends Specification {
         10  | 4  | 4 | 1
     }
 
-    def "drawing a player"(xp, yp, xf, yf, side) {
+    /* def "drawing a player"(xp, yp, xf, yf, side) {
         given:
         def playerPosition = Mock(Vector2D)
         player.getPosition() >> playerPosition
@@ -233,6 +233,81 @@ class LevelViewSpec extends Specification {
         0  | 1  | 40 | 10 | 10
         50 | 3  | 40 | 30 | 10
 
+    } */
+
+    def "drawing a player: drawing all pixels"() {
+        given:
+
+        def playerPosition = Mock(Vector2D)
+        player.getPosition() >> playerPosition
+        playerPosition.getX() >> 0
+        playerPosition.getY() >> 0
+        def playerColorMock = Mock(Color)
+        settings.getPlayerColor() >> playerColorMock
+
+        when:
+        def levelView = new LevelView(model, ioAdapter, settings)
+        levelView.drawPlayer(model.getPlayer())
+
+        then:
+        100 * ioAdapter.drawPixel(_, _, playerColorMock)
     }
+
+    def "drawing a player: drawing the right pixels"(xp, yp, rot, xi, yi, xf, yf) {
+        given:
+        def playerPosition = Mock(Vector2D)
+        player.getPosition() >> playerPosition
+        playerPosition.getX() >> xp
+        playerPosition.getY() >> yp
+
+        player.getRotation() >> rot
+
+        def playerColorMock = Mock(Color)
+        settings.getPlayerColor() >> playerColorMock
+
+        when:
+        def levelView = new LevelView(model, ioAdapter, settings)
+        levelView.drawPlayer(model.getPlayer())
+
+        then:
+        1 * ioAdapter.drawPixel(xf, yf, playerColorMock)
+
+        where:
+        xp | yp | rot | xi | yi | xf | yf
+        0  | 0  | 0   | 0  | 0  | 40 | 0
+        10 | 0  | 0   | 10 | 0  | 40 | 0
+        0  | 1  | 0   | 0  | 1  | 40 | 10
+        50 | 3  | 0   | 50 | 3  | 40 | 30
+
+    }
+
+    def "drawing a player: not drawing the wrong pixels"(xp, yp, rot, xi, yi, xf, yf) {
+        given:
+        def playerPosition = Mock(Vector2D)
+        player.getPosition() >> playerPosition
+        playerPosition.getX() >> xp
+        playerPosition.getY() >> yp
+
+        player.getRotation() >> rot
+
+        def playerColorMock = Mock(Color)
+        settings.getPlayerColor() >> playerColorMock
+
+        when:
+        def levelView = new LevelView(model, ioAdapter, settings)
+        levelView.drawPlayer(model.getPlayer())
+
+        then:
+        0 * ioAdapter.drawPixel(xi, yi, xf, yf, playerColorMock)
+
+        where:
+        xp | yp | rot | xi | yi | xf | yf
+        0  | 0  | 45  | 0  | 0  | 40 | 0
+        10 | 0  | 45  | 10 | 0  | 40 | 0
+        0  | 1  | 135 | 0  | 1  | 40 | 10
+        50 | 3  | 50  | 50 | 3  | 40 | 30
+
+    }
+
 
 }

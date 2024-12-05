@@ -19,6 +19,25 @@ public class Vector2D {
         return y;
     }
 
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
+
+    public void rotate(double angle) {
+
+        double radians = Math.toRadians(angle);
+
+        double new_x = x * Math.cos(radians) - y * Math.sin(radians);
+        double new_y = x * Math.sin(radians) + y * Math.cos(radians);
+
+        this.x = new_x;
+        this.y = new_y;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -2,12 +2,15 @@ package com.t10g01.minidash.controller;
 
 import com.t10g01.minidash.model.Player;
 import com.t10g01.minidash.model.Vector2D;
+import com.t10g01.minidash.utils.GameSettings;
 
 public class PlayerController {
     private final Player player;
+    private final double rotationSpeed;
 
-    public PlayerController(Player player) {
+    public PlayerController(Player player, GameSettings settings) {
         this.player = player;
+        this.rotationSpeed = settings.getRotationSpeed();
     }
 
     public void update(double deltaTime) {
@@ -20,6 +23,13 @@ public class PlayerController {
 
         player.setSpeed(newSpeed);
         player.setPosition(newPosition);
+
+        if(player.getGrounded()) {
+            player.setRotation(0);
+        } else {
+            double rotation = player.getRotation() + deltaTime * rotationSpeed;
+            player.setRotation(rotation);
+        }
 
         player.setGrounded(false);
     }

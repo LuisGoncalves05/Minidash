@@ -1,17 +1,31 @@
 package com.t10g01.minidash.controller
 
+import com.t10g01.minidash.ioadapter.IOAdapter
+import com.t10g01.minidash.model.LevelModel
 import com.t10g01.minidash.model.Player
 import com.t10g01.minidash.model.Vector2D
+import com.t10g01.minidash.utils.GameSettings
 import spock.lang.Specification
 
 class PlayerControllerSpec extends Specification {
+
+    static GameSettings settings
+
+    def setup() {
+        settings = Mock(GameSettings)
+        settings.getResolution() >> 10
+        settings.getCameraWidth() >> 10
+        settings.getCameraHeight() >> 5
+        settings.getRotationSpeed() >> -360
+    }
+
     def "update updates position and speed"(xi, yi, vx, vy, g, dt, xf, yf, vxf, vyf) {
         given:
         def player = Mock(Player)
         player.getPosition() >> new Vector2D(xi, yi)
         player.getSpeed() >> new Vector2D(vx, vy)
         player.getG() >> g
-        def controller = new PlayerController(player)
+        def controller = new PlayerController(player, settings)
 
         when:
         controller.update(dt)
@@ -32,7 +46,7 @@ class PlayerControllerSpec extends Specification {
         def player = Mock(Player)
         player.getPosition() >> new Vector2D(x, y)
         player.getSpeed() >> new Vector2D(0, 0)
-        def controller = new PlayerController(player)
+        def controller = new PlayerController(player, settings)
 
         when:
         controller.update(0.1)
@@ -53,7 +67,7 @@ class PlayerControllerSpec extends Specification {
         player.getPosition() >> new Vector2D(xi, yi)
         player.getSpeed() >> new Vector2D(vx, vy)
         player.getG() >> g
-        def controller = new PlayerController(player)
+        def controller = new PlayerController(player, settings)
 
         when:
         controller.update(dt)
@@ -73,7 +87,7 @@ class PlayerControllerSpec extends Specification {
         def player = Mock(Player)
         player.getSpeed() >> new Vector2D(vxi, vyi)
         player.getGrounded() >> false
-        def controller = new PlayerController(player)
+        def controller = new PlayerController(player, settings)
 
         when:
         controller.jump(height, time)
@@ -94,7 +108,7 @@ class PlayerControllerSpec extends Specification {
         def player = Mock(Player)
         player.getSpeed() >> new Vector2D(vxi, vyi)
         player.getGrounded() >> true
-        def controller = new PlayerController(player)
+        def controller = new PlayerController(player, settings)
 
         when:
         controller.jump(height, time)
@@ -114,7 +128,7 @@ class PlayerControllerSpec extends Specification {
         def player = Mock(Player)
         player.getSpeed() >> new Vector2D(vxi, vyi)
         player.getGrounded() >> true
-        def controller = new PlayerController(player)
+        def controller = new PlayerController(player, settings)
 
         when:
         controller.jump(height, time)
@@ -133,7 +147,7 @@ class PlayerControllerSpec extends Specification {
         given:
         def player = Mock(Player)
         player.getPosition() >> new Vector2D(xi, yi)
-        def controller = new PlayerController(player)
+        def controller = new PlayerController(player, settings)
 
         when:
         controller.setGrounded(h)
@@ -152,7 +166,7 @@ class PlayerControllerSpec extends Specification {
         given:
         def player = Mock(Player)
         player.getPosition() >> new Vector2D(xi, yi)
-        def controller = new PlayerController(player)
+        def controller = new PlayerController(player, settings)
 
         when:
         controller.setGrounded(h)
@@ -171,7 +185,7 @@ class PlayerControllerSpec extends Specification {
         given:
         def player = Mock(Player)
         player.getPosition() >> new Vector2D(xi, yi)
-        def controller = new PlayerController(player)
+        def controller = new PlayerController(player, settings)
 
         when:
         controller.setGrounded(h)
@@ -184,5 +198,33 @@ class PlayerControllerSpec extends Specification {
         1 | 0  | 0
         2 | 3  | 1
         3 | 5  | 1
+    }
+
+    def "jump updates rotation"(ground, rot, dt, rotf) {
+        given:
+        def player = Mock(Player)
+        player.getGrounded() >> ground
+        player.getRotation() >> rot
+
+        player.getSpeed() >> new Vector2D(0, 0)
+        player.getPosition() >> new Vector2D(0, 0)
+
+        when:
+        def controller = new PlayerController(player, settings)
+        controller.update(dt)
+
+        then:
+        1 * player.setRotation(rotf)
+
+        where:
+        ground  | rot | dt  | rotf
+        true    | 0   | 0.1 | 0
+        true    | 72  | 0.1 | 0
+        false   | 0   | 0.1 | -36
+        false   | 0   | 0.5 | -180
+        false   | 30  | 0.1 | -6
+
+
+
     }
 }

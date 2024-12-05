@@ -11,7 +11,7 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
 
     public LevelController(LevelModel levelModel, Game game) {
        super(levelModel, game);
-       playerController = new PlayerController(levelModel.getPlayer());
+       playerController = new PlayerController(levelModel.getPlayer(), game.getGameSettings());
     }
 
     @Override
