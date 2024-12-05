@@ -2,6 +2,7 @@ package com.t10g01.minidash.view;
 
 import com.t10g01.minidash.model.*;
 import com.t10g01.minidash.ioadapter.IOAdapter;
+import com.t10g01.minidash.utils.Color;
 import com.t10g01.minidash.utils.GameSettings;
 
 import java.io.IOException;
@@ -77,7 +78,39 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
         ioAdapter.drawRectangle(x_pixels, y_pixels, resolution, resolution, gameSettings.getPlayerColor());
         */
 
-        // TODO new implementation with rotation
+        int resolution = gameSettings.getResolution();
+
+        Vector2D playerPosition = player.getPosition();
+        double x_player = cameraOffset * resolution;
+        double y_player = (double) playerPosition.getY() * resolution;
+
+        double rotation = player.getRotation();
+        Color playerColor = gameSettings.getPlayerColor();
+
+        double x_center = x_player + (double)resolution / 2;
+        double y_center = y_player + (double)resolution / 2;
+
+        for(int i = 0; i < resolution; i++) {
+            for(int j = 0; j < resolution; j++) {
+
+                Vector2D pixelPosition = new Vector2D(
+                        x_player + i,
+                        y_player + j);
+
+                Vector2D centerToPixel = new Vector2D(
+                        pixelPosition.getX() - x_center,
+                        pixelPosition.getY() - y_center);
+
+                centerToPixel.rotate(rotation);
+
+                Vector2D finalPosition = new Vector2D(
+                        x_center + centerToPixel.getX(),
+                        y_center + centerToPixel.getY()
+                );
+
+                ioAdapter.drawPixel((int)finalPosition.getX(), (int)finalPosition.getY(), playerColor);
+            }
+        }
     }
 
 }
