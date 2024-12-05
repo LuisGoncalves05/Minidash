@@ -16,7 +16,7 @@ public class Game {
     private State state;
 
     public Game() throws IOException, URISyntaxException, FontFormatException {
-        this.gameSettings = new GameSettings(10, 15, 7);
+        this.gameSettings = new GameSettings(20, 15, 7);
         this.ioAdapter = new LanternaIOAdapter(
                 gameSettings.getCameraHeight() * gameSettings.getResolution(),
                 gameSettings.getCameraWidth() * gameSettings.getResolution(),
@@ -44,7 +44,7 @@ public class Game {
     }
 
     public void start() throws InterruptedException, IOException {
-        int FPS = 100;
+        int FPS = 30;
         int frameTime = 1000 / FPS; // milliseconds per frame
 
         while (state != null) {
@@ -59,5 +59,9 @@ public class Game {
         }
 
         ioAdapter.close();
+    }
+
+    public GameSettings getGameSettings() {
+        return gameSettings;
     }
 }

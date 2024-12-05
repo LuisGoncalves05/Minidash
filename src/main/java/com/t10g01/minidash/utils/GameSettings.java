@@ -26,7 +26,7 @@ public class GameSettings {
         spikeColor = new Color("#31331f");
 
         jumpTime = 0.5;
-        rotationSpeed = 180d / jumpTime;
+        rotationSpeed = - 180d / jumpTime;
     }
 
     public int getResolution() {
@@ -55,5 +55,13 @@ public class GameSettings {
 
     public Color getSpikeColor() {
         return spikeColor;
+    }
+
+    public double getJumpTime() {
+        return jumpTime;
+    }
+
+    public double getRotationSpeed() {
+        return rotationSpeed;
     }
 }
