@@ -20,7 +20,7 @@ repositories {
 
 dependencies {
     implementation 'com.googlecode.lanterna:lanterna:3.1.1'
-     errorprone "com.google.errorprone:error_prone_core:2.20.0"
+    errorprone "com.google.errorprone:error_prone_core:2.20.0"
 
     testImplementation 'org.spockframework:spock-core:2.0-groovy-3.0'
     testImplementation 'org.codehaus.groovy:groovy-all:3.0.21'
@@ -33,3 +33,10 @@ pitest {
 application {
     mainClass.set("Game")
 }
+
+configurations {
+    testImplementation {
+        exclude group: 'org.testng', module: 'testng'
+    }
+}
+
