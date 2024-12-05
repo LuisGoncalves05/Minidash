@@ -67,6 +67,7 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
     }
 
     public void drawPlayer(Player player) {
+        /*
         Vector2D position = player.getPosition();
         int resolution = gameSettings.getResolution();
 
@@ -74,6 +75,9 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
         int y_pixels = (int)(position.getY() * resolution);
 
         ioAdapter.drawRectangle(x_pixels, y_pixels, resolution, resolution, gameSettings.getPlayerColor());
+        */
+
+        // TODO new implementation with rotation
     }
 
 }

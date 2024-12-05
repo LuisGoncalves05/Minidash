@@ -5,6 +5,7 @@ public class Player {
     private Vector2D previousPosition = new Vector2D(0, 0);
     private Vector2D speed = new Vector2D(7, 0);
     private boolean grounded = false;
+    private double rotation = 0d;
     public static final double defaultG = 5; // g used while falling
     double g = defaultG;
 
@@ -29,6 +30,10 @@ public class Player {
         return grounded;
     }
 
+    public double getRotation() {
+        return rotation;
+    }
+
     public double getG() {
         return g;
     }
@@ -47,6 +52,10 @@ public class Player {
 
     public void setGrounded(boolean grounded) {
         this.grounded = grounded;
+    }
+
+    public void setRotation(double rotation) {
+        this.rotation = rotation;
     }
 
     public void setG(double g) {

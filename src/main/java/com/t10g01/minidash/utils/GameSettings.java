@@ -12,6 +12,9 @@ public class GameSettings {
     private final Color playerColor;
     private final Color spikeColor;
 
+    private final double jumpTime;
+    private final double rotationSpeed;
+
     public GameSettings(int resolution, int cameraWidth, int cameraHeight) {
         this.resolution = resolution;
         this.cameraWidth = cameraWidth;
@@ -21,6 +24,9 @@ public class GameSettings {
         blockColor = new Color("#645d3b");
         playerColor = new Color("#ba8b68");
         spikeColor = new Color("#31331f");
+
+        jumpTime = 0.5;
+        rotationSpeed = 180d / jumpTime;
     }
 
     public int getResolution() {
