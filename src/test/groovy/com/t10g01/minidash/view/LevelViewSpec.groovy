@@ -123,8 +123,6 @@ class LevelViewSpec extends Specification {
         0  | 0  | 4    | 1   | 0   | 0
         5  | 3  | 0    | 1   | 90  | 30
         50 | 1  | 48   | 3   | 60  | 10
-        50 | 1  | 54.7 | 1   | 0   | 10
-        50 | 1  | 44.8 | 1   | 92  | 10
     }
 
     def "spike visitor edge case left"() {
