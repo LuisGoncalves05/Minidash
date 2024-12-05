@@ -213,7 +213,7 @@ class LevelViewSpec extends Specification {
         given:
         def playerPosition = Mock(Vector2D)
         player.getPosition() >> playerPosition
-        playerPosition.getX >> xp
+        playerPosition.getX() >> xp
         playerPosition.getY() >> yp
 
         def playerColorMock = Mock(Color)

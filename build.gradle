@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'info.solidsoft.pitest' version '1.15.0'
+    id 'net.ltgt.errorprone' version '4.1.0'
     id 'groovy'
     id 'application'
 }
@@ -16,10 +17,17 @@ repositories {
     mavenCentral()
 }
 
+
 dependencies {
+    implementation 'com.googlecode.lanterna:lanterna:3.1.1'
+     errorprone "com.google.errorprone:error_prone_core:2.20.0"
+
     testImplementation 'org.spockframework:spock-core:2.0-groovy-3.0'
     testImplementation 'org.codehaus.groovy:groovy-all:3.0.21'
-    implementation group: 'com.googlecode.lanterna', name: 'lanterna', version: '3.1.1'
+}
+
+pitest {
+    junit5PluginVersion = '1.2.0'
 }
 
 application {

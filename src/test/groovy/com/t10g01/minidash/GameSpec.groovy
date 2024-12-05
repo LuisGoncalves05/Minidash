@@ -1,8 +1,6 @@
 package com.t10g01.minidash
 
-import com.t10g01.minidash.controller.LevelController
 import com.t10g01.minidash.ioadapter.IOAdapter
-import com.t10g01.minidash.state.LevelState
 import com.t10g01.minidash.utils.GameSettings
 import spock.lang.Specification
 
