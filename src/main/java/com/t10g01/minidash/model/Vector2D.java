@@ -20,7 +20,14 @@ public class Vector2D {
     }
 
     public void rotate(double angle) {
-        // implement
+
+        double radians = Math.toRadians(angle);
+
+        double new_x = x * Math.cos(radians) - y * Math.sin(radians);
+        double new_y = x * Math.sin(radians) + y * Math.cos(radians);
+
+        this.x = new_x;
+        this.y = new_y;
     }
 
     @Override
