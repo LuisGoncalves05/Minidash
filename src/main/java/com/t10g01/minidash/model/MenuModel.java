@@ -1,5 +1,25 @@
 package com.t10g01.minidash.model;
 
-public class MenuModel{
+import java.util.List;
 
+public class MenuModel {
+    private final List<MenuOption> options;
+    private int selected = 0;
+
+    public MenuModel(List<MenuOption> options, int selected) {
+        this.options = options;
+        this.selected = selected;
+    }
+
+    public List<MenuOption> getOptions() {
+        return options;
+    }
+
+    public int getSelected() {
+        return selected;
+    }
+
+    public void setSelected(int selected) {
+        this.selected = selected;
+    }
 }
