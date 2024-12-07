@@ -49,4 +49,12 @@ public class MenuController extends Controller<MenuModel, MenuAction> implements
     public void visitExitButton(ExitButton exitButton) {
         game.setState(null);
     }
+
+    public double getElapsedTime() {
+        return elapsedTime;
+    }
+
+    public void setElapsedTime(double elapsedTime) {
+        this.elapsedTime = elapsedTime;
+    }
 }

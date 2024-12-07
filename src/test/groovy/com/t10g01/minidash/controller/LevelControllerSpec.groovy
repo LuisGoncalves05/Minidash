@@ -7,6 +7,7 @@ import com.t10g01.minidash.model.Block
 import com.t10g01.minidash.model.Spike
 import com.t10g01.minidash.model.Player
 import com.t10g01.minidash.model.Vector2D
+import com.t10g01.minidash.state.MenuState
 import com.t10g01.minidash.utils.LevelAction
 import spock.lang.Specification
 
@@ -63,8 +64,7 @@ class LevelControllerSpec extends Specification {
         levelController.step(action, 0)
 
         then:
-        1 * game.setState(null)
-        0 * _
+        1 * game.setState({it instanceof MenuState})
     }
 
     def "step visits colliders"() {
