@@ -19,7 +19,7 @@ public abstract class State<T, U> {
     protected final GameSettings gameSettings;
 
     public State(Game game, IOAdapter ioAdapter, GameSettings gameSettings) throws IOException {
-        this.game = game;src/main/java/com/t10g01/minidash/state/MenuState.java
+        this.game = game;
         this.gameSettings = gameSettings;
         this.ioAdapter = ioAdapter;
         this.model = createModel();

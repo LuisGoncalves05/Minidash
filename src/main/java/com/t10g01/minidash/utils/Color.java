@@ -6,11 +6,9 @@ public class Color {
     private int blue;
 
     public Color(String hexCode) {
-
         this.red = Integer.valueOf(hexCode.substring(1, 3), 16);
         this.green = Integer.valueOf(hexCode.substring(3, 5), 16);
         this.blue = Integer.valueOf(hexCode.substring(5, 7), 16);
-
     }
 
     public int getRed() {
