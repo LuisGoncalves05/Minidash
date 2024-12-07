@@ -10,6 +10,6 @@ public interface IOAdapter {
     void drawPixel(int x, int y, Color color);
     void drawRectangle(int x, int y, int width, int height, Color color);
     boolean isPressed(char key);
-    public int getScreenHeight();
-    public int getScreenWidth();
+    int getScreenHeight();
+    int getScreenWidth();
 }

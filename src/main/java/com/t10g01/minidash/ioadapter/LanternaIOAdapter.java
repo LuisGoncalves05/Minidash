@@ -136,10 +136,12 @@ public class LanternaIOAdapter implements IOAdapter {
         pressedKeys.remove(c);
     }
 
+    @Override
     public int getScreenHeight() {
         return screenHeight;
     }
 
+    @Override
     public int getScreenWidth() {
         return screenWidth;
     }
