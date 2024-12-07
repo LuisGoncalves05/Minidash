@@ -3,6 +3,7 @@ package com.t10g01.minidash;
 import com.t10g01.minidash.ioadapter.IOAdapter;
 import com.t10g01.minidash.ioadapter.LanternaIOAdapter;
 import com.t10g01.minidash.state.LevelState;
+import com.t10g01.minidash.state.MenuState;
 import com.t10g01.minidash.state.State;
 import com.t10g01.minidash.utils.GameSettings;
 import java.awt.*;
@@ -22,7 +23,8 @@ public class Game {
                 gameSettings.getCameraWidth() * gameSettings.getResolution(),
                 gameSettings.getBackgroundColor()
         );
-        this.state = new LevelState(this, ioAdapter, gameSettings);
+        // this.state = new LevelState(this, ioAdapter, gameSettings);
+        this.state = new MenuState(this, ioAdapter, gameSettings);
     }
 
     public Game(GameSettings gameSettings, IOAdapter ioAdapter, State state) {
@@ -43,7 +45,7 @@ public class Game {
         return ioAdapter;
     }
 
-    public void start() throws InterruptedException, IOException {
+    public void start() throws InterruptedException, IOException, URISyntaxException {
         int FPS = 30;
         int frameTime = 1000 / FPS; // milliseconds per frame
 

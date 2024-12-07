@@ -7,6 +7,7 @@ import com.t10g01.minidash.utils.GameSettings;
 import com.t10g01.minidash.view.View;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 public abstract class State<T, U> {
 
@@ -18,7 +19,7 @@ public abstract class State<T, U> {
     protected final GameSettings gameSettings;
 
     public State(Game game, IOAdapter ioAdapter, GameSettings gameSettings) throws IOException {
-        this.game = game;
+        this.game = game;src/main/java/com/t10g01/minidash/state/MenuState.java
         this.gameSettings = gameSettings;
         this.ioAdapter = ioAdapter;
         this.model = createModel();
@@ -26,7 +27,7 @@ public abstract class State<T, U> {
         this.view = createView();
     }
 
-    public void step(double deltaTime) throws IOException {
+    public void step(double deltaTime) throws IOException, URISyntaxException {
         controller.step(getAction(), deltaTime);
         view.draw();
     }

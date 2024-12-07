@@ -2,6 +2,7 @@ package com.t10g01.minidash.view;
 
 import com.t10g01.minidash.ioadapter.IOAdapter;
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 public abstract class View<T> {
 
@@ -14,5 +15,5 @@ public abstract class View<T> {
         this.ioAdapter = ioAdapter;
     }
 
-    public abstract void draw() throws IOException;
+    public abstract void draw() throws IOException, URISyntaxException;
 }

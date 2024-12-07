@@ -1,4 +1,1 @@
 rootProject.name = 'minidash'
-include 'src:test:com'
-findProject(':src:test:com')?.name = 'com'
-

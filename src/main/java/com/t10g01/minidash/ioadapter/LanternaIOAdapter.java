@@ -130,6 +130,14 @@ public class LanternaIOAdapter implements IOAdapter {
         pressedKeys.remove(c);
     }
 
+    public int getScreenHeight() {
+        return screenHeight;
+    }
+
+    public int getScreenWidth() {
+        return screenWidth;
+    }
+
     // Constructor used for testing
     public LanternaIOAdapter(Terminal terminal, Screen screen, TextGraphics graphics, int screenHeight, int screenWidth, Color backgroundColor) {
         this.screenHeight = screenHeight;

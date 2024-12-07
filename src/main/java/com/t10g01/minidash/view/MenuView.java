@@ -2,25 +2,63 @@ package com.t10g01.minidash.view;
 
 import com.t10g01.minidash.ioadapter.IOAdapter;
 import com.t10g01.minidash.model.*;
+import com.t10g01.minidash.utils.Color;
+import com.t10g01.minidash.utils.GameSettings;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 public class MenuView extends View<MenuModel> implements MenuOptionVisitor {
+    GameSettings gameSettings;
+    private int renderedOptions;
 
-    public MenuView(MenuModel model, IOAdapter ioAdapter) {
+    public MenuView(MenuModel model, IOAdapter ioAdapter, GameSettings gameSettings) {
         super(model, ioAdapter);
+        this.gameSettings = gameSettings;
     }
 
     @Override
-    public void draw() {
+    public void draw() throws URISyntaxException, IOException {
+        renderedOptions = 0;
 
+        ioAdapter.clear();
+        for (MenuOption option : model.getOptions()) option.accept(this);
+        ioAdapter.refresh();
     }
 
     @Override
-    public void visitPlayButton(PlayButton playButton) {
-
+    public void visitPlayButton(PlayButton playButton) throws URISyntaxException, IOException {
+        drawOption("play.png");
     }
 
     @Override
-    public void visitExitButton(ExitButton exitButton) {
+    public void visitExitButton(ExitButton exitButton) throws URISyntaxException, IOException {
+        drawOption("exit.png");
+    }
 
+    void drawOption(String spritePath) throws URISyntaxException, IOException {
+        URL resource = getClass().getClassLoader().getResource(spritePath);
+        assert resource != null;
+        BufferedImage sprite = ImageIO.read(new File(resource.toURI()));
+
+        // Option sprites are assumed to be 40px tall and there is a 20px margin to the top of the screen
+        int offsetY = renderedOptions * 40 + 20;
+        int offsetX = (ioAdapter.getScreenWidth() - sprite.getWidth()) / 2;
+
+        Color color = model.getSelected() == renderedOptions? gameSettings.getSelectedOptionColor() : gameSettings.getMenuOptionColor();
+
+        for (int i = 0; i < sprite.getHeight(); i++) {
+            for (int j = 0; j < sprite.getWidth(); j++) {
+                if (sprite.getRGB(j, i) != 0) {
+                    ioAdapter.drawPixel(offsetX + j, ioAdapter.getScreenHeight() - i - offsetY, color);
+                }
+            }
+        }
+
+        renderedOptions++;
     }
 }

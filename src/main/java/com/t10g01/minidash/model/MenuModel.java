@@ -6,9 +6,8 @@ public class MenuModel {
     private final List<MenuOption> options;
     private int selected = 0;
 
-    public MenuModel(List<MenuOption> options, int selected) {
+    public MenuModel(List<MenuOption> options) {
         this.options = options;
-        this.selected = selected;
     }
 
     public List<MenuOption> getOptions() {
