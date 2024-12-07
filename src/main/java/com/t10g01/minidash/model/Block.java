@@ -16,6 +16,7 @@ public class Block extends Element {
         return collider.topCollision(player);
     }
 
+    @Override
     public void accept(ElementVisitor visitor) {
         visitor.visitBlock(this);
     }

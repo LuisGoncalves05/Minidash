@@ -48,10 +48,12 @@ public class LanternaIOAdapter implements IOAdapter {
         ((AWTTerminalFrame) terminal).getComponent(0).addKeyListener(createKeyAdapter());
     }
 
+    @Override
     public boolean isPressed(char c) {
         return pressedKeys.contains(c);
     }
 
+    @Override
     public void clear() {
         screen.clear();
         TextColor color = new TextColor.RGB(backgroundColor.getRed(), backgroundColor.getGreen(), backgroundColor.getBlue());
@@ -59,22 +61,26 @@ public class LanternaIOAdapter implements IOAdapter {
         graphics.fill(' ');
     }
 
+    @Override
     public void drawPixel(int x, int y, Color color) {
         TextColor pixelColor = new TextColor.RGB(color.getRed(), color.getGreen(), color.getBlue());
         graphics.setBackgroundColor(pixelColor);
         graphics.fillRectangle(new TerminalPosition(x, screenHeight - y - 1), new TerminalSize(1, 1), ' ');
     }
 
+    @Override
     public void drawRectangle(int x, int y, int width, int height, Color color) {
         TextColor pixelColor = new TextColor.RGB(color.getRed(), color.getGreen(), color.getBlue());
         graphics.setBackgroundColor(pixelColor);
         graphics.fillRectangle(new TerminalPosition(x, screenHeight - y - height), new TerminalSize(width, height), ' ');
     }
 
+    @Override
     public void refresh() throws IOException {
         screen.refresh();
     }
 
+    @Override
     public void close() throws IOException {
         screen.close();
     }

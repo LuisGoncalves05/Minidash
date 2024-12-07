@@ -19,6 +19,7 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
         this.cameraOffset = cameraWidth * 0.4;
     }
 
+    @Override
     public void draw() throws IOException {
         ioAdapter.clear();
         drawPlayer(model.getPlayer());
@@ -28,6 +29,7 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
         ioAdapter.refresh();
     }
 
+    @Override
     public void visitBlock(Block block) {
         Vector2D position = block.getPosition();
         int resolution = gameSettings.getResolution();
@@ -50,11 +52,12 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
         }
     }
 
+    @Override
     public void visitSpike(Spike spike) {
         Vector2D position = spike.getPosition();
         int resolution = gameSettings.getResolution();
-        int x = (int)((spike.getPosition().getX() - model.getPlayer().getPosition().getX() + cameraOffset) * resolution);
-        int y = (int)(spike.getPosition().getY() * resolution);
+        int x = (int)((position.getX() - model.getPlayer().getPosition().getX() + cameraOffset) * resolution);
+        int y = (int)(position.getY() * resolution);
 
         if (x <= -resolution || x >= gameSettings.getCameraWidth() * resolution) return;
 
