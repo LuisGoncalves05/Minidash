@@ -23,7 +23,6 @@ public class Game {
                 gameSettings.getCameraWidth() * gameSettings.getResolution(),
                 gameSettings.getBackgroundColor()
         );
-        // this.state = new LevelState(this, ioAdapter, gameSettings);
         this.state = new MenuState(this, ioAdapter, gameSettings);
     }
 

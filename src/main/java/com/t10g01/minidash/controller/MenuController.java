@@ -15,7 +15,7 @@ import java.net.URISyntaxException;
 public class MenuController extends Controller<MenuModel, MenuAction> implements MenuOptionVisitor {
 
     private final double actionCoolDown = 0.25;
-    private double elapsedTime = actionCoolDown;
+    private double elapsedTime = 0;
 
     public MenuController(MenuModel model, Game game) {
         super(model, game);
