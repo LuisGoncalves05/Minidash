@@ -7,9 +7,15 @@ import com.t10g01.minidash.utils.LevelAction;
 
 import java.awt.*;
 import java.io.IOException;
+import java.util.List;
 
 public class LevelController extends Controller<LevelModel, LevelAction> implements ElementVisitor {
     PlayerController playerController;
+
+    // These pointers are used to handle collisions more efficiently: the LevelController only visits elements if there
+    // is a chance of collision
+    private int leftPointer = 0;
+    private int rightPointer = 0;
 
     public LevelController(LevelModel levelModel, Game game) {
        super(levelModel, game);
@@ -26,8 +32,10 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
         if (levelAction == LevelAction.JUMP) playerController.jump(3, 0.5);
         playerController.update(deltaTime);
 
-        for (Element element : model.getElements()) {
-            element.accept(this);
+        updatePointers();
+        List<Element> elements = model.getElements();
+        for (int i = leftPointer; i < rightPointer; i++) {
+            elements.get(i).accept(this);
         }
     }
 
@@ -52,5 +60,29 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
     public LevelController(LevelModel levelModel, Game game, PlayerController playerController) {
         super(levelModel, game);
         this.playerController = playerController;
+    }
+
+    public void updatePointers() {
+        double playerX = model.getPlayer().getPosition().getX();
+        List<Element> elements = model.getElements();
+
+        while (leftPointer < elements.size()) {
+            double elementX = elements.get(leftPointer).getPosition().getX();
+            if (elementX + 1 <= playerX) leftPointer++;
+            else break;
+        }
+        while (rightPointer < elements.size()) {
+            double elementX = elements.get(rightPointer).getPosition().getX();
+            if (elementX < playerX + 1) rightPointer++;
+            else break;
+        }
+    }
+
+    public int getLeftPointer() {
+        return leftPointer;
+    }
+
+    public int getRightPointer() {
+        return rightPointer;
     }
 }

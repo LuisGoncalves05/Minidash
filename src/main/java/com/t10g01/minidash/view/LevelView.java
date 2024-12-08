@@ -30,11 +30,11 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
     @Override
     public void draw() throws IOException {
         this.cameraX = model.getPlayer().getPosition().getX() - cameraOffset;
-        updatePointers();
 
         ioAdapter.clear();
         drawPlayer(model.getPlayer());
 
+        updatePointers();
         List<Element> elements = model.getElements();
         for (int i = leftPointer; i < rightPointer; i++) {
             elements.get(i).accept(this);
