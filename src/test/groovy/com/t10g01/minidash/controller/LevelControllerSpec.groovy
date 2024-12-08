@@ -5,6 +5,7 @@ import com.t10g01.minidash.model.Element
 import com.t10g01.minidash.model.LevelModel
 import com.t10g01.minidash.model.Block
 import com.t10g01.minidash.model.Spike
+import com.t10g01.minidash.model.Platform
 import com.t10g01.minidash.model.Player
 import com.t10g01.minidash.model.Vector2D
 import com.t10g01.minidash.state.MenuState
@@ -135,6 +136,53 @@ class LevelControllerSpec extends Specification {
 
         when:
         levelController.visitSpike(spike)
+
+        then:
+        1 * game.setState(null)
+    }
+
+    def "visitPlatform does nothing if no collisions"() {
+        given:
+        def platform = Mock(Platform)
+        platform.collision(player) >> false
+        platform.topCollision(player) >> false
+
+        when:
+        levelController.visitPlatform(platform)
+
+        then:
+        0 * playerController.setGrounded(_)
+        0 * game.setState(_)
+    }
+
+    def "visitPlatform grounds player"(h) {
+        given:
+        def platform = Mock(Platform)
+        platform.topCollision(player) >> true
+        def position = Mock(Vector2D)
+        position.getY() >> h
+        platform.getPosition() >> position
+
+        when:
+        levelController.visitPlatform(platform)
+
+        then:
+        playerController.setGrounded(h + 1)
+
+        where:
+        h | _
+        2 | _
+        3 | _
+    }
+
+    def "visitPlatform ends game"() {
+        given:
+        def platform = Mock(Platform)
+        platform.topCollision(player) >> false
+        platform.collision(player) >> true
+
+        when:
+        levelController.visitPlatform(platform)
 
         then:
         1 * game.setState(null)

@@ -56,6 +56,18 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
         if (spike.collision(model.getPlayer())) game.setState(null);
     }
 
+    @Override
+    public void visitPlatform(Platform platform) {
+        Player player = model.getPlayer();
+
+        if (platform.topCollision(player)) {
+            double height = platform.getPosition().getY() + 1;
+            playerController.setGrounded(height);
+        } else if (platform.collision(player)) {
+            game.setState(null);
+        }
+    }
+
     // Constructor used for testing
     public LevelController(LevelModel levelModel, Game game, PlayerController playerController) {
         super(levelModel, game);

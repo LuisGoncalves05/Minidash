@@ -5,6 +5,7 @@ import com.t10g01.minidash.model.Element
 import com.t10g01.minidash.model.Player
 import com.t10g01.minidash.model.Block
 import com.t10g01.minidash.model.Spike
+import com.t10g01.minidash.model.Platform
 import com.t10g01.minidash.model.Vector2D
 import com.t10g01.minidash.utils.*
 import com.t10g01.minidash.model.LevelModel
@@ -87,6 +88,37 @@ class LevelViewSpec extends Specification {
         1 * ioAdapter.drawRectangle(xf + 2, yf + 2, 6, 1, spikeColor)
         1 * ioAdapter.drawRectangle(xf + 3, yf + 3, 4, 1, spikeColor)
         1 * ioAdapter.drawRectangle(xf + 4, yf + 4, 2, 1, spikeColor)
+
+        where:
+        x  | y  | xp   | yp  | xf  | yf
+        0  | 0  | 0    | 1   | 40  | 0
+        0  | 0  | 4    | 1   | 0   | 0
+        5  | 3  | 0    | 1   | 90  | 30
+        50 | 1  | 48   | 3   | 60  | 10
+    }
+
+    def "platform visitor"(x, y, xp, yp, xf, yf) {
+        given:
+        def platform = Mock(Platform)
+        def platformPosition = Mock(Vector2D)
+        platform.getPosition() >> platformPosition
+        platformPosition.getX() >> x
+        platformPosition.getY() >> y
+        def platformColor = Mock(Color)
+        settings.getPlatformColor() >> platformColor
+
+        def playerPosition = Mock(Vector2D)
+        player.getPosition() >> playerPosition
+        playerPosition.getX() >> xp
+        playerPosition.getY() >> yp
+
+        def levelView = new LevelView(model, ioAdapter, settings)
+
+        when:
+        levelView.visitPlatform(platform)
+
+        then:
+        1 * ioAdapter.drawRectangle(xf, yf + 7, 10, 2, platformColor)
 
         where:
         x  | y  | xp   | yp  | xf  | yf
