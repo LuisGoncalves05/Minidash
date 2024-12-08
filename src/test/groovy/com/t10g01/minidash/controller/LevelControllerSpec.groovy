@@ -22,6 +22,7 @@ class LevelControllerSpec extends Specification {
         model = Mock(LevelModel)
         model.getElements() >> new ArrayList<Element>()
         player = Mock(Player)
+        player.getPosition() >> new Vector2D(0, 0)
         model.getPlayer() >> player
         game = Mock(Game)
         playerController = Mock(PlayerController)
@@ -65,21 +66,6 @@ class LevelControllerSpec extends Specification {
 
         then:
         1 * game.setState({it instanceof MenuState})
-    }
-
-    def "step visits colliders"() {
-        given:
-        def collidable = Mock(Element)
-        def model = Mock(LevelModel)
-        model.getElements() >> Arrays.asList(collidable, collidable, collidable)
-        def levelController = new LevelController(model, game, playerController)
-        LevelAction action = LevelAction.NULL
-
-        when:
-        levelController.step(action, 0)
-
-        then:
-        3 * collidable.accept(_)
     }
 
     def "visitBlock does nothing if no collisions"() {
@@ -152,5 +138,45 @@ class LevelControllerSpec extends Specification {
 
         then:
         1 * game.setState(null)
+    }
+
+    def "updatePointers"() {
+        given:
+        def element1 = Mock(Element)
+        def position1 = new Vector2D(1, 0)
+        element1.getPosition() >> position1
+        def element2 = Mock(Element)
+        def position2 = new Vector2D(1.5, 0)
+        element2.getPosition() >> position2
+        def element3 = Mock(Element)
+        def position3 = new Vector2D(2, 0)
+        element3.getPosition() >> position3
+        def element4 = Mock(Element)
+        def position4 = new Vector2D(5, 0)
+        element4.getPosition() >> position4
+
+        def model = Mock(LevelModel)
+        model.getElements() >> Arrays.asList(element1, element2, element3, element4)
+
+        def player = Mock(Player)
+        def playerPosition = new Vector2D(playerX, 0)
+        player.getPosition() >> playerPosition
+        model.getPlayer() >> player
+
+        def levelController = new LevelController(model, game, playerController)
+
+        when:
+        levelController.updatePointers()
+
+        then:
+        levelController.getLeftPointer() == left
+        levelController.getRightPointer() == right
+
+        where:
+        playerX | left | right
+        0       | 0    | 1
+        0.5     | 0    | 2
+        1       | 0    | 3
+        4       | 3    | 4
     }
 }

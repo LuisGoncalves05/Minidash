@@ -68,12 +68,12 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
 
         while (leftPointer < elements.size()) {
             double elementX = elements.get(leftPointer).getPosition().getX();
-            if (elementX + 1 <= playerX) leftPointer++;
+            if (elementX + 1 < playerX) leftPointer++;
             else break;
         }
         while (rightPointer < elements.size()) {
             double elementX = elements.get(rightPointer).getPosition().getX();
-            if (elementX < playerX + 1) rightPointer++;
+            if (elementX <= playerX + 1) rightPointer++;
             else break;
         }
     }
