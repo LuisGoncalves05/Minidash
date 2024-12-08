@@ -45,18 +45,18 @@ public class Game {
     }
 
     public void start() throws InterruptedException, IOException, URISyntaxException {
-        int FPS = 30;
-        int frameTime = 1000 / FPS; // milliseconds per frame
+        int maxFPS = 30;
+        double minFrameTime = 1000.0 / maxFPS; // milliseconds per frame
 
+        double lastFrame = System.currentTimeMillis();
         while (state != null) {
-            long startTime = System.currentTimeMillis();
+            double currentFrame = System.currentTimeMillis();
+            state.step((currentFrame - lastFrame) / 1000.0);
+            lastFrame = currentFrame;
 
-            state.step(frameTime / 1000.0);
-
-            long elapsedTime = System.currentTimeMillis() - startTime;
-            long sleepTime = frameTime - elapsedTime;
-
-            if (sleepTime > 0) Thread.sleep(sleepTime);
+            double elapsedTime = System.currentTimeMillis() - currentFrame;
+            double sleepTime = Math.max(elapsedTime - minFrameTime, 0);
+            Thread.sleep((int)sleepTime);
         }
 
         ioAdapter.close();
