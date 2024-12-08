@@ -53,17 +53,7 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
         int x_pixels = (int)(x * resolution);
         int y_pixels = (int)(y * resolution);
 
-        if(x <= -1 || x >= gameSettings.getCameraWidth()) return;
-
-        if (x < 0) {
-            int blockWidth = resolution + x_pixels;
-            ioAdapter.drawRectangle(0, y_pixels, blockWidth, resolution, gameSettings.getBlockColor());
-        } else if(x > gameSettings.getCameraWidth() - 1) {
-            int blockWidth = gameSettings.getCameraWidth() * resolution - x_pixels;
-            ioAdapter.drawRectangle(x_pixels, y_pixels, blockWidth, resolution, gameSettings.getBlockColor());
-        } else {
-            ioAdapter.drawRectangle(x_pixels, y_pixels, resolution, resolution, gameSettings.getBlockColor());
-        }
+        ioAdapter.drawRectangle(x_pixels, y_pixels, resolution, resolution, gameSettings.getBlockColor());
     }
 
     @Override
@@ -73,14 +63,11 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
         int x = (int)((position.getX() - cameraX) * resolution);
         int y = (int)(position.getY() * resolution);
 
-        if (x <= -resolution || x >= gameSettings.getCameraWidth() * resolution) return;
-
         for (int i = 0; i < resolution / 2; i++) {
-            int left = Math.max(x + i, 0);
-            int right = Math.min(x + resolution - i, gameSettings.getCameraWidth() * resolution);
-            if (right < left) continue;
+            int left = x + i;
+            int right = x + resolution - i;
 
-            ioAdapter.drawRectangle(left, y + i, right - left, 1, gameSettings.getSpikeColor());
+            ioAdapter.drawRectangle(x + i, y + i, right - left, 1, gameSettings.getSpikeColor());
         }
     }
 
