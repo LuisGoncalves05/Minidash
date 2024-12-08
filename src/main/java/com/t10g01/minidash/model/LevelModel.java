@@ -1,5 +1,6 @@
 package com.t10g01.minidash.model;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class LevelModel {
@@ -13,6 +14,9 @@ public class LevelModel {
         this.width = width;
         this.player = player;
         this.elements = elements;
+
+        // elements should be a sorted list
+        elements.sort(Comparator.comparingDouble(a -> a.getPosition().getX()));
     }
 
     public int getHeight() {

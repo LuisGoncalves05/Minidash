@@ -8,6 +8,7 @@ public class Block extends Element {
         collider = new BoxCollider(x, y, 1, 1);
     }
 
+    @Override
     public boolean collision(Player player) {
         return collider.collision(player);
     }

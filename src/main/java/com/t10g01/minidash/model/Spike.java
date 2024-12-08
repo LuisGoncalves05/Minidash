@@ -19,6 +19,7 @@ public class Spike extends Element {
         colliders.add(new BoxCollider(x + 0.4, y, 0.2, 0.1));
     }
 
+    @Override
     public boolean collision(Player player) {
         if (!boundingBox.collision(player)) return false;
         for (BoxCollider collider : colliders) if (collider.collision(player)) return true;
