@@ -122,19 +122,27 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
         }
     }
 
-    private void updatePointers() {
-        double cameraXRight = cameraX + cameraWidth * gameSettings.getResolution();
+    public void updatePointers() {
+        double cameraXRight = cameraX + cameraWidth;
         List<Element> elements = model.getElements();
 
         while (leftPointer < elements.size()) {
             double elementX = elements.get(leftPointer).getPosition().getX();
-            if (elementX + 1 < cameraX) leftPointer++;
+            if (elementX + 1 <= cameraX) leftPointer++;
             else break;
         }
         while (rightPointer < elements.size()) {
             double elementX = elements.get(rightPointer).getPosition().getX();
-            if (elementX < cameraXRight) rightPointer         ++;
+            if (elementX < cameraXRight) rightPointer++;
             else break;
         }
+    }
+
+    public int getLeftPointer() {
+        return leftPointer;
+    }
+
+    public int getRightPointer() {
+        return rightPointer;
     }
 }

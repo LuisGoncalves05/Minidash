@@ -1,6 +1,7 @@
 package com.t10g01.minidash.view
 
 import com.t10g01.minidash.ioadapter.*
+import com.t10g01.minidash.model.Element
 import com.t10g01.minidash.model.Player
 import com.t10g01.minidash.model.Block
 import com.t10g01.minidash.model.Spike
@@ -27,7 +28,6 @@ class LevelViewSpec extends Specification {
         settings.getResolution() >> 10
         settings.getCameraWidth() >> 10
         settings.getCameraHeight() >> 5
-
     }
 
     def "block visitor"(x, y, xp, yp, xf, yf, width, height) {
@@ -45,8 +45,9 @@ class LevelViewSpec extends Specification {
         playerPosition.getX() >> xp
         playerPosition.getY() >> yp
 
-        when:
         def levelView = new LevelView(model, ioAdapter, settings)
+
+        when:
         levelView.visitBlock(block)
 
         then: 
@@ -77,8 +78,9 @@ class LevelViewSpec extends Specification {
         playerPosition.getX() >> xp
         playerPosition.getY() >> yp
 
-        when:
         def levelView = new LevelView(model, ioAdapter, settings)
+
+        when:
         levelView.visitBlock(block)
 
         then:
@@ -194,8 +196,9 @@ class LevelViewSpec extends Specification {
         playerPosition.getX() >> xp
         playerPosition.getY() >> yp
 
-        when:
         def levelView = new LevelView(model, ioAdapter, settings)
+
+        when:
         levelView.visitSpike(spike)
 
         then:
@@ -219,8 +222,9 @@ class LevelViewSpec extends Specification {
         def playerColorMock = Mock(Color)
         settings.getPlayerColor() >> playerColorMock
 
-        when:
         def levelView = new LevelView(model, ioAdapter, settings)
+
+        when:
         levelView.drawPlayer(model.getPlayer())
 
         then:
@@ -239,8 +243,9 @@ class LevelViewSpec extends Specification {
         def playerColorMock = Mock(Color)
         settings.getPlayerColor() >> playerColorMock
 
-        when:
         def levelView = new LevelView(model, ioAdapter, settings)
+
+        when:
         levelView.drawPlayer(model.getPlayer())
 
         then:
@@ -267,8 +272,9 @@ class LevelViewSpec extends Specification {
         def playerColorMock = Mock(Color)
         settings.getPlayerColor() >> playerColorMock
 
-        when:
         def levelView = new LevelView(model, ioAdapter, settings)
+
+        when:
         levelView.drawPlayer(model.getPlayer())
 
         then:
@@ -283,5 +289,42 @@ class LevelViewSpec extends Specification {
 
     }
 
+    def "updatePointers"() {
+        given:
+        def element1 = Mock(Element)
+        def position1 = new Vector2D(1, 0)
+        element1.getPosition() >> position1
+        def element2 = Mock(Element)
+        def position2 = new Vector2D(2, 0)
+        element2.getPosition() >> position2
+        def element3 = Mock(Element)
+        def position3 = new Vector2D(10, 0)
+        element3.getPosition() >> position3
+        def element4 = Mock(Element)
+        def position4 = new Vector2D(15, 0)
+        element4.getPosition() >> position4
 
+        model.getElements() >> Arrays.asList(element1, element2, element3, element4)
+
+        def playerPosition = new Vector2D(playerX, 0)
+        player.getPosition() >> playerPosition
+
+        def levelView = new LevelView(model, ioAdapter, settings)
+
+        when:
+        levelView.updatePointers()
+
+        then:
+        levelView.getLeftPointer() == left
+        levelView.getRightPointer() == right
+
+        where:
+        playerX | left | right
+        4       | 0    | 2
+        5       | 0    | 3
+        6       | 1    | 3
+        6.5     | 1    | 3
+        5.5     | 0    | 3
+        10       | 2    | 4
+    }
 }
