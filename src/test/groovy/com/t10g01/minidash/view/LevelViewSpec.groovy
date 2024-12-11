@@ -27,6 +27,7 @@ class LevelViewSpec extends Specification {
         settings.getResolution() >> 10
         settings.getCameraWidth() >> 10
         settings.getCameraHeight() >> 6
+        settings.getCameraCutoff() >> 0.5
 
     }
 

@@ -7,6 +7,8 @@ public class GameSettings {
     private final int cameraWidth;
     private final int cameraHeight;
 
+    private final double cameraCutoff;
+
     private final Color backgroundColor;
     private final Color blockColor;
     private final Color playerColor;
@@ -19,6 +21,7 @@ public class GameSettings {
         this.resolution = resolution;
         this.cameraWidth = cameraWidth;
         this.cameraHeight = cameraHeight;
+        this.cameraCutoff = 0.7;
 
         backgroundColor = new Color("#d5cdbc");
         blockColor = new Color("#645d3b");
@@ -39,6 +42,10 @@ public class GameSettings {
 
     public int getCameraHeight() {
         return cameraHeight;
+    }
+
+    public double getCameraCutoff() {
+        return cameraCutoff;
     }
 
     public Color getBackgroundColor() {

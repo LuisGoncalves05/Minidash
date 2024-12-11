@@ -11,14 +11,13 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
 
     private final GameSettings gameSettings;
     private final double cameraXOffset;
-    private final double cameraY;
+    private final double cameraCutoff;
 
     public LevelView(LevelModel model, IOAdapter ioAdapter, GameSettings gameSettings) {
         super(model, ioAdapter);
-        int cameraWidth = gameSettings.getCameraWidth();
         this.gameSettings = gameSettings;
-        this.cameraXOffset = cameraWidth * 0.4;
-        this.cameraY = 0;
+        this.cameraXOffset = gameSettings.getCameraWidth() * 0.4;
+        this.cameraCutoff = gameSettings.getCameraHeight() * gameSettings.getCameraCutoff();
     }
 
     public void draw() throws IOException {
@@ -31,43 +30,66 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
     }
 
     public void visitBlock(Block block) {
+
+        double cameraYOffset = 0;
+        if(model.getPlayer().getPosition().getY() > cameraCutoff) {
+            cameraYOffset = model.getPlayer().getPosition().getY() - cameraCutoff;
+        }
+
         Vector2D position = block.getPosition();
         int resolution = gameSettings.getResolution();
         double x = position.getX() - model.getPlayer().getPosition().getX() + cameraXOffset;
-        double y = position.getY();
-        // TODO change y positions to adjust to proper cameraY
+        double y = position.getY() - cameraYOffset;
 
         int x_pixels = (int)(x * resolution);
         int y_pixels = (int)(y * resolution);
 
-        if(x <= -1 || x >= gameSettings.getCameraWidth()) return;
+        if(x <= -1 || x >= gameSettings.getCameraWidth()
+            || y <= -1 || y >= gameSettings.getCameraHeight()) return;
 
+        int blockWidth = gameSettings.getResolution();
+        int blockHeight = gameSettings.getResolution();
         if (x < 0) {
-            int blockWidth = resolution + x_pixels;
-            ioAdapter.drawRectangle(0, y_pixels, blockWidth, resolution, gameSettings.getBlockColor());
+            blockWidth = resolution + x_pixels;
+            x_pixels = 0;
         } else if(x > gameSettings.getCameraWidth() - 1) {
-            int blockWidth = gameSettings.getCameraWidth() * resolution - x_pixels;
-            ioAdapter.drawRectangle(x_pixels, y_pixels, blockWidth, resolution, gameSettings.getBlockColor());
-        } else {
-            ioAdapter.drawRectangle(x_pixels, y_pixels, resolution, resolution, gameSettings.getBlockColor());
+            blockWidth = gameSettings.getCameraWidth() * resolution - x_pixels;
         }
+
+        if(y < 0) {
+            blockHeight = resolution + y_pixels;
+            y_pixels = 0;
+        } else if(y > gameSettings.getCameraHeight() - 1) {
+            blockHeight = gameSettings.getCameraHeight() * resolution - y_pixels;
+        }
+
+        ioAdapter.drawRectangle(x_pixels, y_pixels, blockWidth, blockHeight, gameSettings.getBlockColor());
     }
 
     public void visitSpike(Spike spike) {
+
+        double cameraYOffset = 0;
+        if(model.getPlayer().getPosition().getY() > cameraCutoff) {
+            cameraYOffset = model.getPlayer().getPosition().getY() - cameraCutoff;
+        }
+
         Vector2D position = spike.getPosition();
         int resolution = gameSettings.getResolution();
-        int x = (int)((spike.getPosition().getX() - model.getPlayer().getPosition().getX() + cameraXOffset) * resolution);
-        int y = (int)(spike.getPosition().getY() * resolution);
-        // TODO change y positions to adjust to proper cameraY
+        double x = position.getX() - model.getPlayer().getPosition().getX() + cameraXOffset;
+        double y = position.getY() - cameraYOffset;
 
-        if (x <= -resolution || x >= gameSettings.getCameraWidth() * resolution) return;
+        int x_pixels = (int)(x * resolution);
+        int y_pixels = (int)(y * resolution);
+
+        if(x <= -1 || x >= gameSettings.getCameraWidth()
+                || y <= -1 || y >= gameSettings.getCameraHeight()) return;
 
         for (int i = 0; i < resolution / 2; i++) {
-            int left = Math.max(x + i, 0);
-            int right = Math.min(x + resolution - i, gameSettings.getCameraWidth() * resolution);
+            int left = Math.max(x_pixels + i, 0);
+            int right = Math.min(x_pixels + resolution - i, gameSettings.getCameraWidth() * resolution);
             if (right < left) continue;
 
-            ioAdapter.drawRectangle(left, y + i, right - left, 1, gameSettings.getSpikeColor());
+            ioAdapter.drawRectangle(left, y_pixels + i, right - left, 1, gameSettings.getSpikeColor());
         }
     }
 
@@ -77,8 +99,12 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
 
         Vector2D playerPosition = player.getPosition();
         double x_player = cameraXOffset * resolution;
-        double y_player = (double) playerPosition.getY() * resolution;
-        // TODO change y positions to adjust to proper cameraY
+        double y_player;
+        if(model.getPlayer().getPosition().getY() <= cameraCutoff) {
+            y_player = (double) playerPosition.getY() * resolution;
+        } else {
+            y_player = cameraCutoff * resolution;
+        }
 
         double rotation = player.getRotation();
         Color playerColor = gameSettings.getPlayerColor();
