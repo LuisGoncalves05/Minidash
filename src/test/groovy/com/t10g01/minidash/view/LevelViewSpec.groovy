@@ -28,10 +28,11 @@ class LevelViewSpec extends Specification {
         settings = Mock(GameSettings)
         settings.getResolution() >> 10
         settings.getCameraWidth() >> 10
-        settings.getCameraHeight() >> 5
+        settings.getCameraHeight() >> 6
+        settings.getCameraCutoff() >> 0.5
     }
 
-    def "block visitor"(x, y, xp, yp, xf, yf) {
+    def "block visitor"(x, y, xp, yp, xf, yf, cy) {
         given:
         def block = Mock(Block)
         def blockPosition = Mock(Vector2D)
@@ -47,6 +48,7 @@ class LevelViewSpec extends Specification {
         playerPosition.getY() >> yp
 
         def levelView = new LevelView(model, ioAdapter, settings)
+        levelView.setCameraY(cy)
 
         when:
         levelView.visitBlock(block)
@@ -55,14 +57,19 @@ class LevelViewSpec extends Specification {
         1 * ioAdapter.drawRectangle(xf, yf, 10, 10, blockColorMock)
 
         where:
-        x  | y  | xp   | yp  | xf  | yf
-        0  | 0  | 0    | 1   | 40  | 0
-        0  | 0  | 4    | 1   | 0   | 0
-        5  | 3  | 0    | 1   | 90  | 30
-        50 | 1  | 48   | 3   | 60  | 10
+
+        x  | y  | xp   | yp  | xf  | yf  | cy
+        0  | 0  | 0    | 1   | 40  | 0   | 0
+        0  | 0  | 4    | 1   | 0   | 0   | 0
+        5  | 3  | 0    | 1   | 90  | 30  | 0
+        50 | 1  | 48   | 3   | 60  | 10  | 0
+        0  | 1  | 0    | 4   | 40  | 0   | 1
+        0  | 3  | 0    | 5   | 40  | 10  | 2
+        11 | 3  | 10   | 4   | 50  | 20  | 1
+
     }
 
-    def "spike visitor"(x, y, xp, yp, xf, yf) {
+    def "spike visitor"(x, y, xp, yp, xf, yf, cy) {
         given:
         def spike = Mock(Spike)
         def spikePosition = Mock(Vector2D)
@@ -78,6 +85,7 @@ class LevelViewSpec extends Specification {
         playerPosition.getY() >> yp
 
         def levelView = new LevelView(model, ioAdapter, settings)
+        levelView.setCameraY(cy)
 
         when:
         levelView.visitSpike(spike)
@@ -90,11 +98,13 @@ class LevelViewSpec extends Specification {
         1 * ioAdapter.drawRectangle(xf + 4, yf + 4, 2, 1, spikeColor)
 
         where:
-        x  | y  | xp   | yp  | xf  | yf
-        0  | 0  | 0    | 1   | 40  | 0
-        0  | 0  | 4    | 1   | 0   | 0
-        5  | 3  | 0    | 1   | 90  | 30
-        50 | 1  | 48   | 3   | 60  | 10
+        x  | y  | xp   | yp  | xf  | yf  | cy
+        0  | 0  | 0    | 1   | 40  | 0   | 0
+        0  | 0  | 4    | 1   | 0   | 0   | 0
+        0  | 1  | 4    | 4   | 0   | 0   | 1
+        0  | 1  | 0    | 4   | 40  | 0   | 1
+        5  | 3  | 0    | 1   | 90  | 30  | 0
+        50 | 1  | 48   | 3   | 60  | 10  | 0
     }
 
     def "platform visitor"(x, y, xp, yp, xf, yf) {
@@ -173,6 +183,7 @@ class LevelViewSpec extends Specification {
         10 | 0  | 0   | 10 | 0  | 40 | 0
         0  | 1  | 0   | 0  | 1  | 40 | 10
         50 | 3  | 0   | 50 | 3  | 40 | 30
+        50 | 4  | 0   | 50 | 3  | 40 | 30
 
     }
 
@@ -202,6 +213,7 @@ class LevelViewSpec extends Specification {
         10 | 0  | 45  | 10 | 0  | 40 | 0
         0  | 1  | 135 | 0  | 1  | 40 | 10
         50 | 3  | 50  | 50 | 3  | 40 | 30
+        50 | 4  | 30  | 50 | 3  | 40 | 30
 
     }
 

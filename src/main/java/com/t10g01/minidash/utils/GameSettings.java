@@ -6,6 +6,7 @@ public class GameSettings {
 
     private final int cameraWidth;
     private final int cameraHeight;
+    private final double cameraCutoff;
 
     private final Color menuOptionColor;
     private final Color selectedOptionColor;
@@ -23,6 +24,7 @@ public class GameSettings {
         this.resolution = resolution;
         this.cameraWidth = cameraWidth;
         this.cameraHeight = cameraHeight;
+        this.cameraCutoff = 0.7;
 
         menuOptionColor = new Color("#645d3b");
         selectedOptionColor = new Color("#31331f");
@@ -49,6 +51,10 @@ public class GameSettings {
         return cameraHeight;
     }
 
+    public double getCameraCutoff() {
+        return cameraCutoff;
+    }
+    
     public Color getMenuOptionColor() {
         return menuOptionColor;
     }
@@ -56,7 +62,7 @@ public class GameSettings {
     public Color getSelectedOptionColor() {
         return selectedOptionColor;
     }
-
+    
     public Color getBackgroundColor() {
         return backgroundColor;
     }
