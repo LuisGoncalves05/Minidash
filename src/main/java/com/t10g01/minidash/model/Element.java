@@ -1,5 +1,7 @@
 package com.t10g01.minidash.model;
 
+import java.io.IOException;
+
 public abstract class Element {
     private final Vector2D position;
 
@@ -11,7 +13,7 @@ public abstract class Element {
         return position;
     }
 
-    public abstract void accept(ElementVisitor visitor);
+    public abstract void accept(ElementVisitor visitor) throws IOException;
 
     public abstract boolean collision(Player player);
 }

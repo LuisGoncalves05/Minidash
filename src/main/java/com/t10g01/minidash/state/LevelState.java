@@ -60,6 +60,8 @@ public class LevelState extends State<LevelModel, LevelAction> {
         elements.add(new Platform(83, 7));
         for (int i = 83; i < 100; i++) elements.add(new Block(i, 1));
 
+        for (int i = 0; i < 10; i++) elements.add(new LevelEnd(99, i));
+
         return new LevelModel(10, 50, player, elements);
     }
 
