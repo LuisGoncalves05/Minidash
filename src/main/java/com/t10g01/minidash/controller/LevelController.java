@@ -68,6 +68,11 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
         }
     }
 
+    @Override
+    public void visitLevelEnd() {
+
+    }
+
     // Constructor used for testing
     public LevelController(LevelModel levelModel, Game game, PlayerController playerController) {
         super(levelModel, game);
