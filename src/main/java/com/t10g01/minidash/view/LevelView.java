@@ -26,20 +26,20 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
         this.gameSettings = gameSettings;
         this.cameraWidth = gameSettings.getCameraWidth();
         this.cameraXOffset = cameraWidth * 0.4;
-        this.cameraX = model.player().getPosition().getX() - cameraXOffset;
+        this.cameraX = model.getPlayer().getPosition().getX() - cameraXOffset;
         this.cameraCutoff = gameSettings.getCameraHeight() * gameSettings.getCameraCutoff();
     }
 
     @Override
     public void draw() throws IOException {
-        this.cameraX = model.player().getPosition().getX() - cameraXOffset;
-        this.cameraY = Math.max(model.player().getPosition().getY() - cameraCutoff, 0);
+        this.cameraX = model.getPlayer().getPosition().getX() - cameraXOffset;
+        this.cameraY = Math.max(model.getPlayer().getPosition().getY() - cameraCutoff, 0);
 
         ioAdapter.clear();
-        drawPlayer(model.player());
+        drawPlayer(model.getPlayer());
 
         updatePointers();
-        List<Element> elements = model.elements();
+        List<Element> elements = model.getElements();
         for (int i = leftPointer; i < rightPointer; i++) {
             elements.get(i).accept(this);
         }
@@ -99,7 +99,7 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
 
         double x_player = cameraXOffset * resolution;
         double y_player;
-        if(model.player().getPosition().getY() <= cameraCutoff) {
+        if(model.getPlayer().getPosition().getY() <= cameraCutoff) {
             y_player = playerPosition.getY() * resolution;
         } else {
             y_player = cameraCutoff * resolution;
@@ -138,7 +138,7 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
 
     public void updatePointers() {
         double cameraXRight = cameraX + cameraWidth;
-        List<Element> elements = model.elements();
+        List<Element> elements = model.getElements();
 
         while (leftPointer < elements.size()) {
             double elementX = elements.get(leftPointer).getPosition().getX();

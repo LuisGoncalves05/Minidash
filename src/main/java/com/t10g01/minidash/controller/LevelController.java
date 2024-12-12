@@ -18,7 +18,7 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
 
     public LevelController(LevelModel levelModel, Game game) {
        super(levelModel, game);
-       playerController = new PlayerController(levelModel.player(), game.getGameSettings());
+       playerController = new PlayerController(levelModel.getPlayer(), game.getGameSettings());
     }
 
     @Override
@@ -32,7 +32,7 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
         playerController.update(deltaTime);
 
         updatePointers();
-        List<Element> elements = model.elements();
+        List<Element> elements = model.getElements();
         for (int i = leftPointer; i < rightPointer; i++) {
             elements.get(i).accept(this);
         }
@@ -40,7 +40,7 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
 
     @Override
     public void visitBlock(Block block) throws IOException {
-        Player player = model.player();
+        Player player = model.getPlayer();
 
         if (block.topCollision(player)) {
             double height = block.getPosition().getY() + 1;
@@ -52,12 +52,12 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
 
     @Override
     public void visitSpike(Spike spike) throws IOException {
-        if (spike.collision(model.player())) game.restartLevel();
+        if (spike.collision(model.getPlayer())) game.restartLevel();
     }
 
     @Override
     public void visitPlatform(Platform platform) throws IOException {
-        Player player = model.player();
+        Player player = model.getPlayer();
 
         if (platform.topCollision(player)) {
             double height = platform.getPosition().getY() + 1;
@@ -74,8 +74,8 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
     }
 
     public void updatePointers() {
-        double playerX = model.player().getPosition().getX();
-        List<Element> elements = model.elements();
+        double playerX = model.getPlayer().getPosition().getX();
+        List<Element> elements = model.getElements();
 
         while (leftPointer < elements.size()) {
             double elementX = elements.get(leftPointer).getPosition().getX();

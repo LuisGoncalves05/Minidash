@@ -21,16 +21,16 @@ class LevelControllerSpec extends Specification {
 
     def setup() {
         model = Mock(LevelModel)
-        model.elements() >> new ArrayList<Element>()
+        model.getElements() >> new ArrayList<Element>()
         player = Mock(Player)
         player.getPosition() >> new Vector2D(0, 0)
-        model.player() >> player
+        model.getPlayer() >> player
         game = Mock(Game)
         playerController = Mock(PlayerController)
         levelController = new LevelController(model, game, playerController)
     }
 
-    def "step updates player"(dt) {
+    def "step updates player"(double dt) {
         given:
         LevelAction action = LevelAction.NULL
 
@@ -83,7 +83,7 @@ class LevelControllerSpec extends Specification {
         0 * game.setState(_)
     }
 
-    def "visitBlock grounds player"(h) {
+    def "visitBlock grounds player"(int h) {
         given:
         def block = Mock(Block)
         block.topCollision(player) >> true
@@ -103,7 +103,7 @@ class LevelControllerSpec extends Specification {
         3 | _
     }
 
-    def "visitBlock ends game"() {
+    def "visitBlock restarts game"() {
         given:
         def block = Mock(Block)
         block.topCollision(player) >> false
@@ -113,7 +113,7 @@ class LevelControllerSpec extends Specification {
         levelController.visitBlock(block)
 
         then:
-        1 * game.setState(null)
+        1 * game.restartLevel()
     }
 
     def "visitSpike does nothing if no collisions"() {
@@ -129,7 +129,7 @@ class LevelControllerSpec extends Specification {
         0 * game.setState(_)
     }
 
-    def "visitSpike ends game"() {
+    def "visitSpike restarts game"() {
         given:
         def spike = Mock(Spike)
         spike.collision(player) >> true
@@ -138,7 +138,7 @@ class LevelControllerSpec extends Specification {
         levelController.visitSpike(spike)
 
         then:
-        1 * game.setState(null)
+        1 * game.restartLevel()
     }
 
     def "visitPlatform does nothing if no collisions"() {
@@ -155,7 +155,7 @@ class LevelControllerSpec extends Specification {
         0 * game.setState(_)
     }
 
-    def "visitPlatform grounds player"(h) {
+    def "visitPlatform grounds player"(int h) {
         given:
         def platform = Mock(Platform)
         platform.topCollision(player) >> true
@@ -175,7 +175,7 @@ class LevelControllerSpec extends Specification {
         3 | _
     }
 
-    def "visitPlatform ends game"() {
+    def "visitPlatform restarts game"() {
         given:
         def platform = Mock(Platform)
         platform.topCollision(player) >> false
@@ -185,7 +185,7 @@ class LevelControllerSpec extends Specification {
         levelController.visitPlatform(platform)
 
         then:
-        1 * game.setState(null)
+        1 * game.restartLevel()
     }
 
     def "updatePointers"() {
@@ -204,12 +204,12 @@ class LevelControllerSpec extends Specification {
         element4.getPosition() >> position4
 
         def model = Mock(LevelModel)
-        model.elements() >> Arrays.asList(element1, element2, element3, element4)
+        model.getElements() >> Arrays.asList(element1, element2, element3, element4)
 
         def player = Mock(Player)
-        def playerPosition = new Vector2D(playerX, 0)
+        def playerPosition = new Vector2D(playerX as double, 0)
         player.getPosition() >> playerPosition
-        model.player() >> player
+        model.getPlayer() >> player
 
         def levelController = new LevelController(model, game, playerController)
 

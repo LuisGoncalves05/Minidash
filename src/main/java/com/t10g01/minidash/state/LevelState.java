@@ -66,7 +66,6 @@ public class LevelState extends State<LevelModel, LevelAction> {
     }
 
     private Scanner createScanner() throws IOException {
-        System.out.println(this.levelNumber);
         URL level = getClass().getClassLoader().getResource("lvl" + this.levelNumber + ".txt");
         assert level != null;
         File levelFile = new File(level.getFile());

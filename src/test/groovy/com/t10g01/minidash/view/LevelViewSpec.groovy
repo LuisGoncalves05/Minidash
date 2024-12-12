@@ -21,7 +21,7 @@ class LevelViewSpec extends Specification {
     def setup() {
         model = Mock(LevelModel)
         player = Mock(Player)
-        model.player() >> player
+        model.getPlayer() >> player
 
         ioAdapter = Mock(IOAdapter)
 
@@ -151,7 +151,7 @@ class LevelViewSpec extends Specification {
         def levelView = new LevelView(model, ioAdapter, settings)
 
         when:
-        levelView.drawPlayer(model.player())
+        levelView.drawPlayer(model.getPlayer())
 
         then:
         100 * ioAdapter.drawPixel(_, _, playerColorMock)
@@ -172,7 +172,7 @@ class LevelViewSpec extends Specification {
         def levelView = new LevelView(model, ioAdapter, settings)
 
         when:
-        levelView.drawPlayer(model.player())
+        levelView.drawPlayer(model.getPlayer())
 
         then:
         1 * ioAdapter.drawPixel(xf, yf, playerColorMock)
@@ -202,7 +202,7 @@ class LevelViewSpec extends Specification {
         def levelView = new LevelView(model, ioAdapter, settings)
 
         when:
-        levelView.drawPlayer(model.player())
+        levelView.drawPlayer(model.getPlayer())
 
         then:
         0 * ioAdapter.drawPixel(xi, yi, xf, yf, playerColorMock)
@@ -232,7 +232,7 @@ class LevelViewSpec extends Specification {
         def position4 = new Vector2D(15, 0)
         element4.getPosition() >> position4
 
-        model.elements() >> Arrays.asList(element1, element2, element3, element4)
+        model.getElements() >> Arrays.asList(element1, element2, element3, element4)
 
         def playerPosition = new Vector2D(playerX, 0)
         player.getPosition() >> playerPosition
