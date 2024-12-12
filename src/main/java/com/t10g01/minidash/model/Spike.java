@@ -1,5 +1,6 @@
 package com.t10g01.minidash.model;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class Spike extends Element {
     }
 
     @Override
-    public void accept(ElementVisitor visitor) {
+    public void accept(ElementVisitor visitor) throws IOException {
         visitor.visitSpike(this);
     }
 

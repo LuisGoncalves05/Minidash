@@ -85,7 +85,7 @@ public class LanternaIOAdapter implements IOAdapter {
         screen.close();
     }
 
-    Terminal createTerminal() throws IOException, FontFormatException, URISyntaxException {
+    private Terminal createTerminal() throws IOException, FontFormatException, URISyntaxException {
         URL resource = getClass().getClassLoader().getResource(FONT_PATH);
         assert resource != null;
         File fontFile = new File(resource.toURI());
@@ -104,7 +104,7 @@ public class LanternaIOAdapter implements IOAdapter {
                 .createTerminal();
     }
 
-    Screen createScreen() throws IOException {
+    private Screen createScreen() throws IOException {
         Screen screen = new TerminalScreen(terminal);
 
         screen.setCursorPosition(null);

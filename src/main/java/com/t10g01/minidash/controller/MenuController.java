@@ -8,13 +8,11 @@ import com.t10g01.minidash.model.PlayButton;
 import com.t10g01.minidash.state.LevelState;
 import com.t10g01.minidash.utils.MenuAction;
 
-import java.awt.*;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
 public class MenuController extends Controller<MenuModel, MenuAction> implements MenuOptionVisitor {
 
-    private final double actionCoolDown = 0.25;
     private double elapsedTime = 0;
 
     public MenuController(MenuModel model, Game game) {
@@ -26,6 +24,7 @@ public class MenuController extends Controller<MenuModel, MenuAction> implements
         elapsedTime += deltaTime;
 
         if (action == MenuAction.NULL) return;
+        double actionCoolDown = 0.25;
         if (elapsedTime < actionCoolDown) return;
         elapsedTime = 0;
 
@@ -42,7 +41,7 @@ public class MenuController extends Controller<MenuModel, MenuAction> implements
 
     @Override
     public void visitPlayButton(PlayButton playButton) throws IOException {
-        game.setState(new LevelState(game, game.getIoAdapter(), game.getGameSettings(), 2));
+        game.setState(new LevelState(game, game.getIoAdapter(), game.getGameSettings(), 0));
     }
 
     @Override

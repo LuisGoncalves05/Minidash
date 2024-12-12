@@ -1,5 +1,7 @@
 package com.t10g01.minidash.model;
 
+import java.io.IOException;
+
 public class Platform extends Element {
     private final BoxCollider boxCollider;
 
@@ -9,7 +11,7 @@ public class Platform extends Element {
     }
 
     @Override
-    public void accept(ElementVisitor visitor) {
+    public void accept(ElementVisitor visitor) throws IOException {
         visitor.visitPlatform(this);
     }
 

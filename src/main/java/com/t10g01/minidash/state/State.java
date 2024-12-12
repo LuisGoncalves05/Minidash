@@ -6,18 +6,16 @@ import com.t10g01.minidash.ioadapter.IOAdapter;
 import com.t10g01.minidash.utils.GameSettings;
 import com.t10g01.minidash.view.View;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
 public abstract class State<T, U> {
-
-    protected final T model;
-    protected final Controller<T, U> controller;
-    protected final View<T> view;
-    protected final IOAdapter ioAdapter;
-    protected final Game game;
-    protected final GameSettings gameSettings;
+    protected T model;
+    protected Controller<T, U> controller;
+    protected View<T> view;
+    protected IOAdapter ioAdapter;
+    protected Game game;
+    protected GameSettings gameSettings;
 
     public State(Game game, IOAdapter ioAdapter, GameSettings gameSettings) throws IOException {
         this.game = game;
@@ -28,14 +26,16 @@ public abstract class State<T, U> {
         this.view = createView();
     }
 
+    public State(){}
+
     public void step(double deltaTime) throws IOException, URISyntaxException {
         controller.step(getAction(), deltaTime);
         view.draw();
     }
 
     protected abstract T createModel() throws IOException;
-    protected abstract Controller<T, U> createController();
-    protected abstract View<T> createView();
+    protected abstract Controller<T, U> createController() throws IOException;
+    protected abstract View<T> createView() throws IOException;
 
     protected abstract U getAction();
 }

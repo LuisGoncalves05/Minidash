@@ -21,10 +21,10 @@ class LevelControllerSpec extends Specification {
 
     def setup() {
         model = Mock(LevelModel)
-        model.getElements() >> new ArrayList<Element>()
+        model.elements() >> new ArrayList<Element>()
         player = Mock(Player)
         player.getPosition() >> new Vector2D(0, 0)
-        model.getPlayer() >> player
+        model.player() >> player
         game = Mock(Game)
         playerController = Mock(PlayerController)
         levelController = new LevelController(model, game, playerController)
@@ -204,12 +204,12 @@ class LevelControllerSpec extends Specification {
         element4.getPosition() >> position4
 
         def model = Mock(LevelModel)
-        model.getElements() >> Arrays.asList(element1, element2, element3, element4)
+        model.elements() >> Arrays.asList(element1, element2, element3, element4)
 
         def player = Mock(Player)
         def playerPosition = new Vector2D(playerX, 0)
         player.getPosition() >> playerPosition
-        model.getPlayer() >> player
+        model.player() >> player
 
         def levelController = new LevelController(model, game, playerController)
 
