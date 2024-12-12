@@ -6,6 +6,7 @@ import com.t10g01.minidash.model.Player
 import com.t10g01.minidash.model.Block
 import com.t10g01.minidash.model.Spike
 import com.t10g01.minidash.model.Platform
+import com.t10g01.minidash.model.Boost
 import com.t10g01.minidash.model.Vector2D
 import com.t10g01.minidash.utils.*
 import com.t10g01.minidash.model.LevelModel
@@ -136,6 +137,10 @@ class LevelViewSpec extends Specification {
         0  | 0  | 4    | 1   | 0   | 0
         5  | 3  | 0    | 1   | 90  | 30
         50 | 1  | 48   | 3   | 60  | 10
+    }
+
+    def 'boost visitor'() {
+        // TODO add tests
     }
 
     def "drawing a player: drawing all pixels"() {

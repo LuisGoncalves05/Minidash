@@ -68,6 +68,16 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
         }
     }
 
+    @Override
+    public void visitBoost(Boost boost) {
+        Player player = model.getPlayer();
+
+        if (boost.collision(player)) {
+            // TODO make player jump
+        }
+
+    }
+
     // Constructor used for testing
     public LevelController(LevelModel levelModel, Game game, PlayerController playerController) {
         super(levelModel, game);

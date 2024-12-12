@@ -188,6 +188,14 @@ class LevelControllerSpec extends Specification {
         1 * game.setState(null)
     }
 
+    def "visitBoost does nothing if no collisions"() {
+        // TODO add tests
+    }
+
+    def "visitBoost boosts player"() {
+        // TODO add tests
+    }
+
     def "updatePointers"() {
         given:
         def element1 = Mock(Element)

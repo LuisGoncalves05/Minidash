@@ -91,6 +91,11 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
         ioAdapter.drawRectangle(x, y, resolution, height, gameSettings.getPlatformColor());
     }
 
+    @Override
+    public void visitBoost(Boost boost) {
+        // TODO draw boost
+    }
+
 
     public void drawPlayer(Player player) {
         int resolution = gameSettings.getResolution();
