@@ -139,8 +139,39 @@ class LevelViewSpec extends Specification {
         50 | 1  | 48   | 3   | 60  | 10
     }
 
-    def 'boost visitor'() {
-        // TODO add tests
+    def 'boost visitor'(x, y, xp, yp, cy, xf, yf) {
+        given:
+        def boost = Mock(Boost)
+        def boostPosition = Mock(Vector2D)
+        boost.getPosition() >> boostPosition
+        boostPosition.getX() >> x
+        boostPosition.getY() >> y
+        def boostColor = Mock(Color)
+        settings.getBoostColor() >> boostColor
+
+        def playerPosition = Mock(Vector2D)
+        player.getPosition() >> playerPosition
+        playerPosition.getX() >> xp
+        playerPosition.getY() >> yp
+
+        def levelView = new LevelView(model, ioAdapter, settings)
+        levelView.setCameraY(cy)
+
+        when:
+        levelView.visitBoost(boost)
+
+        then:
+        1 * ioAdapter.drawRectangle(xf + 1, yf + 1, 8, 1, boostColor)
+        1 * ioAdapter.drawRectangle(xf + 2, yf + 2, 6, 1, boostColor)
+
+        where:
+        x  | y  | xp   | yp  | xf  | yf  | cy
+        0  | 0  | 0    | 1   | 40  | 0   | 0
+        0  | 0  | 4    | 1   | 0   | 0   | 0
+        0  | 1  | 4    | 4   | 0   | 0   | 1
+        0  | 1  | 0    | 4   | 40  | 0   | 1
+        5  | 3  | 0    | 1   | 90  | 30  | 0
+        50 | 1  | 48   | 3   | 60  | 10  | 0
     }
 
     def "drawing a player: drawing all pixels"() {
