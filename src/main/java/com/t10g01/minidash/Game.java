@@ -62,6 +62,10 @@ public class Game {
         ioAdapter.close();
     }
 
+    public void restartLevel() throws IOException {
+        this.state = new LevelState(this, ioAdapter, gameSettings, ((LevelState)this.state).getLevelNumber());
+    }
+
     public GameSettings getGameSettings() {
         return gameSettings;
     }

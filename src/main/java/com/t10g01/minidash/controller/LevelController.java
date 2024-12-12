@@ -5,7 +5,6 @@ import com.t10g01.minidash.model.*;
 import com.t10g01.minidash.state.MenuState;
 import com.t10g01.minidash.utils.LevelAction;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.List;
 
@@ -19,7 +18,7 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
 
     public LevelController(LevelModel levelModel, Game game) {
        super(levelModel, game);
-       playerController = new PlayerController(levelModel.getPlayer(), game.getGameSettings());
+       playerController = new PlayerController(levelModel.player(), game.getGameSettings());
     }
 
     @Override
@@ -33,38 +32,38 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
         playerController.update(deltaTime);
 
         updatePointers();
-        List<Element> elements = model.getElements();
+        List<Element> elements = model.elements();
         for (int i = leftPointer; i < rightPointer; i++) {
             elements.get(i).accept(this);
         }
     }
 
     @Override
-    public void visitBlock(Block block) {
-        Player player = model.getPlayer();
+    public void visitBlock(Block block) throws IOException {
+        Player player = model.player();
 
         if (block.topCollision(player)) {
             double height = block.getPosition().getY() + 1;
             playerController.setGrounded(height);
         } else if (block.collision(player)) {
-            game.setState(null);
+            game.restartLevel();
         }
     }
 
     @Override
-    public void visitSpike(Spike spike) {
-        if (spike.collision(model.getPlayer())) game.setState(null);
+    public void visitSpike(Spike spike) throws IOException {
+        if (spike.collision(model.player())) game.restartLevel();
     }
 
     @Override
-    public void visitPlatform(Platform platform) {
-        Player player = model.getPlayer();
+    public void visitPlatform(Platform platform) throws IOException {
+        Player player = model.player();
 
         if (platform.topCollision(player)) {
             double height = platform.getPosition().getY() + 1;
             playerController.setGrounded(height);
         } else if (platform.collision(player)) {
-            game.setState(null);
+            game.restartLevel();
         }
     }
 
@@ -75,8 +74,8 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
     }
 
     public void updatePointers() {
-        double playerX = model.getPlayer().getPosition().getX();
-        List<Element> elements = model.getElements();
+        double playerX = model.player().getPosition().getX();
+        List<Element> elements = model.elements();
 
         while (leftPointer < elements.size()) {
             double elementX = elements.get(leftPointer).getPosition().getX();
