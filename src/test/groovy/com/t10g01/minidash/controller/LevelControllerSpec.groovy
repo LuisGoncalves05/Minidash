@@ -211,6 +211,7 @@ class LevelControllerSpec extends Specification {
 
         then:
         1 * playerController.jump(5, 0.8)
+        1 * player.setGrounded(false)
     }
 
     def "updatePointers"() {

@@ -30,12 +30,12 @@ public class GameSettings {
         menuOptionColor = new Color("#645d3b");
         selectedOptionColor = new Color("#31331f");
 
-        backgroundColor = new Color("#d5cdbc");
-        blockColor = new Color("#645d3b");
-        playerColor = new Color("#ba8b68");
-        spikeColor = new Color("#31331f");
+        backgroundColor = new Color("#e4d8c8");
+        blockColor = new Color("#5a3e39");
+        playerColor = new Color("#e07d45");
+        spikeColor = new Color("#dd805d");
         platformColor = blockColor;
-        boostColor = new Color("#f5c74d");
+        boostColor = new Color("#d78b30");
 
         jumpTime = 0.5;
         rotationSpeed = - 180d / jumpTime;

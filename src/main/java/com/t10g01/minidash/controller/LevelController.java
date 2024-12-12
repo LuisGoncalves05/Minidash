@@ -29,7 +29,6 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
             return;
         }
 
-        if (levelAction == LevelAction.JUMP) playerController.jump(3, 0.5);
         playerController.update(deltaTime);
 
         updatePointers();
@@ -37,6 +36,8 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
         for (int i = leftPointer; i < rightPointer; i++) {
             elements.get(i).accept(this);
         }
+
+        if (levelAction == LevelAction.JUMP) playerController.jump(3, 0.5);
     }
 
     @Override
@@ -74,8 +75,8 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
 
         if (boost.collision(player)) {
             playerController.jump(5, 0.8);
+            model.getPlayer().setGrounded(false);
         }
-
     }
 
     // Constructor used for testing

@@ -26,10 +26,11 @@ public class LevelState extends State<LevelModel, LevelAction> {
         List<Element> elements = new ArrayList<>();
         for (int i = 0; i < 50; i++) elements.add(new Block(i, 0));
         elements.add(new Block(20, 2));
-        elements.add(new Spike(20, 1));
+        elements.add(new Boost(19, 1));
         elements.add(new Block(23, 3));
         for (int i = 26; i < 50; i++) elements.add(new Block(i, 3));
         for (int i = 0; i < 6; i++) elements.add(new Block(45, i));
+        elements.add(new Boost(45, 6));
         for (int i = 0; i < 8; i++) elements.add(new Block(50, i));
         return new LevelModel(10, 50, player, elements);
     }
