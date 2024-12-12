@@ -14,9 +14,9 @@ public class Spike extends Element {
 
         colliders = new ArrayList<>();
         colliders.add(new BoxCollider(x + 0.1, y, 0.8, 0.1));
-        colliders.add(new BoxCollider(x + 0.2, y, 0.6, 0.1));
-        colliders.add(new BoxCollider(x + 0.3, y, 0.4, 0.1));
-        colliders.add(new BoxCollider(x + 0.4, y, 0.2, 0.1));
+        colliders.add(new BoxCollider(x + 0.2, y + 0.1, 0.6, 0.1));
+        colliders.add(new BoxCollider(x + 0.3, y + 0.2, 0.4, 0.1));
+        colliders.add(new BoxCollider(x + 0.4, y + 0.3, 0.2, 0.1));
     }
 
     @Override
@@ -36,5 +36,13 @@ public class Spike extends Element {
         super(0, 0);
         this.boundingBox = boundingBox;
         this.colliders = colliders;
+    }
+
+    public List<BoxCollider> getColliders() {
+        return colliders;
+    }
+
+    public BoxCollider getBoundingBox() {
+        return boundingBox;
     }
 }

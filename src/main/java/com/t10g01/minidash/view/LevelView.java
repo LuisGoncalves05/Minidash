@@ -85,7 +85,7 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
         int resolution = gameSettings.getResolution();
 
         int x = (int) ((position.getX() - cameraX) * resolution);
-        int y = (int) ((position.getY() + 0.75) * resolution);
+        int y = (int) ((position.getY() + 0.75 - cameraY   ) * resolution);
         int height = (int) (0.25 * resolution);
 
         ioAdapter.drawRectangle(x, y, resolution, height, gameSettings.getPlatformColor());

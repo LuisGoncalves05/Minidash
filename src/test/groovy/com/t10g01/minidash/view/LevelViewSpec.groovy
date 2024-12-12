@@ -107,7 +107,7 @@ class LevelViewSpec extends Specification {
         50 | 1  | 48   | 3   | 60  | 10  | 0
     }
 
-    def "platform visitor"(x, y, xp, yp, xf, yf) {
+    def "platform visitor"(x, y, xp, yp, xf, yf, cy) {
         given:
         def platform = Mock(Platform)
         def platformPosition = Mock(Vector2D)
@@ -123,6 +123,7 @@ class LevelViewSpec extends Specification {
         playerPosition.getY() >> yp
 
         def levelView = new LevelView(model, ioAdapter, settings)
+        levelView.setCameraY(cy)
 
         when:
         levelView.visitPlatform(platform)
@@ -131,11 +132,12 @@ class LevelViewSpec extends Specification {
         1 * ioAdapter.drawRectangle(xf, yf + 7, 10, 2, platformColor)
 
         where:
-        x  | y  | xp   | yp  | xf  | yf
-        0  | 0  | 0    | 1   | 40  | 0
-        0  | 0  | 4    | 1   | 0   | 0
-        5  | 3  | 0    | 1   | 90  | 30
-        50 | 1  | 48   | 3   | 60  | 10
+        x  | y  | xp   | yp  | xf  | yf | cy
+        0  | 0  | 0    | 1   | 40  | 0  | 0
+        0  | 0  | 4    | 1   | 0   | 0  | 0
+        5  | 3  | 0    | 1   | 90  | 30 | 0
+        50 | 1  | 48   | 3   | 60  | 10 | 0
+        50 | 1  | 48   | 4   | 60  | 0  | 1
     }
 
     def "drawing a player: drawing all pixels"() {

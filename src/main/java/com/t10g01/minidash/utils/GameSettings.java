@@ -24,7 +24,7 @@ public class GameSettings {
         this.resolution = resolution;
         this.cameraWidth = cameraWidth;
         this.cameraHeight = cameraHeight;
-        this.cameraCutoff = 0.7;
+        this.cameraCutoff = 0.75;
 
         menuOptionColor = new Color("#645d3b");
         selectedOptionColor = new Color("#31331f");

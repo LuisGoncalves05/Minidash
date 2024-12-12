@@ -20,6 +20,56 @@ class SpikeSpec extends  Specification {
         player = Mock(Player)
     }
 
+    def "spike generates correct bounding box"() {
+        when:
+        def spike = new Spike(x, y);
+        def boundingBox = spike.getBoundingBox()
+
+        then:
+        boundingBox.getLowerLeft().getX() == xl
+        boundingBox.getLowerLeft().getY() == yl
+        boundingBox.getUpperRight().getX() == xu
+        boundingBox.getUpperRight().getY() == yu
+
+        where:
+        x | y | xl | yl | xu | yu
+        0 | 0 | 0  | 0  | 1  | 0.5 as Double
+        1 | 1 | 1  | 1  | 2  | 1.5 as Double
+    }
+
+    def "spike generates all colliders"() {
+        when:
+        def spike = new Spike(x, y);
+        def colliders = spike.getColliders()
+        def d = 1e-3;
+
+        then:
+        colliders.size() == 4
+
+        Math.abs(colliders.get(0).getLowerLeft().getX() - (xl + 0.1d)) < d
+        Math.abs(colliders.get(0).getLowerLeft().getY() - yl) < d
+        Math.abs(colliders.get(1).getLowerLeft().getX() - (xl + 0.2d)) < d
+        Math.abs(colliders.get(1).getLowerLeft().getY() - (yl + 0.1d)) < d
+        Math.abs(colliders.get(2).getLowerLeft().getX() - (xl + 0.3d)) < d
+        Math.abs(colliders.get(2).getLowerLeft().getY() - (yl + 0.2d)) < d
+        Math.abs(colliders.get(3).getLowerLeft().getX() - (xl + 0.4d)) < d
+        Math.abs(colliders.get(3).getLowerLeft().getY() - (yl + 0.3d)) < d
+
+        Math.abs(colliders.get(0).getUpperRight().getX() - (xl + 0.9d)) < d
+        Math.abs(colliders.get(0).getUpperRight().getY() - (yl + 0.1d)) < d
+        Math.abs(colliders.get(1).getUpperRight().getX() - (xl + 0.8d)) < d
+        Math.abs(colliders.get(1).getUpperRight().getY() - (yl + 0.2d)) < d
+        Math.abs(colliders.get(2).getUpperRight().getX() - (xl + 0.7d)) < d
+        Math.abs(colliders.get(2).getUpperRight().getY() - (yl + 0.3d)) < d
+        Math.abs(colliders.get(3).getUpperRight().getX() - (xl + 0.6d)) < d
+        Math.abs(colliders.get(3).getUpperRight().getY() - (yl + 0.4d)) < d
+
+        where:
+        x | y | xl | yl
+        0 | 0 | 0  | 0
+        1 | 1 | 1  | 1
+    }
+
     def "collision checks boundingBox first"() {
         given:
         boundingBox.collision(player) >> false

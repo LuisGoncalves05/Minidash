@@ -24,4 +24,14 @@ public class BoxCollider {
         if (!collision(player)) return false;
         return player.getPreviousPosition().getY() >= upperRight.getY();
     }
+
+    // Methods used for testing
+
+    public Vector2D getLowerLeft() {
+        return lowerLeft;
+    }
+
+    public Vector2D getUpperRight() {
+        return upperRight;
+    }
 }
