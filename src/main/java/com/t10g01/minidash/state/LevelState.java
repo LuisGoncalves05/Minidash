@@ -10,27 +10,52 @@ import com.t10g01.minidash.utils.LevelAction;
 import com.t10g01.minidash.view.View;
 import com.t10g01.minidash.view.LevelView;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class LevelState extends State<LevelModel, LevelAction> {
-    public LevelState(Game game, IOAdapter ioAdapter, GameSettings gameSettings) throws IOException {
+    private final int levelNumber;
+    public LevelState(Game game, IOAdapter ioAdapter, GameSettings gameSettings, int levelNumber) throws IOException {
         super(game, ioAdapter, gameSettings);
+        this.levelNumber = levelNumber;
     }
 
     @Override
-    protected LevelModel createModel() {
-        // Temporary fix while a level loader is not implemented
-        Player player = new Player(10, 1);
+    protected LevelModel createModel() throws IOException {
+        int lines, columns, posX, posY;
         List<Element> elements = new ArrayList<>();
-        for (int i = 0; i < 50; i++) elements.add(new Block(i, 0));
-        elements.add(new Block(20, 2));
-        elements.add(new Spike(20, 1));
-        elements.add(new Block(23, 3));
-        for (int i = 26; i < 50; i++) elements.add(new Block(i, 3));
-        for (int i = 0; i < 6; i++) elements.add(new Block(45, i));
-        for (int i = 0; i < 8; i++) elements.add(new Block(50, i));
+        URL level = getClass().getClassLoader().getResource("Lvl" + levelNumber + ".txt");
+        assert level != null;
+        File levelFile = new File(level.getFile());
+        System.out.println("Loading level : Lvl" + levelNumber + ".txt");
+        Scanner myReader = new Scanner(levelFile, UTF_8);
+        lines = myReader.nextInt();
+        columns = myReader.nextInt();
+        myReader.nextLine();
+
+        for (int x = 0; x < lines; x++) {
+            String data = myReader.nextLine();
+            for (int y = 0; y < columns; y++) {
+                 Element element = switch (data.charAt(y)) {
+                    case '#' -> new Block(x, y);
+                    case '|' -> new Platform(x, y);
+                    case '>' -> new Spike(x, y);
+                    default -> null;
+                };
+                if (element != null) elements.add(element);
+            }
+        }
+        posX = myReader.nextInt();
+        posY = myReader.nextInt();
+        myReader.close();
+        Player player = new Player(posX, posY);
         return new LevelModel(10, 50, player, elements);
     }
 

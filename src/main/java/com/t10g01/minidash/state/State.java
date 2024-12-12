@@ -6,6 +6,7 @@ import com.t10g01.minidash.ioadapter.IOAdapter;
 import com.t10g01.minidash.utils.GameSettings;
 import com.t10g01.minidash.view.View;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
@@ -32,7 +33,7 @@ public abstract class State<T, U> {
         view.draw();
     }
 
-    protected abstract T createModel();
+    protected abstract T createModel() throws IOException;
     protected abstract Controller<T, U> createController();
     protected abstract View<T> createView();
 
