@@ -161,8 +161,8 @@ class LevelViewSpec extends Specification {
         levelView.visitBoost(boost)
 
         then:
-        1 * ioAdapter.drawRectangle(xf + 1, yf + 1, 8, 1, boostColor)
-        1 * ioAdapter.drawRectangle(xf + 2, yf + 2, 6, 1, boostColor)
+        1 * ioAdapter.drawRectangle(xf + 1, yf, 8, 1, boostColor)
+        1 * ioAdapter.drawRectangle(xf + 2, yf + 1, 6, 1, boostColor)
 
         where:
         x  | y  | xp   | yp  | xf  | yf  | cy
