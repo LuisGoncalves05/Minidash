@@ -22,44 +22,16 @@ public class LevelState extends State<LevelModel, LevelAction> {
     @Override
     protected LevelModel createModel() {
         // Temporary fix while a level loader is not implemented
-        Player player = new Player(4, 1);
+        Player player = new Player(10, 1);
         List<Element> elements = new ArrayList<>();
-        for (int i = 0; i < 100; i++) elements.add(new Block(i, 0));
-
-        elements.add(new Spike(10, 1));
-
-        elements.add(new Spike(20, 1));
-
-        elements.add(new Spike(30, 1));
-        elements.add(new Block(31, 1));
-        elements.add(new Spike(32, 1));
-        elements.add(new Spike(33, 1));
-        elements.add(new Platform(34, 2));
-        elements.add(new Spike(34, 1));
-        elements.add(new Spike(35, 1));
-        elements.add(new Spike(35, 1));
-        elements.add(new Spike(36, 1));
-        elements.add(new Spike(37, 1));
-        elements.add(new Spike(38, 1));
-        elements.add(new Spike(39, 1));
-        elements.add(new Platform(37, 3));
-
-        elements.add(new Spike(45, 1));
-        elements.add(new Spike(46, 1));
-
-        for (int i = 50; i < 55; i++) elements.add(new Block(i, 1));
-        elements.add(new Spike(55, 1));
-        elements.add(new Spike(56, 1));
-        for (int i = 57; i < 65; i++) elements.add(new Block(i, 1));
-        for (int i = 65; i < 85; i++) elements.add(new Spike(i, 1));
-        elements.add(new Platform(68, 2));
-        elements.add(new Platform(71, 3));
-        elements.add(new Platform(74, 4));
-        elements.add(new Platform(77, 5));
-        elements.add(new Platform(80, 6));
-        elements.add(new Platform(83, 7));
-        for (int i = 83; i < 100; i++) elements.add(new Block(i, 1));
-
+        for (int i = 0; i < 50; i++) elements.add(new Block(i, 0));
+        elements.add(new Block(20, 2));
+        elements.add(new Boost(19, 1));
+        elements.add(new Block(23, 3));
+        for (int i = 26; i < 50; i++) elements.add(new Block(i, 3));
+        for (int i = 0; i < 6; i++) elements.add(new Block(45, i));
+        elements.add(new Boost(45, 6));
+        for (int i = 0; i < 8; i++) elements.add(new Block(50, i));
         return new LevelModel(10, 50, player, elements);
     }
 

@@ -64,7 +64,6 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
 
     @Override
     public void visitSpike(Spike spike) {
-
         Vector2D position = spike.getPosition();
         int resolution = gameSettings.getResolution();
 
@@ -89,6 +88,18 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
         int height = (int) (0.25 * resolution);
 
         ioAdapter.drawRectangle(x, y, resolution, height, gameSettings.getPlatformColor());
+    }
+
+    @Override
+    public void visitBoost(Boost boost) {
+        Vector2D position = boost.getPosition();
+        int resolution = gameSettings.getResolution();
+
+        int x = (int)((position.getX() - cameraX) * resolution);
+        int y = (int)((position.getY() - cameraY) * resolution);
+
+        ioAdapter.drawRectangle(x + 1, y, resolution - 2, 1, gameSettings.getBoostColor());
+        ioAdapter.drawRectangle(x + 2, y + 1, resolution - 4, 1, gameSettings.getBoostColor());
     }
 
 
