@@ -6,6 +6,7 @@ import com.t10g01.minidash.model.LevelModel
 import com.t10g01.minidash.model.Block
 import com.t10g01.minidash.model.Spike
 import com.t10g01.minidash.model.Platform
+import com.t10g01.minidash.model.Boost
 import com.t10g01.minidash.model.Player
 import com.t10g01.minidash.model.Vector2D
 import com.t10g01.minidash.state.MenuState
@@ -189,11 +190,27 @@ class LevelControllerSpec extends Specification {
     }
 
     def "visitBoost does nothing if no collisions"() {
-        // TODO add tests
+        given:
+        def boost = Mock(Boost)
+        boost.collision(player) >> false
+
+        when:
+        levelController.visitBoost(boost)
+
+        then:
+        0 * playerController.jump(_, _)
     }
 
     def "visitBoost boosts player"() {
-        // TODO add tests
+        given:
+        def boost = Mock(Boost)
+        boost.collision(player) >> true;
+
+        when:
+        levelController.visitBoost(boost)
+
+        then:
+        1 * playerController.jump(5, 0.8)
     }
 
     def "updatePointers"() {

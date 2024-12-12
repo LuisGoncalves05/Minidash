@@ -73,7 +73,7 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
         Player player = model.getPlayer();
 
         if (boost.collision(player)) {
-            // TODO make player jump
+            playerController.jump(5, 0.8);
         }
 
     }
