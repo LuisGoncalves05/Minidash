@@ -7,7 +7,7 @@ public class LevelEnd extends Element {
 
     @Override
     public void accept(ElementVisitor visitor) {
-        visitor.visitLevelEnd();
+        visitor.visitLevelEnd(this);
     }
 
     @Override

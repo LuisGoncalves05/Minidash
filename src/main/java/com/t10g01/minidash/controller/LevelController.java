@@ -69,7 +69,7 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
     }
 
     @Override
-    public void visitLevelEnd() {
+    public void visitLevelEnd(LevelEnd levelEnd) {
 
     }
 

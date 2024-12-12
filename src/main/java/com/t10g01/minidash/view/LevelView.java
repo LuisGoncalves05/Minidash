@@ -92,7 +92,7 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
     }
 
     @Override
-    public void visitLevelEnd() {
+    public void visitLevelEnd(LevelEnd levelEnd) {
 
     }
 
