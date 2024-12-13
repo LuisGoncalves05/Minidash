@@ -34,28 +34,40 @@ public class LevelState extends State<LevelModel, LevelAction> {
 
     @Override
     protected LevelModel createModel() throws IOException {
-        Scanner myReader = createScanner();
+        /*
+        (Level represented rotated 90 degrees in the txt file because then elements are read sorted by their respective x coordinates)
+        Reads level in the format:
+            l c
+            vertical line of elements
+            vertical line of elements
+            (...)
+            x y
+        Where l is the number of lines that represent the level and c the number of elements in each line.
+        x and y are the initial coordinates of the player in this level
+        */
 
-        int lines = myReader.nextInt();
-        int columns = myReader.nextInt();
-        myReader.nextLine();
+        Scanner LevelScanner = createLevelScanner();
+
+        int lines = LevelScanner.nextInt();
+        int columns = LevelScanner.nextInt();
+        LevelScanner.nextLine();
 
         List<Element> elements = new ArrayList<>();
         for (int x = 0; x < lines; x++) {
-            String data = myReader.nextLine();
+            String data = LevelScanner.nextLine();
             for (int y = 0; y < columns; y++) {
                 Element element = getElement(data, x, y);
                 if (element != null) elements.add(element);
             }
         }
 
-        int posX = myReader.nextInt();
-        int posY = myReader.nextInt();
-        myReader.close();
+        int posX = LevelScanner.nextInt();
+        int posY = LevelScanner.nextInt();
+        LevelScanner.close();
         return new LevelModel(new Player(posX, posY), elements);
     }
 
-    private Element getElement(String data, int x, int y) {
+    public static Element getElement(String data, int x, int y) throws IndexOutOfBoundsException {
         return switch (data.charAt(y)) {
             case '#' -> new Block(x, y);
             case '|' -> new Platform(x, y);
@@ -65,7 +77,7 @@ public class LevelState extends State<LevelModel, LevelAction> {
         };
     }
 
-    private Scanner createScanner() throws IOException {
+    private Scanner createLevelScanner() throws IOException {
         URL level = getClass().getClassLoader().getResource("lvl" + this.levelNumber + ".txt");
         assert level != null;
         File levelFile = new File(level.getFile());

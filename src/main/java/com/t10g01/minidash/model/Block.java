@@ -1,6 +1,7 @@
 package com.t10g01.minidash.model;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class Block extends Element {
     private final BoxCollider collider;
@@ -22,5 +23,17 @@ public class Block extends Element {
     @Override
     public void accept(ElementVisitor visitor) throws IOException {
         visitor.visitBlock(this);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Block block)) return false;
+        return block.getPosition().equals(getPosition());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getPosition());
     }
 }
