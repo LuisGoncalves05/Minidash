@@ -8,6 +8,8 @@ import com.t10g01.minidash.utils.GameSettings;
 import java.io.IOException;
 import java.util.List;
 
+import static java.lang.Math.*;
+
 public class LevelView extends View<LevelModel> implements ElementVisitor {
     private final GameSettings gameSettings;
     private final double cameraWidth;
@@ -84,8 +86,8 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
         int resolution = gameSettings.getResolution();
 
         int x = (int) ((position.getX() - cameraX) * resolution);
-        int y = (int) ((position.getY() + 0.75 - cameraY   ) * resolution);
-        int height = (int) (0.25 * resolution);
+        int y = (int) floor((position.getY() + 0.75 - cameraY) * resolution);
+        int height = (int) ceil(0.25 * resolution);
 
         ioAdapter.drawRectangle(x, y, resolution, height, gameSettings.getPlatformColor());
     }

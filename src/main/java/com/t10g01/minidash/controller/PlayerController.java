@@ -13,7 +13,7 @@ public class PlayerController {
         this.rotationSpeed = settings.getRotationSpeed();
     }
 
-    public void update(double deltaTime) {
+    public boolean update(double deltaTime) {
         Vector2D speed = player.getSpeed();
         Vector2D newSpeed = new Vector2D(speed.getX(), speed.getY() - player.getG() * deltaTime);
 
@@ -24,7 +24,7 @@ public class PlayerController {
         player.setSpeed(newSpeed);
         player.setPosition(newPosition);
 
-        if(player.getGrounded()) {
+        if (player.getGrounded()) {
             player.setRotation(0);
         } else {
             double rotation = player.getRotation() + deltaTime * rotationSpeed;
@@ -32,6 +32,8 @@ public class PlayerController {
         }
 
         player.setGrounded(false);
+
+        return player.getPosition().getY() >= 0;
     }
 
     public void jump(double height, double time) {

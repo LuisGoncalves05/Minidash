@@ -28,7 +28,10 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
             return;
         }
 
-        playerController.update(deltaTime);
+        boolean inVoid = !playerController.update(deltaTime);
+        if (inVoid) {
+            game.restartLevel();
+        }
 
         updatePointers();
         List<Element> elements = model.getElements();
