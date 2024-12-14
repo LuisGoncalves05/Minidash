@@ -17,7 +17,7 @@ public class Game {
     private State state;
 
     public Game() throws IOException, URISyntaxException, FontFormatException {
-        this.gameSettings = new GameSettings(10, 48, 12);
+        this.gameSettings = new GameSettings(10, 20, 10);
 
         this.ioAdapter = new LanternaIOAdapter(
                 gameSettings.getCameraHeight() * gameSettings.getResolution(),

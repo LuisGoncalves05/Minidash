@@ -41,7 +41,7 @@ public class MenuController extends Controller<MenuModel, MenuAction> implements
 
     @Override
     public void visitPlayButton(PlayButton playButton) throws IOException {
-        game.setState(new LevelState(game, game.getIoAdapter(), game.getGameSettings(), 0));
+        game.setState(new LevelState(game, game.getIoAdapter(), game.getGameSettings(), 2));
     }
 
     @Override
