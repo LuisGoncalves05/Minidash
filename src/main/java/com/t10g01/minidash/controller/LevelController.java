@@ -60,6 +60,11 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
     }
 
     @Override
+    public void visitReversedSpike(ReversedSpike reversedSpike) throws IOException {
+        if (reversedSpike.collision(model.getPlayer())) game.restartLevel();
+    }
+
+    @Override
     public void visitPlatform(Platform platform) throws IOException {
         Player player = model.getPlayer();
 

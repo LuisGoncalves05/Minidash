@@ -81,6 +81,22 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
     }
 
     @Override
+    public void visitReversedSpike(ReversedSpike reversedSpike) {
+        Vector2D position = reversedSpike.getPosition();
+        int resolution = gameSettings.getResolution();
+
+        int x = (int)((position.getX() - cameraX) * resolution);
+        int y = (int)((position.getY() - cameraY) * resolution);
+
+        for (int i = 0; i < resolution / 2; i++) {
+            int left = x + i;
+            int right = x + resolution - i;
+
+            ioAdapter.drawRectangle(x + i, y + resolution - i - 1, right - left, 1, gameSettings.getSpikeColor());
+        }
+    }
+
+    @Override
     public void visitPlatform(Platform platform) {
         Vector2D position = platform.getPosition();
         int resolution = gameSettings.getResolution();

@@ -5,6 +5,7 @@ import com.t10g01.minidash.model.Element
 import com.t10g01.minidash.model.LevelModel
 import com.t10g01.minidash.model.Block
 import com.t10g01.minidash.model.Spike
+import com.t10g01.minidash.model.ReversedSpike
 import com.t10g01.minidash.model.Platform
 import com.t10g01.minidash.model.Boost
 import com.t10g01.minidash.model.Player
@@ -137,6 +138,31 @@ class LevelControllerSpec extends Specification {
 
         when:
         levelController.visitSpike(spike)
+
+        then:
+        1 * game.restartLevel()
+    }
+
+    def "visitReversedSpike does nothing if no collisions"() {
+        given:
+        def spike = Mock(ReversedSpike)
+        spike.collision(player) >> false
+
+        when:
+        levelController.visitReversedSpike(spike)
+
+        then:
+        0 * playerController.setGrounded(_)
+        0 * game.setState(_)
+    }
+
+    def "visitReversedSpike restarts game"() {
+        given:
+        def spike = Mock(ReversedSpike)
+        spike.collision(player) >> true
+
+        when:
+        levelController.visitReversedSpike(spike)
 
         then:
         1 * game.restartLevel()
