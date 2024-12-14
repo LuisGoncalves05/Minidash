@@ -21,7 +21,7 @@ class SpikeSpec extends  Specification {
         player = Mock(Player)
     }
 
-    def "spike generates correct bounding box"() {
+    def "spike generates correct bounding box"(x, y, xl, yl, xu, yu) {
         when:
         def spike = new Spike(x, y);
         def boundingBox = spike.getBoundingBox()
@@ -38,7 +38,7 @@ class SpikeSpec extends  Specification {
         1 | 1 | 1  | 1  | 2  | 1.5 as Double
     }
 
-    def "spike generates all colliders"() {
+    def "spike generates all colliders"(x, y, xl, yl) {
         when:
         def spike = new Spike(x, y);
         def colliders = spike.getColliders()
@@ -82,7 +82,7 @@ class SpikeSpec extends  Specification {
         !spike.collision(player)
     }
 
-    def "collision detects collision with colliders"() {
+    def "collision detects collision with colliders"(a, b, c, result) {
         given:
         boundingBox.collision(player) >> true
         collider1.collision(player) >> a

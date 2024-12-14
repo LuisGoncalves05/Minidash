@@ -21,7 +21,7 @@ class ReversedSpikeSpec extends Specification {
         player = Mock(Player)
     }
 
-    def 'reversedSpike generates correct bounding box'() {
+    def 'reversedSpike generates correct bounding box'(x, y, xl, yl, xu, yu) {
         when:
         def spike = new ReversedSpike(x, y);
         def boundingBox = spike.getBoundingBox()
@@ -38,7 +38,7 @@ class ReversedSpikeSpec extends Specification {
         1 | 1 | 1  | 1.5 as Double | 2  | 2
     }
 
-    def 'reversedSpike generates all colliders'() {
+    def 'reversedSpike generates all colliders'(x, y, xl, yl) {
         when:
         def spike = new ReversedSpike(x, y);
         def colliders = spike.getColliders()
@@ -83,7 +83,7 @@ class ReversedSpikeSpec extends Specification {
         !spike.collision(player)
     }
 
-    def 'collision with reversedSpike colliders'() {
+    def 'collision with reversedSpike colliders'(a, b, c, result) {
         given:
         boundingBox.collision(player) >> true
         collider1.collision(player) >> a
