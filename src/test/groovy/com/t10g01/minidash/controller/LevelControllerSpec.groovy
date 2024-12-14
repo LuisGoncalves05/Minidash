@@ -142,6 +142,14 @@ class LevelControllerSpec extends Specification {
         1 * game.restartLevel()
     }
 
+    def "visitReversedSpike does nothing if no collisions"() {
+
+    }
+
+    def "visitReversedSpike restarts game"() {
+
+    }
+
     def "visitPlatform does nothing if no collisions"() {
         given:
         def platform = Mock(Platform)

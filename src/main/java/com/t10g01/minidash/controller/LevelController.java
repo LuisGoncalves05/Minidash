@@ -57,6 +57,11 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
     }
 
     @Override
+    public void visitReversedSpike(ReversedSpike reversedSpike) {
+        // TODO reversedSpike visitor
+    }
+
+    @Override
     public void visitPlatform(Platform platform) throws IOException {
         Player player = model.getPlayer();
 

@@ -108,6 +108,10 @@ class LevelViewSpec extends Specification {
         50 | 1  | 48   | 3   | 60  | 10  | 0
     }
 
+    def 'reversedSpike visitor'() {
+
+    }
+
     def "platform visitor"(x, y, xp, yp, xf, yf, cy) {
         given:
         def platform = Mock(Platform)
