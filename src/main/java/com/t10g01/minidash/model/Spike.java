@@ -1,7 +1,9 @@
 package com.t10g01.minidash.model;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Spike extends Element {
     BoxCollider boundingBox;
@@ -9,7 +11,6 @@ public class Spike extends Element {
 
     public Spike(int x, int y) {
         super(x, y);
-
         boundingBox = new BoxCollider(x, y, 1, 0.5);
 
         colliders = new ArrayList<>();
@@ -27,7 +28,7 @@ public class Spike extends Element {
     }
 
     @Override
-    public void accept(ElementVisitor visitor) {
+    public void accept(ElementVisitor visitor) throws IOException {
         visitor.visitSpike(this);
     }
 
@@ -44,5 +45,17 @@ public class Spike extends Element {
 
     public BoxCollider getBoundingBox() {
         return boundingBox;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Spike spike)) return false;
+        return spike.getPosition().equals(getPosition());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getPosition());
     }
 }

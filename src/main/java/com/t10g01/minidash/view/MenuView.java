@@ -13,7 +13,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 
 public class MenuView extends View<MenuModel> implements MenuOptionVisitor {
-    GameSettings gameSettings;
+    private final GameSettings gameSettings;
     private int renderedOptions;
 
     public MenuView(MenuModel model, IOAdapter ioAdapter, GameSettings gameSettings) {

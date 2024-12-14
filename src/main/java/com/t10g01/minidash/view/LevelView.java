@@ -111,7 +111,7 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
         double x_player = cameraXOffset * resolution;
         double y_player;
         if(model.getPlayer().getPosition().getY() <= cameraCutoff) {
-            y_player = (double) playerPosition.getY() * resolution;
+            y_player = playerPosition.getY() * resolution;
         } else {
             y_player = cameraCutoff * resolution;
         }

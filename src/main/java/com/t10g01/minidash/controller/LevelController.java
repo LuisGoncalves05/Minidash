@@ -5,7 +5,6 @@ import com.t10g01.minidash.model.*;
 import com.t10g01.minidash.state.MenuState;
 import com.t10g01.minidash.utils.LevelAction;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.List;
 
@@ -41,31 +40,31 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
     }
 
     @Override
-    public void visitBlock(Block block) {
+    public void visitBlock(Block block) throws IOException {
         Player player = model.getPlayer();
 
         if (block.topCollision(player)) {
             double height = block.getPosition().getY() + 1;
             playerController.setGrounded(height);
         } else if (block.collision(player)) {
-            game.setState(null);
+            game.restartLevel();
         }
     }
 
     @Override
-    public void visitSpike(Spike spike) {
-        if (spike.collision(model.getPlayer())) game.setState(null);
+    public void visitSpike(Spike spike) throws IOException {
+        if (spike.collision(model.getPlayer())) game.restartLevel();
     }
 
     @Override
-    public void visitPlatform(Platform platform) {
+    public void visitPlatform(Platform platform) throws IOException {
         Player player = model.getPlayer();
 
         if (platform.topCollision(player)) {
             double height = platform.getPosition().getY() + 1;
             playerController.setGrounded(height);
         } else if (platform.collision(player)) {
-            game.setState(null);
+            game.restartLevel();
         }
     }
 

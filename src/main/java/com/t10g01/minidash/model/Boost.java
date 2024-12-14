@@ -2,6 +2,7 @@ package com.t10g01.minidash.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Boost extends Element {
     BoxCollider boundingBox;
@@ -34,5 +35,17 @@ public class Boost extends Element {
         super(0, 0);
         this.boundingBox = boundingBox;
         this.colliders = colliders;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Boost boost)) return false;
+        return boost.getPosition().equals(getPosition());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getPosition());
     }
 }

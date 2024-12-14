@@ -10,29 +10,79 @@ import com.t10g01.minidash.utils.LevelAction;
 import com.t10g01.minidash.view.View;
 import com.t10g01.minidash.view.LevelView;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class LevelState extends State<LevelModel, LevelAction> {
-    public LevelState(Game game, IOAdapter ioAdapter, GameSettings gameSettings) throws IOException {
-        super(game, ioAdapter, gameSettings);
+    private final int levelNumber;
+    public LevelState(Game game, IOAdapter ioAdapter, GameSettings gameSettings, int levelNumber) throws IOException {
+        super();
+        this.game = game;
+        this.gameSettings = gameSettings;
+        this.ioAdapter = ioAdapter;
+        this.levelNumber = levelNumber;
+        this.model = createModel();
+        this.controller = createController();
+        this.view = createView();
     }
 
     @Override
-    protected LevelModel createModel() {
-        // Temporary fix while a level loader is not implemented
-        Player player = new Player(10, 1);
+    protected LevelModel createModel() throws IOException {
+        /*
+        (Level represented rotated 90 degrees in the txt file because then elements are read sorted by their respective x coordinates)
+        Reads level in the format:
+            l c
+            vertical line of elements
+            vertical line of elements
+            (...)
+            x y
+        Where l is the number of lines that represent the level and c the number of elements in each line.
+        x and y are the initial coordinates of the player in this level
+        */
+
+        Scanner LevelScanner = createLevelScanner();
+
+        int lines = LevelScanner.nextInt();
+        int columns = LevelScanner.nextInt();
+        LevelScanner.nextLine();
+
         List<Element> elements = new ArrayList<>();
-        for (int i = 0; i < 50; i++) elements.add(new Block(i, 0));
-        elements.add(new Block(20, 2));
-        elements.add(new Boost(19, 1));
-        elements.add(new Block(23, 3));
-        for (int i = 26; i < 50; i++) elements.add(new Block(i, 3));
-        for (int i = 0; i < 6; i++) elements.add(new Block(45, i));
-        elements.add(new Boost(45, 6));
-        for (int i = 0; i < 8; i++) elements.add(new Block(50, i));
-        return new LevelModel(10, 50, player, elements);
+
+        for (int x = 0; x < lines; x++) {
+            String data = LevelScanner.nextLine();
+            for (int y = 0; y < columns; y++) {
+                Element element = getElement(data, x, y);
+                if (element != null) elements.add(element);
+            }
+        }
+
+        int posX = LevelScanner.nextInt();
+        int posY = LevelScanner.nextInt();
+        LevelScanner.close();
+        return new LevelModel(new Player(posX, posY), elements);
+    }
+
+    public static Element getElement(String data, int x, int y) throws IndexOutOfBoundsException {
+        return switch (data.charAt(y)) {
+            case '#' -> new Block(x, y);
+            case '|' -> new Platform(x, y);
+            case '>' -> new Spike(x, y);
+            case ')' -> new Boost(x, y);
+            default -> null;
+        };
+    }
+
+    private Scanner createLevelScanner() throws IOException {
+        URL level = getClass().getClassLoader().getResource("lvl" + this.levelNumber + ".txt");
+        assert level != null;
+        File levelFile = new File(level.getFile());
+        return new Scanner(levelFile, UTF_8);
     }
 
     @Override
@@ -42,7 +92,7 @@ public class LevelState extends State<LevelModel, LevelAction> {
 
     @Override
     protected View<LevelModel> createView() {
-        return new LevelView(this.model, this.ioAdapter, this.gameSettings);
+        return new LevelView(model, this.ioAdapter, this.gameSettings);
     }
 
     @Override
@@ -50,5 +100,9 @@ public class LevelState extends State<LevelModel, LevelAction> {
         if (ioAdapter.isPressed(' ')) return LevelAction.JUMP;
         if (ioAdapter.isPressed('q')) return LevelAction.EXIT;
         return LevelAction.NULL;
+    }
+
+    public int getLevelNumber() {
+        return levelNumber;
     }
 }
