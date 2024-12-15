@@ -4,6 +4,7 @@ import com.t10g01.minidash.Game
 import com.t10g01.minidash.model.Element
 import com.t10g01.minidash.model.LevelModel
 import com.t10g01.minidash.model.Block
+import com.t10g01.minidash.model.LevelEnd
 import com.t10g01.minidash.model.Spike
 import com.t10g01.minidash.model.ReversedSpike
 import com.t10g01.minidash.model.Platform
@@ -238,6 +239,30 @@ class LevelControllerSpec extends Specification {
         then:
         1 * playerController.jump(5, 0.8)
         1 * player.setGrounded(false)
+    }
+
+    def "visitLevelEnd does nothing if no collisions"() {
+        given:
+        def levelEnd = Mock(LevelEnd)
+        levelEnd.collision(player) >> false
+
+        when:
+        levelController.visitLevelEnd(levelEnd)
+
+        then:
+        0 * game.setState(_)
+    }
+
+    def "visitLevelEnd ends game"() {
+        given:
+        def levelEnd = Mock(LevelEnd)
+        levelEnd.collision(player) >> true
+
+        when:
+        levelController.visitLevelEnd(levelEnd)
+
+        then:
+        1 * game.setState(_ as MenuState)
     }
 
     def "updatePointers"() {
