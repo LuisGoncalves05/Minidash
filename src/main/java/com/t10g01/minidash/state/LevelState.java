@@ -22,17 +22,13 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 public class LevelState extends State<LevelModel, LevelAction> {
     private final int levelNumber;
     public LevelState(Game game, int levelNumber) throws IOException {
-        super();
-        this.game = game;
-        this.gameSettings = game.getGameSettings();
-        this.ioAdapter = game.getIoAdapter();
+        super(game);
         this.levelNumber = levelNumber;
         this.model = createModel();
         this.controller = createController();
         this.view = createView();
     }
 
-    @Override
     protected LevelModel createModel() throws IOException {
         /*
         (Level represented rotated 90 degrees in the txt file because then elements are read sorted by their respective x coordinates)
@@ -88,12 +84,10 @@ public class LevelState extends State<LevelModel, LevelAction> {
         return new Scanner(levelFile, UTF_8);
     }
 
-    @Override
     protected Controller<LevelModel, LevelAction> createController() {
         return new LevelController(model, this.game);
     }
 
-    @Override
     protected View<LevelModel> createView() {
         return new LevelView(model, this.ioAdapter, this.gameSettings);
     }

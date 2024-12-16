@@ -2,6 +2,7 @@ package com.t10g01.minidash.controller;
 
 import com.t10g01.minidash.Game;
 import com.t10g01.minidash.model.*;
+import com.t10g01.minidash.state.LevelCompleteState;
 import com.t10g01.minidash.state.LevelMenuState;
 import com.t10g01.minidash.state.MainMenuState;
 import com.t10g01.minidash.utils.LevelAction;
@@ -97,7 +98,7 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
 
     @Override
     public void visitLevelEnd(LevelEnd levelEnd) throws IOException {
-        if (levelEnd.collision(model.getPlayer())) game.setState(new LevelMenuState(game));
+        if (levelEnd.collision(model.getPlayer())) game.setState(new LevelCompleteState(game));
     }
 
     // Constructor used for testing

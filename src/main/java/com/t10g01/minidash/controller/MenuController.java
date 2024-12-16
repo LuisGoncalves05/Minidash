@@ -14,7 +14,7 @@ public class MenuController extends Controller<MenuModel, MenuAction> implements
 
     private double elapsedTime = 0;
 
-    public MenuController(MenuModel model, Game game) {
+    public MenuController(Game game, MenuModel model) {
         super(model, game);
     }
 

@@ -14,7 +14,7 @@ public class LevelCompleteState extends MenuState {
     }
 
     @Override
-    protected MenuModel createModel() throws IOException {
+    protected MenuModel createModel() {
         return new MenuModel(Arrays.asList(new LevelCompleteButton()));
     }
 }

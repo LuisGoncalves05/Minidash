@@ -13,16 +13,15 @@ import java.io.IOException;
 public abstract class MenuState extends State<MenuModel, MenuAction> {
     public MenuState(Game game) throws IOException {
         super(game);
+        this.model = createModel();
+        this.controller = createController();
+        this.view = createView();
     }
 
     @Override
-    protected Controller<MenuModel, MenuAction> createController() {
-        return new MenuController(model, this.game);
-    }
-
-    @Override
-    protected View<MenuModel> createView() {
-        return new MenuView(model, ioAdapter, gameSettings);
+    public MenuState reset() {
+        this.model.setSelected(0);
+        return this;
     }
 
     @Override
@@ -38,9 +37,13 @@ public abstract class MenuState extends State<MenuModel, MenuAction> {
         return MenuAction.NULL;
     }
 
-    @Override
-    public MenuState reset() {
-        this.model.setSelected(0);
-        return this;
+    protected Controller<MenuModel, MenuAction> createController() {
+        return new MenuController(this.game, model);
     }
+
+    protected View<MenuModel> createView() {
+        return new MenuView(model, ioAdapter, gameSettings);
+    }
+
+    protected abstract MenuModel createModel() throws IOException;
 }
