@@ -2,7 +2,7 @@ package com.t10g01.minidash.controller;
 
 import com.t10g01.minidash.Game;
 import com.t10g01.minidash.model.*;
-import com.t10g01.minidash.state.MenuState;
+import com.t10g01.minidash.state.MainMenuState;
 import com.t10g01.minidash.utils.LevelAction;
 
 import java.io.IOException;
@@ -24,7 +24,7 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
     @Override
     public void step(LevelAction levelAction, double deltaTime) throws IOException {
         if (levelAction == LevelAction.EXIT) {
-            game.setState(new MenuState(game, game.getIoAdapter(), game.getGameSettings()));
+            game.setState(new MainMenuState(game));
             return;
         }
 

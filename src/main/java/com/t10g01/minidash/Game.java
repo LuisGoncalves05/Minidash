@@ -3,6 +3,7 @@ package com.t10g01.minidash;
 import com.t10g01.minidash.ioadapter.IOAdapter;
 import com.t10g01.minidash.ioadapter.LanternaIOAdapter;
 import com.t10g01.minidash.state.LevelState;
+import com.t10g01.minidash.state.MainMenuState;
 import com.t10g01.minidash.state.MenuState;
 import com.t10g01.minidash.state.State;
 import com.t10g01.minidash.utils.GameSettings;
@@ -24,7 +25,7 @@ public class Game {
                 gameSettings.getCameraWidth() * gameSettings.getResolution(),
                 gameSettings.getBackgroundColor()
         );
-        this.state = new MenuState(this, ioAdapter, gameSettings);
+        this.state = new MainMenuState(this);
     }
 
     public Game(GameSettings gameSettings, IOAdapter ioAdapter, State state) {

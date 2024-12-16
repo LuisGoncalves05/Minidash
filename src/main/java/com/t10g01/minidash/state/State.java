@@ -17,10 +17,10 @@ public abstract class State<T, U> {
     protected Game game;
     protected GameSettings gameSettings;
 
-    public State(Game game, IOAdapter ioAdapter, GameSettings gameSettings) throws IOException {
+    public State(Game game) throws IOException {
         this.game = game;
-        this.gameSettings = gameSettings;
-        this.ioAdapter = ioAdapter;
+        this.gameSettings = game.getGameSettings();
+        this.ioAdapter = game.getIoAdapter();
         this.model = createModel();
         this.controller = createController();
         this.view = createView();
