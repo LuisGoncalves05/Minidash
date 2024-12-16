@@ -50,7 +50,7 @@ public class MenuController extends Controller<MenuModel, MenuAction> implements
 
     @Override
     public void visitLevelButton(LevelButton levelButton) throws IOException {
-        game.setState(new LevelState(game, levelButton.getLevel() - 1));
+        game.setState(new LevelState(game, levelButton.level() - 1));
     }
 
     @Override
