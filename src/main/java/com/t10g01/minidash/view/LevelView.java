@@ -124,6 +124,7 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
     @Override
     public void visitLevelEnd(LevelEnd levelEnd) {}
 
+
     @Override
     public void visitDoubleJump(DoubleJump doubleJump) {
         Vector2D position = doubleJump.getPosition();
@@ -150,30 +151,17 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
         double rotation = player.getRotation();
         Color playerColor = gameSettings.getPlayerColor();
 
-        double x_center = x_player + (double)resolution / 2;
-        double y_center = y_player + (double)resolution / 2;
+        int x_center = (int)(x_player + (double)resolution / 2);
+        int y_center = (int)(y_player + (double)resolution / 2);
 
-        for(int i = 0; i < resolution; i++) {
-            for(int j = 0; j < resolution; j++) {
+        for (int i = -resolution; i < resolution; i++) {
+            for (int j = -resolution; j < resolution; j++) {
+                Vector2D centerToPixel = new Vector2D(i / (double) resolution, j / (double) resolution);
+                centerToPixel.rotate(-rotation);
 
-                Vector2D pixelPosition = new Vector2D(
-                        x_player + i,
-                        y_player + j
-                );
-
-                Vector2D centerToPixel = new Vector2D(
-                        pixelPosition.getX() - x_center,
-                        pixelPosition.getY() - y_center
-                );
-
-                centerToPixel.rotate(rotation);
-
-                Vector2D finalPosition = new Vector2D(
-                        x_center + centerToPixel.getX(),
-                        y_center + centerToPixel.getY()
-                );
-
-                ioAdapter.drawPixel((int)finalPosition.getX(), (int)finalPosition.getY(), playerColor);
+                if (Math.abs(centerToPixel.getX()) > 0.5) continue;
+                if (Math.abs(centerToPixel.getY()) > 0.5) continue;
+                ioAdapter.drawPixel(x_center + i, y_center + j, playerColor);
             }
         }
     }
