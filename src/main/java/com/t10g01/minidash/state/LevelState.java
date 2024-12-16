@@ -25,23 +25,36 @@ public class LevelState extends State<LevelModel, LevelAction> {
         super(game);
         this.levelNumber = levelNumber;
         this.model = createModel();
-        this.controller = createController();
-        this.view = createView();
+        this.controller = new LevelController(model, this.game);;
+        this.view = new LevelView(model, this.ioAdapter, this.gameSettings);;
     }
 
-    protected LevelModel createModel() throws IOException {
-        /*
-        (Level represented rotated 90 degrees in the txt file because then elements are read sorted by their respective x coordinates)
-        Reads level in the format:
-            l c
-            vertical line of elements
-            vertical line of elements
-            (...)
-            x y
-        Where l is the number of lines that represent the level and c the number of elements in each line.
-        x and y are the initial coordinates of the player in this level
-        */
+    @Override
+    protected LevelAction getAction() {
+        if (ioAdapter.isPressed(' ')) return LevelAction.JUMP;
+        if (ioAdapter.isPressed('q')) return LevelAction.EXIT;
+        return LevelAction.NULL;
+    }
 
+    @Override
+    public LevelState reset() throws IOException {
+        return new LevelState(game, levelNumber);
+    }
+
+    /*
+     *  Reads level in the format:
+     *      l c
+     *      vertical line of elements
+     *      vertical line of elements
+     *      [...]
+     *      x y
+     *
+     *  Where l is the number of lines that represent the level and c the number of elements in each line.
+     *  x and y are the initial coordinates of the player in this level
+     *
+     *  Levels are rotated by 90 degrees for ease of reading - elements are read sorted by their x coordinates
+     */
+    protected LevelModel createModel() throws IOException {
         Scanner LevelScanner = createLevelScanner();
 
         int lines = LevelScanner.nextInt();
@@ -58,10 +71,11 @@ public class LevelState extends State<LevelModel, LevelAction> {
             }
         }
 
-        int posX = LevelScanner.nextInt();
-        int posY = LevelScanner.nextInt();
+        int playerX = LevelScanner.nextInt();
+        int playerY = LevelScanner.nextInt();
+
         LevelScanner.close();
-        return new LevelModel(new Player(posX, posY), elements);
+        return new LevelModel(elements, playerX, playerY);
     }
 
     public static Element getElement(String data, int x, int y) throws IndexOutOfBoundsException {
@@ -82,29 +96,5 @@ public class LevelState extends State<LevelModel, LevelAction> {
         assert level != null;
         File levelFile = new File(level.getFile());
         return new Scanner(levelFile, UTF_8);
-    }
-
-    protected Controller<LevelModel, LevelAction> createController() {
-        return new LevelController(model, this.game);
-    }
-
-    protected View<LevelModel> createView() {
-        return new LevelView(model, this.ioAdapter, this.gameSettings);
-    }
-
-    @Override
-    protected LevelAction getAction() {
-        if (ioAdapter.isPressed(' ')) return LevelAction.JUMP;
-        if (ioAdapter.isPressed('q')) return LevelAction.EXIT;
-        return LevelAction.NULL;
-    }
-
-    @Override
-    public LevelState reset() throws IOException {
-        return new LevelState(game, levelNumber);
-    }
-
-    public int getLevelNumber() {
-        return levelNumber;
     }
 }

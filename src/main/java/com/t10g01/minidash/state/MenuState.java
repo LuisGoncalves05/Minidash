@@ -14,8 +14,8 @@ public abstract class MenuState extends State<MenuModel, MenuAction> {
     public MenuState(Game game) throws IOException {
         super(game);
         this.model = createModel();
-        this.controller = createController();
-        this.view = createView();
+        this.controller = new MenuController(this.game, model);;
+        this.view = new MenuView(model, ioAdapter, gameSettings);
     }
 
     @Override
@@ -35,14 +35,6 @@ public abstract class MenuState extends State<MenuModel, MenuAction> {
         if (ioAdapter.isPressed(' '))
             return MenuAction.SELECT;
         return MenuAction.NULL;
-    }
-
-    protected Controller<MenuModel, MenuAction> createController() {
-        return new MenuController(this.game, model);
-    }
-
-    protected View<MenuModel> createView() {
-        return new MenuView(model, ioAdapter, gameSettings);
     }
 
     protected abstract MenuModel createModel() throws IOException;

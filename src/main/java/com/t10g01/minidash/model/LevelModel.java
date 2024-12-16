@@ -6,8 +6,8 @@ public class LevelModel {
     private final Player player;
     private final List<Element> elements;
 
-    public LevelModel(Player player, List<Element> elements) {
-        this.player = player;
+    public LevelModel(List<Element> elements, int playerX, int playerY) {
+        this.player = new Player(playerX, playerY);
         this.elements = elements;
     }
 
