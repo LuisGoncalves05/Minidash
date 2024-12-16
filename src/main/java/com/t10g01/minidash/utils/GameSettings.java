@@ -19,13 +19,13 @@ public class GameSettings {
     private final Color boostColor;
     private final Color doubleJumpColor;
 
-    private final double jumpTime;
-    private final double rotationSpeed;
+    private final double jumpTime = 0.5;
+    private final double rotationSpeed = -180d / jumpTime;
 
-    public GameSettings(int resolution, int cameraWidth, int cameraHeight) {
-        this.resolution = resolution;
-        this.cameraWidth = cameraWidth;
-        this.cameraHeight = cameraHeight;
+    public GameSettings() {
+        this.resolution = 10;
+        this.cameraWidth = 20;
+        this.cameraHeight = 10;
         this.cameraCutoff = 0.75;
 
         menuOptionColor = new Color("#645d3b");
@@ -38,9 +38,6 @@ public class GameSettings {
         platformColor = blockColor;
         boostColor = new Color("#d78b30");
         doubleJumpColor = new Color("#cc8899");
-
-        jumpTime = 0.5;
-        rotationSpeed = - 180d / jumpTime;
     }
 
     public int getResolution() {
