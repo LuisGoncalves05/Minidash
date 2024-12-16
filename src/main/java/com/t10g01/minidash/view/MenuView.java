@@ -55,8 +55,9 @@ public class MenuView extends View<MenuModel> implements MenuOptionVisitor {
         assert resource != null;
         BufferedImage sprite = ImageIO.read(new File(resource.toURI()));
 
+        int numberOptions = model.getOptions().size();
         // Option sprites are assumed to be 30px tall and there is a 20px margin to the top of the screen
-        int offsetY = renderedOptions * 30 + 10;
+        int offsetY = (renderedOptions + 1) * (ioAdapter.getScreenHeight() - numberOptions * 30) / (numberOptions + 1) + renderedOptions * 30;
         int offsetX = (ioAdapter.getScreenWidth() - sprite.getWidth()) / 2;
 
         Color color = model.getSelected() == renderedOptions? gameSettings.getSelectedOptionColor() : gameSettings.getMenuOptionColor();
