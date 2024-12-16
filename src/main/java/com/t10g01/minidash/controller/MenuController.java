@@ -1,11 +1,10 @@
 package com.t10g01.minidash.controller;
 
 import com.t10g01.minidash.Game;
-import com.t10g01.minidash.model.ExitButton;
-import com.t10g01.minidash.model.MenuModel;
-import com.t10g01.minidash.model.MenuOptionVisitor;
-import com.t10g01.minidash.model.PlayButton;
+import com.t10g01.minidash.model.*;
+import com.t10g01.minidash.state.LevelMenuState;
 import com.t10g01.minidash.state.LevelState;
+import com.t10g01.minidash.state.MainMenuState;
 import com.t10g01.minidash.utils.MenuAction;
 
 import java.io.IOException;
@@ -40,13 +39,23 @@ public class MenuController extends Controller<MenuModel, MenuAction> implements
     }
 
     @Override
-    public void visitPlayButton(PlayButton playButton) throws IOException {
-        game.setState(new LevelState(game, game.getIoAdapter(), game.getGameSettings(), 0));
+    public void visitLevelsButton(LevelsButton levelsButton) throws IOException {
+        game.setState(new LevelMenuState(game));
     }
 
     @Override
     public void visitExitButton(ExitButton exitButton) {
         game.setState(null);
+    }
+
+    @Override
+    public void visitLevelButton(LevelButton levelButton) throws IOException {
+        game.setState(new LevelState(game, game.getIoAdapter(), game.getGameSettings(), levelButton.getLevel() - 1));
+    }
+
+    @Override
+    public void acceptLevelComplete(LevelCompleteButton levelCompleteButton) throws IOException {
+        game.setState(new MainMenuState(game));
     }
 
     public double getElapsedTime() {
