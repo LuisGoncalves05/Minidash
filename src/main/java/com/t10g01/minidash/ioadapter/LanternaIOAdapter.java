@@ -21,6 +21,7 @@ import com.googlecode.lanterna.terminal.swing.AWTTerminalFontConfiguration;
 import com.googlecode.lanterna.terminal.swing.AWTTerminalFrame;
 import com.t10g01.minidash.utils.Color;
 
+
 public class LanternaIOAdapter implements IOAdapter {
 
     private final int screenHeight;
@@ -73,6 +74,17 @@ public class LanternaIOAdapter implements IOAdapter {
         TextColor pixelColor = new TextColor.RGB(color.getRed(), color.getGreen(), color.getBlue());
         graphics.setBackgroundColor(pixelColor);
         graphics.fillRectangle(new TerminalPosition(x, screenHeight - y - height), new TerminalSize(width, height), ' ');
+    }
+
+    @Override
+    public void drawCircle(int x, int y, int radius, Color color) {
+        for (int i = -radius; i <= radius; i++) {
+            for (int j = -radius; j <= radius; j++) {
+                if (i*i + j*j <= radius*radius) {
+                    drawPixel(x + i,y + j, color);
+                }
+            }
+        }
     }
 
     @Override

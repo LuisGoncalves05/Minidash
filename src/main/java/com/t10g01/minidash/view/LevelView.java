@@ -114,20 +114,30 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
         int x = (int)((position.getX() - cameraX) * resolution);
         int y = (int)((position.getY() - cameraY) * resolution);
 
-        ioAdapter.drawRectangle(x + 1, y, resolution - 2, 1, gameSettings.getBoostColor());
-        ioAdapter.drawRectangle(x + 2, y + 1, resolution - 4, 1, gameSettings.getBoostColor());
+        Color color  = gameSettings.getBoostColor();
+        ioAdapter.drawRectangle(x + 1, y, resolution - 2, 1, color);
+        ioAdapter.drawRectangle(x + 2, y + 1, resolution - 4, 1, color);
     }
 
-
-    public void drawPlayer(Player player) {
+    @Override
+    public void visitDoubleJump(DoubleJump doubleJump) {
+        Vector2D position = doubleJump.getPosition();
         int resolution = gameSettings.getResolution();
 
-        Vector2D playerPosition = player.getPosition();
+        int x = (int) (((position.getX() - cameraX) * resolution) + (resolution - 1) / 2.0);
+        int y = (int) (((position.getY() - cameraY) * resolution) + (resolution - 1) / 2.0);
+
+        ioAdapter.drawCircle(x, y, resolution >> 2, gameSettings.getDoubleJumpColor());
+    }
+
+    public void drawPlayer(Player player) {
+        Vector2D position = player.getPosition();
+        int resolution = gameSettings.getResolution();
 
         double x_player = cameraXOffset * resolution;
         double y_player;
-        if(model.getPlayer().getPosition().getY() <= cameraCutoff) {
-            y_player = playerPosition.getY() * resolution;
+        if (model.getPlayer().getPosition().getY() <= cameraCutoff) {
+            y_player = position.getY() * resolution;
         } else {
             y_player = cameraCutoff * resolution;
         }
@@ -189,5 +199,10 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
 
     public void setCameraY(double cameraY) {
         this.cameraY = cameraY;
+    }
+
+    //Used for testing
+    public void setCameraX(double cameraX) {
+        this.cameraX = cameraX;
     }
 }
