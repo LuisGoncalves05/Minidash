@@ -110,7 +110,7 @@ class LevelViewSpec extends Specification {
         50 | 1  | 48   | 3   | 60  | 10  | 0
     }
 
-    def 'reversedSpike visitor'() {
+    def 'reversedSpike visitor'(x, y, xp, yp, xf, yf, cy) {
         given:
         def spike = Mock(ReversedSpike)
         def spikePosition = Mock(Vector2D)
@@ -241,8 +241,15 @@ class LevelViewSpec extends Specification {
         1 * ioAdapter.drawCircle(xf, yf, 2, doubleJumpColor)
 
         where:
-        x  | y  | xp | yp  | xf  | yf | cy
-        0  | 0  | 0  | 1   | 44  | 4  | 0
+        x  | y   | xp  | yp  | xf  | yf | cy
+        0  | 0   | 0   | 1   | 44  | 4  | 0
+        0  | 1   | 0   | 4   | 44  | 4  | 1
+        2  | 0   | 0   | 1   | 64  | 4  | 0
+        0  | 2   | 0   | 1   | 44  | 24 | 0
+        3  | 3   | 0   | 0   | 74  | 34 | 0
+        0  | 0   | 0.5 | 1   | 39  | 4  | 0
+        0  | 0   | 2   | 0   | 24  | 4  | 0
+        0  | 0.5 | 2   | 0   | 24  | 9  | 0
     }
 
 
