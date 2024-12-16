@@ -35,6 +35,8 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
         }
 
         updatePointers();
+        model.getPlayer().setOnDoubleJump(false);
+        model.getPlayer().setOnBoost(false);
         List<Element> elements = model.getElements();
         for (int i = leftPointer; i < rightPointer; i++) {
             elements.get(i).accept(this);
@@ -84,15 +86,14 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
         if (boost.collision(player)) {
             playerController.jump(5, 0.7);
             player.setGrounded(false);
+            player.setOnBoost(true);
         }
     }
 
     @Override
     public void visitDoubleJump(DoubleJump doubleJump) {
         Player player = model.getPlayer();
-        if (doubleJump.collision(player)) {
-            player.setGrounded(true);
-        }
+        if (doubleJump.collision(player)) player.setOnDoubleJump(true);
     }
 
     @Override

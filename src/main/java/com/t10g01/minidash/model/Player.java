@@ -5,6 +5,8 @@ public class Player {
     private Vector2D previousPosition;
     private Vector2D speed = new Vector2D(9, 0);
     private boolean grounded = false;
+    private boolean onDoubleJump = false;
+    private boolean onBoost = false;
     private double rotation = 0d;
     public static final double defaultG = 80; // g used while falling
     double g = defaultG;
@@ -38,6 +40,14 @@ public class Player {
         return g;
     }
 
+    public boolean getOnDoubleJump() {
+        return onDoubleJump;
+    }
+
+    public boolean getOnBoost() {
+        return onBoost;
+    }
+
     public void setPosition(Vector2D position) {
         this.position = position;
     }
@@ -57,11 +67,23 @@ public class Player {
         this.grounded = grounded;
     }
 
+    public boolean canJump() {
+        return (grounded || onDoubleJump) && !onBoost;
+    }
+
     public void setRotation(double rotation) {
         this.rotation = rotation;
     }
 
     public void setG(double g) {
         this.g = g;
+    }
+
+    public void setOnDoubleJump(boolean onDoubleJump) {
+        this.onDoubleJump = onDoubleJump;
+    }
+
+    public void setOnBoost(boolean onBoost) {
+        this.onBoost = onBoost;
     }
 }
