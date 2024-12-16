@@ -4,6 +4,7 @@ import com.t10g01.minidash.Game;
 import com.t10g01.minidash.model.*;
 import com.t10g01.minidash.state.LevelMenuState;
 import com.t10g01.minidash.state.LevelState;
+import com.t10g01.minidash.state.MainMenuState;
 import com.t10g01.minidash.utils.MenuAction;
 
 import java.io.IOException;
@@ -49,7 +50,12 @@ public class MenuController extends Controller<MenuModel, MenuAction> implements
 
     @Override
     public void visitLevelButton(LevelButton levelButton) throws IOException {
-        game.setState(new LevelState(game, game.getIoAdapter(), game.getGameSettings(), levelButton.getLevel()));
+        game.setState(new LevelState(game, game.getIoAdapter(), game.getGameSettings(), levelButton.getLevel() - 1));
+    }
+
+    @Override
+    public void acceptLevelComplete(LevelCompleteButton levelCompleteButton) throws IOException {
+        game.setState(new MainMenuState(game));
     }
 
     public double getElapsedTime() {

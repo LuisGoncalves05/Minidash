@@ -45,6 +45,11 @@ public class MenuView extends View<MenuModel> implements MenuOptionVisitor {
         drawOption("level" + levelButton.getLevel() + ".png");
     }
 
+    @Override
+    public void acceptLevelComplete(LevelCompleteButton levelCompleteButton) throws IOException, URISyntaxException {
+        drawOption("complete.png");
+    }
+
     void drawOption(String spritePath) throws URISyntaxException, IOException {
         URL resource = getClass().getClassLoader().getResource(spritePath);
         assert resource != null;

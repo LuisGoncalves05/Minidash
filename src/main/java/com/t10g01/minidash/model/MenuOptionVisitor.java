@@ -7,4 +7,5 @@ public interface MenuOptionVisitor {
     void visitLevelsButton(LevelsButton levelsButton) throws URISyntaxException, IOException;
     void visitExitButton(ExitButton exitButton) throws URISyntaxException, IOException;
     void visitLevelButton(LevelButton levelButton) throws IOException, URISyntaxException;
+    void acceptLevelComplete(LevelCompleteButton levelCompleteButton) throws IOException, URISyntaxException;
 }
