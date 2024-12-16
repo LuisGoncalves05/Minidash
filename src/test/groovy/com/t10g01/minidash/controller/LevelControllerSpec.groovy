@@ -237,7 +237,7 @@ class LevelControllerSpec extends Specification {
         levelController.visitBoost(boost)
 
         then:
-        1 * playerController.jump(5, 0.8)
+        1 * playerController.jump(5, 0.7)
         1 * player.setGrounded(false)
     }
 

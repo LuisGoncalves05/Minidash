@@ -31,8 +31,8 @@ public class MenuView extends View<MenuModel> implements MenuOptionVisitor {
     }
 
     @Override
-    public void visitPlayButton(PlayButton playButton) throws URISyntaxException, IOException {
-        drawOption("play.png");
+    public void visitLevelsButton(LevelsButton levelsButton) throws URISyntaxException, IOException {
+        drawOption("levels.png");
     }
 
     @Override
@@ -40,13 +40,23 @@ public class MenuView extends View<MenuModel> implements MenuOptionVisitor {
         drawOption("exit.png");
     }
 
+    @Override
+    public void visitLevelButton(LevelButton levelButton) throws IOException, URISyntaxException {
+        drawOption("level" + levelButton.getLevel() + ".png");
+    }
+
+    @Override
+    public void acceptLevelComplete(LevelCompleteButton levelCompleteButton) throws IOException, URISyntaxException {
+        drawOption("complete.png");
+    }
+
     void drawOption(String spritePath) throws URISyntaxException, IOException {
         URL resource = getClass().getClassLoader().getResource(spritePath);
         assert resource != null;
         BufferedImage sprite = ImageIO.read(new File(resource.toURI()));
 
-        // Option sprites are assumed to be 40px tall and there is a 20px margin to the top of the screen
-        int offsetY = renderedOptions * 40 + 20;
+        // Option sprites are assumed to be 30px tall and there is a 20px margin to the top of the screen
+        int offsetY = renderedOptions * 30 + 10;
         int offsetX = (ioAdapter.getScreenWidth() - sprite.getWidth()) / 2;
 
         Color color = model.getSelected() == renderedOptions? gameSettings.getSelectedOptionColor() : gameSettings.getMenuOptionColor();

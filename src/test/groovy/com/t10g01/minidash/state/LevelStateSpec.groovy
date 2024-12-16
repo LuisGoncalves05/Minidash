@@ -3,27 +3,31 @@ package com.t10g01.minidash.state
 import com.t10g01.minidash.model.Block
 import com.t10g01.minidash.model.Boost
 import com.t10g01.minidash.model.LevelEnd
+import com.t10g01.minidash.model.DoubleJump
 import com.t10g01.minidash.model.Platform
+import com.t10g01.minidash.model.ReversedSpike
 import com.t10g01.minidash.model.Spike
 import spock.lang.Specification
 
 class LevelStateSpec extends Specification {
     def "parses big string correctly"() {
         expect:
-        LevelState.getElement(str, x, y) == object;
+            LevelState.getElement(str, x, y) == object;
         where:
-            str           | x  | y | object
-            "#| >1h #>)_" | 1  | 0 | new Block(1, 0)
-            "#| >1h #>)_" | 10 | 1 | new Platform(10, 1)
-            "#| >1h #>)_" | 0  | 2 | null
-            "#| >1h #>)_" | 1  | 3 | new Spike(1, 3)
-            "#| >1h #>)_" | 20 | 4 | null
-            "#| >1h #>)_" | 1  | 5 | null
-            "#| >1h #>)_" | 2  | 6 | null
-            "#| >1h #>)_" | 3  | 7 | new Block(3,7)
-            "#| >1h #>)_" | 42 | 8 | new Spike(42, 8)
-            "#| >1h #>)_" | 2  | 9 | new Boost(2, 9)
-            "#| >1h #>)_" | 5  | 10 | new LevelEnd(5, 10)
+            str             | x  | y  | object
+            "#| >1h #>)*<_" | 1  | 0  | new Block(1, 0)
+            "#| >1h #>)*<_" | 10 | 1  | new Platform(10, 1)
+            "#| >1h #>)*<_" | 0  | 2  | null
+            "#| >1h #>)*<_" | 1  | 3  | new Spike(1, 3)
+            "#| >1h #>)*<_" | 20 | 4  | null
+            "#| >1h #>)*<_" | 1  | 5  | null
+            "#| >1h #>)*<_" | 2  | 6  | null
+            "#| >1h #>)*<_" | 3  | 7  | new Block(3,7)
+            "#| >1h #>)*<_" | 42 | 8  | new Spike(42, 8)
+            "#| >1h #>)*<_" | 2  | 9  | new Boost(2, 9)
+            "#| >1h #>)*<_" | 45 | 10 | new DoubleJump(45, 10)
+            "#| >1h #>)*<_" | 78 | 11 | new ReversedSpike(78, 11)
+            "#| >1h #>)*<_" | 99 | 12 | new LevelEnd(99, 12)
     }
 
     def "throws in null string"() {

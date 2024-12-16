@@ -9,4 +9,5 @@ public interface ElementVisitor {
     void visitPlatform(Platform platform) throws IOException;
     void visitBoost(Boost boost);
     void visitLevelEnd(LevelEnd levelEnd) throws IOException;
+    void visitDoubleJump(DoubleJump doubleJump);
 }

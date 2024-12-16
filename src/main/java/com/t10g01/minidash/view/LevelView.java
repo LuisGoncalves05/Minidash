@@ -8,6 +8,8 @@ import com.t10g01.minidash.utils.GameSettings;
 import java.io.IOException;
 import java.util.List;
 
+import static java.lang.Math.*;
+
 public class LevelView extends View<LevelModel> implements ElementVisitor {
     private final GameSettings gameSettings;
     private final double cameraWidth;
@@ -100,8 +102,8 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
         int resolution = gameSettings.getResolution();
 
         int x = (int) ((position.getX() - cameraX) * resolution);
-        int y = (int) ((position.getY() + 0.75 - cameraY) * resolution);
-        int height = (int) (0.25 * resolution);
+        int y = (int) floor((position.getY() + 0.75 - cameraY) * resolution);
+        int height = (int) ceil(0.25 * resolution);
 
         ioAdapter.drawRectangle(x, y, resolution, height, gameSettings.getPlatformColor());
     }
@@ -114,25 +116,33 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
         int x = (int)((position.getX() - cameraX) * resolution);
         int y = (int)((position.getY() - cameraY) * resolution);
 
-        ioAdapter.drawRectangle(x + 1, y, resolution - 2, 1, gameSettings.getBoostColor());
-        ioAdapter.drawRectangle(x + 2, y + 1, resolution - 4, 1, gameSettings.getBoostColor());
+        Color color  = gameSettings.getBoostColor();
+        ioAdapter.drawRectangle(x + 1, y, resolution - 2, 1, color);
+        ioAdapter.drawRectangle(x + 2, y + 1, resolution - 4, 1, color);
     }
 
     @Override
-    public void visitLevelEnd(LevelEnd levelEnd) {
+    public void visitLevelEnd(LevelEnd levelEnd) {}
 
-    }
-
-
-    public void drawPlayer(Player player) {
+    @Override
+    public void visitDoubleJump(DoubleJump doubleJump) {
+        Vector2D position = doubleJump.getPosition();
         int resolution = gameSettings.getResolution();
 
-        Vector2D playerPosition = player.getPosition();
+        int x = (int) (((position.getX() - cameraX) * resolution) + (resolution - 1) / 2.0);
+        int y = (int) (((position.getY() - cameraY) * resolution) + (resolution - 1) / 2.0);
+
+        ioAdapter.drawCircle(x, y, resolution >> 2, gameSettings.getDoubleJumpColor());
+    }
+
+    public void drawPlayer(Player player) {
+        Vector2D position = player.getPosition();
+        int resolution = gameSettings.getResolution();
 
         double x_player = cameraXOffset * resolution;
         double y_player;
-        if(model.getPlayer().getPosition().getY() <= cameraCutoff) {
-            y_player = playerPosition.getY() * resolution;
+        if (model.getPlayer().getPosition().getY() <= cameraCutoff) {
+            y_player = position.getY() * resolution;
         } else {
             y_player = cameraCutoff * resolution;
         }
@@ -194,5 +204,10 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
 
     public void setCameraY(double cameraY) {
         this.cameraY = cameraY;
+    }
+
+    //Used for testing
+    public void setCameraX(double cameraX) {
+        this.cameraX = cameraX;
     }
 }

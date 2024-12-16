@@ -76,6 +76,7 @@ public class LevelState extends State<LevelModel, LevelAction> {
             case '<' -> new ReversedSpike(x, y);
             case ')' -> new Boost(x, y);
             case '_' -> new LevelEnd(x, y);
+            case '*' -> new DoubleJump(x, y);
             default -> null;
         };
     }

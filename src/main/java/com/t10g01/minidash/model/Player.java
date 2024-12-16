@@ -3,10 +3,10 @@ package com.t10g01.minidash.model;
 public class Player {
     private Vector2D position;
     private Vector2D previousPosition;
-    private Vector2D speed = new Vector2D(7, 0);
+    private Vector2D speed = new Vector2D(9, 0);
     private boolean grounded = false;
     private double rotation = 0d;
-    public static final double defaultG = 5; // g used while falling
+    public static final double defaultG = 80; // g used while falling
     double g = defaultG;
 
     public Player(double x, double y) {
@@ -51,6 +51,9 @@ public class Player {
     }
 
     public void setGrounded(boolean grounded) {
+        if (grounded) {
+            getSpeed().setY(0);
+        }
         this.grounded = grounded;
     }
 

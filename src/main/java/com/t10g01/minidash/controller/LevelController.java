@@ -2,7 +2,8 @@ package com.t10g01.minidash.controller;
 
 import com.t10g01.minidash.Game;
 import com.t10g01.minidash.model.*;
-import com.t10g01.minidash.state.MenuState;
+import com.t10g01.minidash.state.LevelMenuState;
+import com.t10g01.minidash.state.MainMenuState;
 import com.t10g01.minidash.utils.LevelAction;
 
 import java.io.IOException;
@@ -24,11 +25,14 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
     @Override
     public void step(LevelAction levelAction, double deltaTime) throws IOException {
         if (levelAction == LevelAction.EXIT) {
-            game.setState(new MenuState(game, game.getIoAdapter(), game.getGameSettings()));
+            game.setState(new MainMenuState(game));
             return;
         }
 
-        playerController.update(deltaTime);
+        boolean inVoid = !playerController.update(deltaTime);
+        if (inVoid) {
+            game.restartLevel();
+        }
 
         updatePointers();
         List<Element> elements = model.getElements();
@@ -78,14 +82,22 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
         Player player = model.getPlayer();
 
         if (boost.collision(player)) {
-            playerController.jump(5, 0.8);
-            model.getPlayer().setGrounded(false);
+            playerController.jump(5, 0.7);
+            player.setGrounded(false);
+        }
+    }
+
+    @Override
+    public void visitDoubleJump(DoubleJump doubleJump) {
+        Player player = model.getPlayer();
+        if (doubleJump.collision(player)) {
+            player.setGrounded(true);
         }
     }
 
     @Override
     public void visitLevelEnd(LevelEnd levelEnd) throws IOException {
-        if (levelEnd.collision(model.getPlayer())) game.setState(new MenuState(game, game.getIoAdapter(), game.getGameSettings()));
+        if (levelEnd.collision(model.getPlayer())) game.setState(new LevelMenuState(game));
     }
 
     // Constructor used for testing

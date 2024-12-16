@@ -4,18 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Boost extends Element {
+public class DoubleJump extends Element{
     private final BoxCollider boundingBox;
     private final List<BoxCollider> colliders;
 
-    public Boost(int x, int y) {
+    public DoubleJump(int x, int y) {
         super(x, y);
-
-        boundingBox = new BoxCollider(x + 0.1, y, 0.8, 0.2);
-
+        boundingBox = new BoxCollider(x + 0.3, y + 0.3, 0.4, 0.4);
         colliders = new ArrayList<>();
-        colliders.add(new BoxCollider(x + 0.1, y, 0.8, 0.1));
-        colliders.add(new BoxCollider(x + 0.2, y + 0.1, 0.6, 0.1));
+        colliders.add(new BoxCollider(x + 0.35, y + 0.3, 0.3, 0.4));
+        colliders.add(new BoxCollider(x + 0.3, y + 0.35, 0.4, 0.3));
     }
 
     @Override
@@ -27,11 +25,11 @@ public class Boost extends Element {
 
     @Override
     public void accept(ElementVisitor visitor) {
-        visitor.visitBoost(this);
+        visitor.visitDoubleJump(this);
     }
 
     // Constructor used for testing
-    public Boost(BoxCollider boundingBox, List<BoxCollider> colliders) {
+    public DoubleJump(BoxCollider boundingBox, List<BoxCollider> colliders) {
         super(0, 0);
         this.boundingBox = boundingBox;
         this.colliders = colliders;
@@ -40,12 +38,13 @@ public class Boost extends Element {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Boost boost)) return false;
-        return boost.getPosition().equals(getPosition());
+        if (!(o instanceof DoubleJump doubleJump)) return false;
+        return doubleJump.getPosition().equals(getPosition());
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(getPosition());
     }
+
 }
