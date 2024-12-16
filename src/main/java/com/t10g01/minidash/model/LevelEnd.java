@@ -5,6 +5,7 @@ import java.util.Objects;
 
 public class LevelEnd extends Element {
     BoxCollider collider;
+
     public LevelEnd(int x, int y) {
         super(x, y);
         collider = new BoxCollider(x, y, 1, 1);

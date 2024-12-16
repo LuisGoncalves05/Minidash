@@ -42,7 +42,7 @@ public class MenuView extends View<MenuModel> implements MenuOptionVisitor {
 
     @Override
     public void visitLevelButton(LevelButton levelButton) throws IOException, URISyntaxException {
-        drawOption("level" + levelButton.getLevel() + ".png");
+        drawOption("level" + levelButton.level() + ".png");
     }
 
     @Override

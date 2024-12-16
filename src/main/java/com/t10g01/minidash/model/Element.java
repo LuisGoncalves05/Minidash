@@ -14,6 +14,5 @@ public abstract class Element {
     }
 
     public abstract void accept(ElementVisitor visitor) throws IOException;
-
     public abstract boolean collision(Player player);
 }
