@@ -8,4 +8,5 @@ public interface ElementVisitor {
     void visitReversedSpike(ReversedSpike reversedSpike) throws IOException;
     void visitPlatform(Platform platform) throws IOException;
     void visitBoost(Boost boost);
+    void visitDoubleJump(DoubleJump doubleJump);
 }

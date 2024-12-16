@@ -1,6 +1,7 @@
 package com.t10g01.minidash.view
 
 import com.t10g01.minidash.ioadapter.*
+import com.t10g01.minidash.model.DoubleJump
 import com.t10g01.minidash.model.Element
 import com.t10g01.minidash.model.Player
 import com.t10g01.minidash.model.Block
@@ -147,7 +148,7 @@ class LevelViewSpec extends Specification {
         50 | 1  | 48   | 3   | 60  | 10  | 0
     }
 
-    def "platform visitor"(x, y, xp, yp, xf, yf, cy) {
+    def "platform visitor"() {
         given:
         def platform = Mock(Platform)
         def platformPosition = Mock(Vector2D)
@@ -180,7 +181,7 @@ class LevelViewSpec extends Specification {
         50 | 1  | 48   | 4   | 60  | 0  | 1
     }
 
-    def 'boost visitor'(x, y, xp, yp, cy, xf, yf) {
+    def 'boost visitor'(x, y, xp, yp, cy) {
         given:
         def boost = Mock(Boost)
         def boostPosition = Mock(Vector2D)
@@ -206,14 +207,44 @@ class LevelViewSpec extends Specification {
         1 * ioAdapter.drawRectangle(xf + 2, yf + 1, 6, 1, boostColor)
 
         where:
-        x  | y  | xp   | yp  | xf  | yf  | cy
-        0  | 0  | 0    | 1   | 40  | 0   | 0
-        0  | 0  | 4    | 1   | 0   | 0   | 0
-        0  | 1  | 4    | 4   | 0   | 0   | 1
-        0  | 1  | 0    | 4   | 40  | 0   | 1
-        5  | 3  | 0    | 1   | 90  | 30  | 0
-        50 | 1  | 48   | 3   | 60  | 10  | 0
+        x  | y  | xp   | yp  | xf  | yf | cy
+        0  | 0  | 0    | 1   | 40  | 0  | 0
+        0  | 0  | 4    | 1   | 0   | 0  | 0
+        0  | 1  | 4    | 4   | 0   | 0  | 1
+        0  | 1  | 0    | 4   | 40  | 0  | 1
+        5  | 3  | 0    | 1   | 90  | 30 | 0
+        50 | 1  | 48   | 3   | 60  | 10 | 0
     }
+
+    def 'doubleJump visitor'() {
+        given:
+        def doubleJump = Mock(DoubleJump)
+        def doubleJumpPosition = Mock(Vector2D)
+        doubleJump.getPosition() >> doubleJumpPosition
+        doubleJumpPosition.getX() >> x
+        doubleJumpPosition.getY() >> y
+        def doubleJumpColor = Mock(Color)
+        settings.getDoubleJumpColor() >> doubleJumpColor
+
+        def playerPosition = Mock(Vector2D)
+        player.getPosition() >> playerPosition
+        playerPosition.getX() >> xp
+        playerPosition.getY() >> yp
+
+        def levelView = new LevelView(model, ioAdapter, settings)
+        levelView.setCameraY(cy)
+
+        when:
+        levelView.visitDoubleJump(doubleJump)
+
+        then:
+        1 * ioAdapter.drawCircle(xf, yf, 2, doubleJumpColor)
+
+        where:
+        x  | y  | xp | yp  | xf  | yf | cy
+        0  | 0  | 0  | 1   | 44  | 4  | 0
+    }
+
 
     def "drawing a player: drawing all pixels"() {
         given:
@@ -294,7 +325,7 @@ class LevelViewSpec extends Specification {
 
     }
 
-    def "updatePointers"() {
+    def "update pointers"() {
         given:
         def element1 = Mock(Element)
         def position1 = new Vector2D(1, 0)

@@ -111,4 +111,5 @@ class LanternaIOAdapterSpec extends Specification {
         4      | 4     | 5 | 5 | 5  | 1  | new Color("#FFFFFF") | new TextColor.RGB(255, 255, 255)
         6      | 2     | 3 | 2 | 3  | 2  | new Color("#FF0000") | new TextColor.RGB(255, 0, 0)
     }
+
 }

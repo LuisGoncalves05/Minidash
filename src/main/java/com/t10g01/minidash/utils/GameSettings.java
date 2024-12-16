@@ -17,6 +17,7 @@ public class GameSettings {
     private final Color spikeColor;
     private final Color platformColor;
     private final Color boostColor;
+    private final Color doubleJumpColor;
 
     private final double jumpTime;
     private final double rotationSpeed;
@@ -36,6 +37,7 @@ public class GameSettings {
         spikeColor = new Color("#dd805d");
         platformColor = blockColor;
         boostColor = new Color("#d78b30");
+        doubleJumpColor = new Color("#cc8899");
 
         jumpTime = 0.5;
         rotationSpeed = - 180d / jumpTime;
@@ -96,4 +98,6 @@ public class GameSettings {
     public double getRotationSpeed() {
         return rotationSpeed;
     }
+
+    public Color getDoubleJumpColor() { return doubleJumpColor;}
 }

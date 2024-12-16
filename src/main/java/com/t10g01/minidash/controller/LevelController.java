@@ -82,7 +82,15 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
 
         if (boost.collision(player)) {
             playerController.jump(5, 0.8);
-            model.getPlayer().setGrounded(false);
+            player.setGrounded(false);
+        }
+    }
+
+    @Override
+    public void visitDoubleJump(DoubleJump doubleJump) {
+        Player player = model.getPlayer();
+        if (doubleJump.collision(player)) {
+            player.setGrounded(true);
         }
     }
 
