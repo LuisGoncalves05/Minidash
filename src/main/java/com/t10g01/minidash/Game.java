@@ -12,6 +12,9 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 
 public class Game {
+    public static void main(String[] args) throws IOException, URISyntaxException, FontFormatException, InterruptedException {
+        new Game().start();
+    }
 
     private final GameSettings gameSettings;
     private final IOAdapter ioAdapter;
@@ -19,31 +22,12 @@ public class Game {
 
     public Game() throws IOException, URISyntaxException, FontFormatException {
         this.gameSettings = new GameSettings(10, 20, 10);
-
         this.ioAdapter = new LanternaIOAdapter(
                 gameSettings.getCameraHeight() * gameSettings.getResolution(),
                 gameSettings.getCameraWidth() * gameSettings.getResolution(),
                 gameSettings.getBackgroundColor()
         );
         this.state = new MainMenuState(this);
-    }
-
-    public Game(GameSettings gameSettings, IOAdapter ioAdapter, State state) {
-        this.gameSettings = gameSettings;
-        this.ioAdapter = ioAdapter;
-        this.state = state;
-    }
-
-    public static void main(String[] args) throws IOException, URISyntaxException, FontFormatException, InterruptedException {
-        new Game().start();
-    }
-
-    public void setState(State state) {
-        this.state = state;
-    }
-
-    public IOAdapter getIoAdapter() {
-        return ioAdapter;
     }
 
     public void start() throws InterruptedException, IOException, URISyntaxException {
@@ -64,11 +48,26 @@ public class Game {
         ioAdapter.close();
     }
 
-    public void restartLevel() throws IOException {
-        this.state = new LevelState(this, ioAdapter, gameSettings, ((LevelState)this.state).getLevelNumber());
+    public void resetState() throws IOException {
+        state = state.reset();
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
+
+    public IOAdapter getIoAdapter() {
+        return ioAdapter;
     }
 
     public GameSettings getGameSettings() {
         return gameSettings;
+    }
+
+    // Constructor used for testing
+    public Game(GameSettings gameSettings, IOAdapter ioAdapter, State state) {
+        this.gameSettings = gameSettings;
+        this.ioAdapter = ioAdapter;
+        this.state = state;
     }
 }

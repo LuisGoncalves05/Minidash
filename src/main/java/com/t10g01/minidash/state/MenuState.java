@@ -37,4 +37,10 @@ public abstract class MenuState extends State<MenuModel, MenuAction> {
             return MenuAction.SELECT;
         return MenuAction.NULL;
     }
+
+    @Override
+    public MenuState reset() {
+        this.model.setSelected(0);
+        return this;
+    }
 }

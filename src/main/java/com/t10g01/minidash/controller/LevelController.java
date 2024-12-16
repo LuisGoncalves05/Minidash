@@ -31,7 +31,7 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
 
         boolean inVoid = !playerController.update(deltaTime);
         if (inVoid) {
-            game.restartLevel();
+            game.resetState();
         }
 
         updatePointers();
@@ -51,18 +51,18 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
             double height = block.getPosition().getY() + 1;
             playerController.setGrounded(height);
         } else if (block.collision(player)) {
-            game.restartLevel();
+            game.resetState();
         }
     }
 
     @Override
     public void visitSpike(Spike spike) throws IOException {
-        if (spike.collision(model.getPlayer())) game.restartLevel();
+        if (spike.collision(model.getPlayer())) game.resetState();
     }
 
     @Override
     public void visitReversedSpike(ReversedSpike reversedSpike) throws IOException {
-        if (reversedSpike.collision(model.getPlayer())) game.restartLevel();
+        if (reversedSpike.collision(model.getPlayer())) game.resetState();
     }
 
     @Override
@@ -73,7 +73,7 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
             double height = platform.getPosition().getY() + 1;
             playerController.setGrounded(height);
         } else if (platform.collision(player)) {
-            game.restartLevel();
+            game.resetState();
         }
     }
 

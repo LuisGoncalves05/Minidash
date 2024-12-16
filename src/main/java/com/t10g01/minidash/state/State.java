@@ -38,4 +38,6 @@ public abstract class State<T, U> {
     protected abstract View<T> createView() throws IOException;
 
     protected abstract U getAction();
+
+    public abstract State<T, U> reset() throws IOException;
 }

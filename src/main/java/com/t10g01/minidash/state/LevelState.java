@@ -21,11 +21,11 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class LevelState extends State<LevelModel, LevelAction> {
     private final int levelNumber;
-    public LevelState(Game game, IOAdapter ioAdapter, GameSettings gameSettings, int levelNumber) throws IOException {
+    public LevelState(Game game, int levelNumber) throws IOException {
         super();
         this.game = game;
-        this.gameSettings = gameSettings;
-        this.ioAdapter = ioAdapter;
+        this.gameSettings = game.getGameSettings();
+        this.ioAdapter = game.getIoAdapter();
         this.levelNumber = levelNumber;
         this.model = createModel();
         this.controller = createController();
@@ -103,6 +103,11 @@ public class LevelState extends State<LevelModel, LevelAction> {
         if (ioAdapter.isPressed(' ')) return LevelAction.JUMP;
         if (ioAdapter.isPressed('q')) return LevelAction.EXIT;
         return LevelAction.NULL;
+    }
+
+    @Override
+    public LevelState reset() throws IOException {
+        return new LevelState(game, levelNumber);
     }
 
     public int getLevelNumber() {

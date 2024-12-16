@@ -116,7 +116,7 @@ class LevelControllerSpec extends Specification {
         levelController.visitBlock(block)
 
         then:
-        1 * game.restartLevel()
+        1 * game.resetState()
     }
 
     def "visitSpike does nothing if no collisions"() {
@@ -141,7 +141,7 @@ class LevelControllerSpec extends Specification {
         levelController.visitSpike(spike)
 
         then:
-        1 * game.restartLevel()
+        1 * game.resetState()
     }
 
     def "visitReversedSpike does nothing if no collisions"() {
@@ -166,7 +166,7 @@ class LevelControllerSpec extends Specification {
         levelController.visitReversedSpike(spike)
 
         then:
-        1 * game.restartLevel()
+        1 * game.resetState()
     }
 
     def "visitPlatform does nothing if no collisions"() {
@@ -213,7 +213,7 @@ class LevelControllerSpec extends Specification {
         levelController.visitPlatform(platform)
 
         then:
-        1 * game.restartLevel()
+        1 * game.resetState()
     }
 
     def "visitBoost does nothing if no collisions"() {
