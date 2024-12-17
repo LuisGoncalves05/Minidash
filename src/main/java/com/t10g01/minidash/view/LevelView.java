@@ -141,19 +141,12 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
         int resolution = gameSettings.getResolution();
 
         double x_player = cameraXOffset * resolution;
-        double y_player;
-        if (model.getPlayer().getPosition().getY() <= cameraYOffset) {
-            y_player = position.getY() * resolution;
-        } else {
-            y_player = cameraYOffset * resolution;
-        }
-
-        double rotation = player.getRotation();
-        Color playerColor = gameSettings.getPlayerColor();
-
+        double y_player = Math.min(position.getY(), cameraYOffset) * resolution;
         int x_center = (int)(x_player + (double)resolution / 2);
         int y_center = (int)(y_player + (double)resolution / 2);
 
+        double rotation = player.getRotation();
+        Color playerColor = gameSettings.getPlayerColor();
         int biggestDeltaCenter = (int) Math.ceil(resolution * 0.70710678118) + 1;
 
         for (int i = -biggestDeltaCenter; i <= biggestDeltaCenter; i++) {

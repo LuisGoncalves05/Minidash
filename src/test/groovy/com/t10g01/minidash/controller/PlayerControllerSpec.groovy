@@ -1,7 +1,6 @@
 package com.t10g01.minidash.controller
 
-import com.t10g01.minidash.ioadapter.IOAdapter
-import com.t10g01.minidash.model.LevelModel
+
 import com.t10g01.minidash.model.Player
 import com.t10g01.minidash.model.Vector2D
 import com.t10g01.minidash.utils.GameSettings
@@ -150,7 +149,7 @@ class PlayerControllerSpec extends Specification {
         def controller = new PlayerController(player, settings)
 
         when:
-        controller.setGrounded(h)
+        controller.groundPlayer(h)
 
         then:
         1 * player.setPosition(new Vector2D(xf, yf))
@@ -169,7 +168,7 @@ class PlayerControllerSpec extends Specification {
         def controller = new PlayerController(player, settings)
 
         when:
-        controller.setGrounded(h)
+        controller.groundPlayer(h)
 
         then:
         1 * player.setGrounded(true)
@@ -188,7 +187,7 @@ class PlayerControllerSpec extends Specification {
         def controller = new PlayerController(player, settings)
 
         when:
-        controller.setGrounded(h)
+        controller.groundPlayer(h)
 
         then:
         1 * player.setG(Player.defaultG)

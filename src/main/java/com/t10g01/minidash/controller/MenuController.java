@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 
 public class MenuController extends Controller<MenuModel, MenuAction> implements MenuOptionVisitor {
-
     private double elapsedTime = 0;
 
     public MenuController(Game game, MenuModel model) {
@@ -27,15 +26,14 @@ public class MenuController extends Controller<MenuModel, MenuAction> implements
         if (elapsedTime < actionCoolDown) return;
         elapsedTime = 0;
 
+        int optionCount = model.getOptions().size();
+
         if (action == MenuAction.EXIT) game.setState(null);
         else if (action == MenuAction.SELECT) model.getOptions().get(model.getSelected()).accept(this);
-        else {
-            int optionCount = model.getOptions().size();
-            // Java's % operator returns the remainder and not the modulo. Hence, (model.getSelected() - 1) % optionCount
-            // is not feasible
-            if (action == MenuAction.UP) model.setSelected((model.getSelected() + optionCount - 1) % optionCount);
-            else model.setSelected((model.getSelected() + 1) % optionCount);
-        }
+        // Java's % operator returns the remainder and not the modulo. Hence, (model.getSelected() - 1) % optionCount
+        // is not feasible
+        else if (action == MenuAction.UP) model.setSelected((model.getSelected() + optionCount - 1) % optionCount);
+        else model.setSelected((model.getSelected() + 1) % optionCount);
     }
 
     @Override
@@ -58,10 +56,10 @@ public class MenuController extends Controller<MenuModel, MenuAction> implements
         game.setState(new MainMenuState(game));
     }
 
+    // Setters used in tests
     public double getElapsedTime() {
         return elapsedTime;
     }
-
     public void setElapsedTime(double elapsedTime) {
         this.elapsedTime = elapsedTime;
     }

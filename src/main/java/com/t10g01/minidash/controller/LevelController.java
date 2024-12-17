@@ -3,7 +3,6 @@ package com.t10g01.minidash.controller;
 import com.t10g01.minidash.Game;
 import com.t10g01.minidash.model.*;
 import com.t10g01.minidash.state.LevelCompleteState;
-import com.t10g01.minidash.state.LevelMenuState;
 import com.t10g01.minidash.state.MainMenuState;
 import com.t10g01.minidash.utils.LevelAction;
 
@@ -30,10 +29,7 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
             return;
         }
 
-        boolean inVoid = !playerController.update(deltaTime);
-        if (inVoid) {
-            game.resetState();
-        }
+        if (model.getPlayer().getPosition().getY() < 0) game.resetState();
 
         updatePointers();
         List<Element> elements = model.getElements();
@@ -50,7 +46,7 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
 
         if (block.topCollision(player)) {
             double height = block.getPosition().getY() + 1;
-            playerController.setGrounded(height);
+            playerController.groundPlayer(height);
         } else if (block.collision(player)) {
             game.resetState();
         }
@@ -72,7 +68,7 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
 
         if (platform.topCollision(player)) {
             double height = platform.getPosition().getY() + 1;
-            playerController.setGrounded(height);
+            playerController.groundPlayer(height);
         } else if (platform.collision(player)) {
             game.resetState();
         }
@@ -101,12 +97,6 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
         if (levelEnd.collision(model.getPlayer())) game.setState(new LevelCompleteState(game));
     }
 
-    // Constructor used for testing
-    public LevelController(LevelModel levelModel, Game game, PlayerController playerController) {
-        super(levelModel, game);
-        this.playerController = playerController;
-    }
-
     public void updatePointers() {
         double playerX = model.getPlayer().getPosition().getX();
         List<Element> elements = model.getElements();
@@ -123,10 +113,14 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
         }
     }
 
+    // Constructor used for testing
+    public LevelController(LevelModel levelModel, Game game, PlayerController playerController) {
+        super(levelModel, game);
+        this.playerController = playerController;
+    }
     public int getLeftPointer() {
         return leftPointer;
     }
-
     public int getRightPointer() {
         return rightPointer;
     }

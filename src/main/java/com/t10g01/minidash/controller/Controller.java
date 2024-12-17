@@ -6,9 +6,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 
 public abstract class Controller<T, U> {
-
     protected final T model;
-
     protected final Game game;
 
     public Controller(T model, Game game) {
@@ -17,5 +15,4 @@ public abstract class Controller<T, U> {
     }
 
     public abstract void step(U action, double deltaTime) throws IOException, URISyntaxException;
-
 }

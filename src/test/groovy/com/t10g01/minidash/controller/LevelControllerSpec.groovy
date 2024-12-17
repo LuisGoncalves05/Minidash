@@ -82,7 +82,7 @@ class LevelControllerSpec extends Specification {
         levelController.visitBlock(block)
 
         then:
-        0 * playerController.setGrounded(_)
+        0 * playerController.groundPlayer(_)
         0 * game.setState(_)
     }
 
@@ -98,7 +98,7 @@ class LevelControllerSpec extends Specification {
         levelController.visitBlock(block)
 
         then:
-        playerController.setGrounded(h + 1)
+        playerController.groundPlayer(h + 1)
 
         where:
         h | _
@@ -128,7 +128,7 @@ class LevelControllerSpec extends Specification {
         levelController.visitSpike(spike)
 
         then:
-        0 * playerController.setGrounded(_)
+        0 * playerController.groundPlayer(_)
         0 * game.setState(_)
     }
 
@@ -153,7 +153,7 @@ class LevelControllerSpec extends Specification {
         levelController.visitReversedSpike(spike)
 
         then:
-        0 * playerController.setGrounded(_)
+        0 * playerController.groundPlayer(_)
         0 * game.setState(_)
     }
 
@@ -179,7 +179,7 @@ class LevelControllerSpec extends Specification {
         levelController.visitPlatform(platform)
 
         then:
-        0 * playerController.setGrounded(_)
+        0 * playerController.groundPlayer(_)
         0 * game.setState(_)
     }
 
@@ -195,7 +195,7 @@ class LevelControllerSpec extends Specification {
         levelController.visitPlatform(platform)
 
         then:
-        playerController.setGrounded(h + 1)
+        playerController.groundPlayer(h + 1)
 
         where:
         h | _
