@@ -34,7 +34,7 @@ public class PlayerController {
     }
 
     public void jump(double height, double time) {
-        if (!player.getGrounded()) return;
+        if (!player.canJump()) return;
 
         double speedX = player.getSpeed().getX();
         double speedY = 4 * height / time;
