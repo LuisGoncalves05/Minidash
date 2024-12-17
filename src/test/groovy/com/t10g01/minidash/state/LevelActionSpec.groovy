@@ -24,11 +24,11 @@ class LevelActionSpec extends Specification{
 
     def "jumps when space pressed" (){
         given:
-        ioAdapter.isPressed(' ') >> true
-        ioAdapter.isPressed('e') >> true
-        ioAdapter.isPressed('x') >> true
-        ioAdapter.isPressed('b') >> true
-        ioAdapter.isPressed('a') >> true
+        ioAdapter.isPressed(' ' as Character) >> true
+        ioAdapter.isPressed('e' as Character) >> true
+        ioAdapter.isPressed('x' as Character) >> true
+        ioAdapter.isPressed('b' as Character) >> true
+        ioAdapter.isPressed('a' as Character) >> true
 
         expect:
         levelState.getAction() == LevelAction.JUMP
@@ -36,11 +36,11 @@ class LevelActionSpec extends Specification{
 
     def "does nothing if random keys pressed" (){
         given:
-        ioAdapter.isPressed('w') >> true
-        ioAdapter.isPressed('e') >> true
-        ioAdapter.isPressed('x') >> true
-        ioAdapter.isPressed('b') >> true
-        ioAdapter.isPressed('a') >> true
+        ioAdapter.isPressed('w' as Character) >> true
+        ioAdapter.isPressed('e' as Character) >> true
+        ioAdapter.isPressed('x' as Character) >> true
+        ioAdapter.isPressed('b' as Character) >> true
+        ioAdapter.isPressed('a' as Character) >> true
 
         expect:
         levelState.getAction() == LevelAction.NULL
@@ -48,7 +48,7 @@ class LevelActionSpec extends Specification{
 
     def "exits if q pressed" (){
         given:
-        ioAdapter.isPressed('q') >> true
+        ioAdapter.isPressed('q' as Character) >> true
 
         expect:
         levelState.getAction() == LevelAction.EXIT

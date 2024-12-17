@@ -22,11 +22,11 @@ class MenuActionSpec extends Specification {
 
     def "goes up when w pressed" () {
         given:
-        ioAdapter.isPressed('w') >> true
-        ioAdapter.isPressed('e') >> true
-        ioAdapter.isPressed('x') >> true
-        ioAdapter.isPressed('b') >> true
-        ioAdapter.isPressed('a') >> true
+        ioAdapter.isPressed('w' as Character) >> true
+        ioAdapter.isPressed('e' as Character) >> true
+        ioAdapter.isPressed('x' as Character) >> true
+        ioAdapter.isPressed('b' as Character) >> true
+        ioAdapter.isPressed('a' as Character) >> true
 
         expect:
         menuState.getAction() == MenuAction.UP
@@ -34,11 +34,11 @@ class MenuActionSpec extends Specification {
 
     def "goes up when k pressed" () {
         given:
-        ioAdapter.isPressed('k') >> true
-        ioAdapter.isPressed('e') >> true
-        ioAdapter.isPressed('x') >> true
-        ioAdapter.isPressed('b') >> true
-        ioAdapter.isPressed('a') >> true
+        ioAdapter.isPressed('k' as Character) >> true
+        ioAdapter.isPressed('e' as Character) >> true
+        ioAdapter.isPressed('x' as Character) >> true
+        ioAdapter.isPressed('b' as Character) >> true
+        ioAdapter.isPressed('a' as Character) >> true
 
         expect:
         menuState.getAction() == MenuAction.UP
@@ -46,11 +46,11 @@ class MenuActionSpec extends Specification {
 
     def "goes down when s pressed" () {
         given:
-        ioAdapter.isPressed('s') >> true
-        ioAdapter.isPressed('e') >> true
-        ioAdapter.isPressed('x') >> true
-        ioAdapter.isPressed('b') >> true
-        ioAdapter.isPressed('a') >> true
+        ioAdapter.isPressed('s' as Character) >> true
+        ioAdapter.isPressed('e' as Character) >> true
+        ioAdapter.isPressed('x' as Character) >> true
+        ioAdapter.isPressed('b' as Character) >> true
+        ioAdapter.isPressed('a' as Character) >> true
 
         expect:
         menuState.getAction() == MenuAction.DOWN
@@ -58,11 +58,11 @@ class MenuActionSpec extends Specification {
 
     def "goes down when j pressed" () {
         given:
-        ioAdapter.isPressed('j') >> true
-        ioAdapter.isPressed('e') >> true
-        ioAdapter.isPressed('x') >> true
-        ioAdapter.isPressed('b') >> true
-        ioAdapter.isPressed('a') >> true
+        ioAdapter.isPressed('j' as Character) >> true
+        ioAdapter.isPressed('e' as Character) >> true
+        ioAdapter.isPressed('x' as Character) >> true
+        ioAdapter.isPressed('b' as Character) >> true
+        ioAdapter.isPressed('a' as Character) >> true
 
         expect:
         menuState.getAction() == MenuAction.DOWN
@@ -70,11 +70,11 @@ class MenuActionSpec extends Specification {
 
     def "selects when space pressed" () {
         given:
-        ioAdapter.isPressed(' ') >> true
-        ioAdapter.isPressed('e') >> true
-        ioAdapter.isPressed('x') >> true
-        ioAdapter.isPressed('b') >> true
-        ioAdapter.isPressed('a') >> true
+        ioAdapter.isPressed(' ' as Character) >> true
+        ioAdapter.isPressed('e' as Character) >> true
+        ioAdapter.isPressed('x' as Character) >> true
+        ioAdapter.isPressed('b' as Character) >> true
+        ioAdapter.isPressed('a' as Character) >> true
 
         expect:
         menuState.getAction() == MenuAction.SELECT
@@ -82,11 +82,11 @@ class MenuActionSpec extends Specification {
 
     def "exits if q pressed" () {
         given:
-        ioAdapter.isPressed('q') >> true
-        ioAdapter.isPressed('e') >> true
-        ioAdapter.isPressed('x') >> true
-        ioAdapter.isPressed('b') >> true
-        ioAdapter.isPressed('a') >> true
+        ioAdapter.isPressed('q' as Character) >> true
+        ioAdapter.isPressed('e' as Character) >> true
+        ioAdapter.isPressed('x' as Character) >> true
+        ioAdapter.isPressed('b' as Character) >> true
+        ioAdapter.isPressed('a' as Character) >> true
 
         expect:
         menuState.getAction() == MenuAction.EXIT
@@ -94,10 +94,10 @@ class MenuActionSpec extends Specification {
 
     def "does nothing when random keys pressed pressed" () {
         given:
-        ioAdapter.isPressed('e') >> true
-        ioAdapter.isPressed('x') >> true
-        ioAdapter.isPressed('b') >> true
-        ioAdapter.isPressed('a') >> true
+        ioAdapter.isPressed('e' as Character) >> true
+        ioAdapter.isPressed('x' as Character) >> true
+        ioAdapter.isPressed('b' as Character) >> true
+        ioAdapter.isPressed('a' as Character) >> true
 
         expect:
         menuState.getAction() == MenuAction.NULL

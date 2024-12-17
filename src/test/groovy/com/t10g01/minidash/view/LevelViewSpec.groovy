@@ -60,7 +60,6 @@ class LevelViewSpec extends Specification {
         1 * ioAdapter.drawRectangle(xf, yf, 10, 10, blockColorMock)
 
         where:
-
         x  | y  | xp   | yp  | xf  | yf  | cy
         0  | 0  | 0    | 1   | 40  | 0   | 0
         0  | 0  | 4    | 1   | 0   | 0   | 0
@@ -69,7 +68,6 @@ class LevelViewSpec extends Specification {
         0  | 1  | 0    | 4   | 40  | 0   | 1
         0  | 3  | 0    | 5   | 40  | 10  | 2
         11 | 3  | 10   | 4   | 50  | 20  | 1
-
     }
 
     def "spike visitor"(x, y, xp, yp, xf, yf, cy) {
@@ -296,7 +294,7 @@ class LevelViewSpec extends Specification {
         levelView.drawPlayer(model.getPlayer())
 
         then:
-        0 * ioAdapter.drawPixel(xi, yi, xf, yf, playerColorMock)
+        0 * ioAdapter.drawPixel(xf, yf, playerColorMock)
 
         where:
         xp | yp | rot | xf | yf
