@@ -245,7 +245,7 @@ class LevelViewSpec extends Specification {
         0  | 0  | 0  | 1   | 44  | 4  | 0
     }
 
-    def "drawing a player: drawing the right pixels"(xp, yp, rot, xi, yi, xf, yf) {
+    def "drawing a player: drawing the right pixels"(xp, yp, rot, xf, yf) {
         given:
         def playerPosition = Mock(Vector2D)
         player.getPosition() >> playerPosition
@@ -266,16 +266,19 @@ class LevelViewSpec extends Specification {
         1 * ioAdapter.drawPixel(xf, yf, playerColorMock)
 
         where:
-        xp | yp | rot | xi | yi | xf | yf
-        0  | 0  | 0   | 0  | 0  | 40 | 0
-        10 | 0  | 0   | 10 | 0  | 40 | 0
-        0  | 1  | 0   | 0  | 1  | 40 | 10
-        50 | 3  | 0   | 50 | 3  | 40 | 30
-        50 | 4  | 0   | 50 | 3  | 40 | 30
-
+        xp | yp | rot | xf | yf
+        0  | 0  | 0   | 40 | 0
+        10 | 0  | 0   | 40 | 0
+        0  | 1  | 0   | 40 | 10
+        50 | 3  | 0   | 40 | 30
+        50 | 4  | 0   | 40 | 30
+        1  | 1  | 45  | 38 | 15
+        1  | 1  | 45  | 52 | 15
+        1  | 1  | 45  | 45 | 22
+        1  | 1  | 45  | 45 | 18
     }
 
-    def "drawing a player: not drawing the wrong pixels"(xp, yp, rot, xi, yi, xf, yf) {
+    def "drawing a player: not drawing the wrong pixels"(xp, yp, rot, xf, yf) {
         given:
         def playerPosition = Mock(Vector2D)
         player.getPosition() >> playerPosition
@@ -296,13 +299,12 @@ class LevelViewSpec extends Specification {
         0 * ioAdapter.drawPixel(xi, yi, xf, yf, playerColorMock)
 
         where:
-        xp | yp | rot | xi | yi | xf | yf
-        0  | 0  | 45  | 0  | 0  | 40 | 0
-        10 | 0  | 45  | 10 | 0  | 40 | 0
-        0  | 1  | 135 | 0  | 1  | 40 | 10
-        50 | 3  | 50  | 50 | 3  | 40 | 30
-        50 | 4  | 30  | 50 | 3  | 40 | 30
-
+        xp | yp | rot | xf | yf
+        0  | 0  | 45  | 40 | 0
+        10 | 0  | 45  | 40 | 0
+        0  | 1  | 135 | 40 | 10
+        50 | 3  | 50  | 40 | 30
+        50 | 4  | 30  | 40 | 30
     }
 
     def "update pointers"() {
