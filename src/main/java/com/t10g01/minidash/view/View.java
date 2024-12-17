@@ -5,9 +5,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 
 public abstract class View<T> {
-
     protected final T model;
-
     protected final IOAdapter ioAdapter;
 
     public View(T model, IOAdapter ioAdapter) {
