@@ -23,7 +23,7 @@ public class GameSettings {
     private final double rotationSpeed = -180d / jumpTime;
 
     public GameSettings() {
-        this.resolution = 10;
+        this.resolution = 16;
         this.cameraWidth = 20;
         this.cameraHeight = 10;
         this.cameraCutoff = 0.75;
@@ -86,10 +86,6 @@ public class GameSettings {
 
     public Color getPlatformColor() {
         return platformColor;
-    }
-
-    public double getJumpTime() {
-        return jumpTime;
     }
 
     public double getRotationSpeed() {

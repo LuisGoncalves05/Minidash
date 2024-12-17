@@ -8,7 +8,8 @@ import com.t10g01.minidash.utils.GameSettings;
 import java.io.IOException;
 import java.util.List;
 
-import static java.lang.Math.*;
+import static java.lang.Math.ceil;
+import static java.lang.Math.floor;
 
 public class LevelView extends View<LevelModel> implements ElementVisitor {
     private final GameSettings gameSettings;
@@ -154,8 +155,10 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
         int x_center = (int)(x_player + (double)resolution / 2);
         int y_center = (int)(y_player + (double)resolution / 2);
 
-        for (int i = -resolution; i < resolution; i++) {
-            for (int j = -resolution; j < resolution; j++) {
+        int biggestDeltaCenter = (int) ceil(resolution * 0.70710678118) + 1;
+
+        for (int i = -biggestDeltaCenter; i <= biggestDeltaCenter; i++) {
+            for (int j = -biggestDeltaCenter; j <= biggestDeltaCenter; j++) {
                 Vector2D centerToPixel = new Vector2D(i / (double) resolution, j / (double) resolution);
                 centerToPixel.rotate(-rotation);
 
