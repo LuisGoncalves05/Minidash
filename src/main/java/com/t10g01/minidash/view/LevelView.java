@@ -154,13 +154,16 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
         int x_center = (int)(x_player + (double)resolution / 2);
         int y_center = (int)(y_player + (double)resolution / 2);
 
-        for (int i = -resolution; i < resolution; i++) {
-            for (int j = -resolution; j < resolution; j++) {
+        int biggestDeltaCenter = (int) Math.ceil(resolution * 0.70710678118) + 1;
+
+        for (int i = -biggestDeltaCenter; i <= biggestDeltaCenter; i++) {
+            for (int j = -biggestDeltaCenter; j <= biggestDeltaCenter; j++) {
                 Vector2D centerToPixel = new Vector2D(i / (double) resolution, j / (double) resolution);
                 centerToPixel.rotate(-rotation);
 
                 if (Math.abs(centerToPixel.getX()) > 0.5) continue;
                 if (Math.abs(centerToPixel.getY()) > 0.5) continue;
+
                 ioAdapter.drawPixel(x_center + i, y_center + j, playerColor);
             }
         }

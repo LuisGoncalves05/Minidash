@@ -88,10 +88,6 @@ public class GameSettings {
         return platformColor;
     }
 
-    public double getJumpTime() {
-        return jumpTime;
-    }
-
     public double getRotationSpeed() {
         return rotationSpeed;
     }
