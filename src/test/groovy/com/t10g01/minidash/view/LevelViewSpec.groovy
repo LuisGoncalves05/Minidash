@@ -3,6 +3,7 @@ package com.t10g01.minidash.view
 import com.t10g01.minidash.ioadapter.*
 import com.t10g01.minidash.model.DoubleJump
 import com.t10g01.minidash.model.Element
+import com.t10g01.minidash.model.LevelEnd
 import com.t10g01.minidash.model.Player
 import com.t10g01.minidash.model.Block
 import com.t10g01.minidash.model.Spike
@@ -245,6 +246,27 @@ class LevelViewSpec extends Specification {
         where:
         x  | y  | xp | yp  | xf  | yf | cy
         0  | 0  | 0  | 1   | 44  | 4  | 0
+    }
+    def "levelEnd visitor" () {
+        given:
+        def block = Mock(Block)
+        def blockPosition = Mock(Vector2D)
+        block.getPosition() >> blockPosition
+        blockPosition.getX() >> 0
+        def blockColorMock = Mock(Color)
+        settings.getBlockColor() >> blockColorMock
+
+        def playerPosition = Mock(Vector2D)
+        player.getPosition() >> playerPosition
+        playerPosition.getX() >> 0
+
+        def levelView = new LevelView(model, ioAdapter, settings)
+
+        when:
+        levelView.visitLevelEnd(Mock(LevelEnd))
+
+        then:
+        0 * _
     }
 
     def "drawing a player: drawing the right pixels"(xp, yp, rot, xf, yf) {

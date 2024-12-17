@@ -1,6 +1,7 @@
 package com.t10g01.minidash.controller
 
 import com.t10g01.minidash.Game
+import com.t10g01.minidash.model.DoubleJump
 import com.t10g01.minidash.model.Element
 import com.t10g01.minidash.model.LevelModel
 import com.t10g01.minidash.model.Block
@@ -13,28 +14,34 @@ import com.t10g01.minidash.model.Player
 import com.t10g01.minidash.model.Vector2D
 import com.t10g01.minidash.state.MenuState
 import com.t10g01.minidash.utils.LevelAction
+import spock.lang.Shared
 import spock.lang.Specification
 
 class LevelControllerSpec extends Specification {
+    @Shared
     LevelModel model
+    @Shared
     Game game
+    @Shared
     Player player
+    @Shared
     PlayerController playerController
+    @Shared
     LevelController levelController
 
     def setup() {
         model = Mock(LevelModel)
         model.getElements() >> new ArrayList<Element>()
         player = Mock(Player)
-        player.getPosition() >> new Vector2D(0, 0)
         model.getPlayer() >> player
         game = Mock(Game)
         playerController = Mock(PlayerController)
         levelController = new LevelController(model, game, playerController)
     }
 
-    def "step updates player"(double dt) {
+    def "step updates player in valid position"(double dt) {
         given:
+        player.getPosition() >> new Vector2D(0, 0)
         LevelAction action = LevelAction.NULL
 
         when:
@@ -42,6 +49,7 @@ class LevelControllerSpec extends Specification {
 
         then:
         1 * playerController.update(dt)
+        0 * game.resetState()
 
         where:
         dt | _
@@ -49,8 +57,9 @@ class LevelControllerSpec extends Specification {
         2  | _
     }
 
-    def "step makes player jump"() {
+    def "step makes player jump in valid position"() {
         given:
+        player.getPosition() >> new Vector2D(0, 0)
         LevelAction action = LevelAction.JUMP
 
         when:
@@ -59,10 +68,12 @@ class LevelControllerSpec extends Specification {
         then:
         1 * playerController.jump(_, _)
         1 * playerController.update(_)
+        0 * game.resetState()
     }
 
-    def "step ends game on exit"() {
+    def "step ends game on exit in valid position"() {
         given:
+        player.getPosition() >> new Vector2D(0, 0)
         LevelAction action = LevelAction.EXIT
 
         when:
@@ -70,6 +81,38 @@ class LevelControllerSpec extends Specification {
 
         then:
         1 * game.setState({it instanceof MenuState})
+        0 * game.resetState()
+    }
+
+    def "step ends game on exit in invalid position"() {
+        given:
+        player.getPosition() >> new Vector2D(-42, 0)
+        LevelAction action = LevelAction.EXIT
+
+        when:
+        levelController.step(action, 0)
+
+        then:
+        1 * game.setState({it instanceof MenuState})
+        0 * game.resetState()
+    }
+
+    def "step restarts game in invalid position"() {
+        given:
+        player.getPosition() >> new Vector2D(px, py)
+
+        when:
+        levelController.step(action, 0)
+
+        then:
+        1 * game.resetState()
+
+        where:
+        px  | py | action
+        1   | -1 | LevelAction.JUMP
+        -1  | 1  | LevelAction.NULL
+        0   | -1 | LevelAction.JUMP
+        -42 | 0  | LevelAction.NULL
     }
 
     def "visitBlock does nothing if no collisions"() {
@@ -239,6 +282,29 @@ class LevelControllerSpec extends Specification {
         then:
         1 * playerController.jump(5, 0.7)
         1 * player.setGrounded(false)
+    }
+
+    def "visitDoubleJump does nothing if no collisions"() {
+        given:
+        def doubleJump = Mock(DoubleJump)
+        doubleJump.collision(player) >> false
+
+        when:
+        levelController.visitDoubleJump(doubleJump)
+
+        then:
+        0 * player.setOnDoubleJump(true);
+    }
+    def "visitDoubleJump allows player to jump"() {
+        given:
+        def doubleJump = Mock(DoubleJump)
+        doubleJump.collision(player) >> true
+
+        when:
+        levelController.visitDoubleJump(doubleJump)
+
+        then:
+        1 * player.setOnDoubleJump(true);
     }
 
     def "visitLevelEnd does nothing if no collisions"() {

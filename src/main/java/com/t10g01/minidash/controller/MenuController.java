@@ -42,13 +42,13 @@ public class MenuController extends Controller<MenuModel, MenuAction> implements
     }
 
     @Override
-    public void visitExitButton(ExitButton exitButton) {
-        game.setState(null);
+    public void visitLevelButton(LevelButton levelButton) throws IOException {
+        game.setState(new LevelState(game, levelButton.getLevelNumber() - 1));
     }
 
     @Override
-    public void visitLevelButton(LevelButton levelButton) throws IOException {
-        game.setState(new LevelState(game, levelButton.level() - 1));
+    public void visitExitButton(ExitButton exitButton) {
+        game.setState(null);
     }
 
     @Override
@@ -60,6 +60,7 @@ public class MenuController extends Controller<MenuModel, MenuAction> implements
     public double getElapsedTime() {
         return elapsedTime;
     }
+
     public void setElapsedTime(double elapsedTime) {
         this.elapsedTime = elapsedTime;
     }

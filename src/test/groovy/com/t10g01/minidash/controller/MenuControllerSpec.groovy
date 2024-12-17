@@ -1,21 +1,36 @@
 package com.t10g01.minidash.controller
 
 import com.t10g01.minidash.Game
+import com.t10g01.minidash.model.ExitButton
+import com.t10g01.minidash.model.LevelButton
+import com.t10g01.minidash.model.LevelCompleteButton
+import com.t10g01.minidash.model.LevelsButton
 import com.t10g01.minidash.model.MenuModel
 import com.t10g01.minidash.model.MenuOption
+import com.t10g01.minidash.state.LevelMenuState
+import com.t10g01.minidash.state.LevelState
+import com.t10g01.minidash.state.MainMenuState
+import com.t10g01.minidash.utils.GameSettings
 import com.t10g01.minidash.utils.LevelAction
 import com.t10g01.minidash.utils.MenuAction
+import spock.lang.Shared
 import spock.lang.Specification
 
+import java.awt.Button
+
 class MenuControllerSpec extends Specification {
+    @Shared
     MenuModel model
+    @Shared
     Game game
+    @Shared
     MenuController controller
 
     def setup() {
         model = Mock(MenuModel)
         game = Mock(Game)
         controller = new MenuController(game, model)
+        game.getGameSettings() >> Mock(GameSettings)
     }
 
     def "step ignores null action"() {
@@ -106,8 +121,10 @@ class MenuControllerSpec extends Specification {
     def "step correctly changes selected action"() {
         given:
         def options = Mock(ArrayList<MenuOption>)
+        model.getOptions() >> options
         options.size() >> l
         model.getSelected() >> si
+        controller.setElapsedTime(0.25)
 
         when:
         controller.step(action, 0)
@@ -124,4 +141,40 @@ class MenuControllerSpec extends Specification {
         3 | 2  | MenuAction.DOWN | 0
         2 | 0  | MenuAction.UP   | 2
     }
+
+    def "visitLevelsButton sets state to LevelMenuState"() {
+        when:
+        controller.visitLevelsButton(Mock(LevelsButton));
+        then:
+        1 * game.setState(_ as LevelMenuState)
+    }
+
+    def "visitLevelButton sets state to LevelState"() {
+        when:
+        controller.visitLevelButton(Mock(LevelButton));
+        then:
+        1 * game.setState(_ as LevelState)
+    }
+
+    def "visitExitButton sets state to null"() {
+        when:
+        controller.visitExitButton(Mock(ExitButton));
+        then:
+        1 * game.setState(null)
+    }
+
+    def "visitExitButton sets state to null"() {
+        when:
+        controller.visitExitButton(Mock(ExitButton));
+        then:
+        1 * game.setState(null)
+    }
+
+    def "acceptLevelComplete sets state to MainMenuState"() {
+        when:
+        controller.acceptLevelComplete(Mock(LevelCompleteButton));
+        then:
+        1 * game.setState(_ as MainMenuState)
+    }
+
 }

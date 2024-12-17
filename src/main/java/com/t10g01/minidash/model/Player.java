@@ -43,14 +43,6 @@ public class Player {
         return g;
     }
 
-    public boolean getOnDoubleJump() {
-        return onDoubleJump;
-    }
-
-    public boolean getOnBoost() {
-        return onBoost;
-    }
-
     public void setPosition(Vector2D position) {
         this.position = position;
     }

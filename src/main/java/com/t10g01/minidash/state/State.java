@@ -30,5 +30,6 @@ public abstract class State<T, U> {
     }
 
     public abstract State<T, U> reset() throws IOException;
+
     protected abstract U getAction();
 }

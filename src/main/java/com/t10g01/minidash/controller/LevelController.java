@@ -29,7 +29,8 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
             return;
         }
 
-        if (model.getPlayer().getPosition().getY() < 0) game.resetState();
+        Vector2D playerPosition = model.getPlayer().getPosition();
+        if (playerPosition.getX() < 0 || playerPosition.getY() < 0) game.resetState();
 
         playerController.update(deltaTime);
 
@@ -116,15 +117,17 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
         }
     }
 
+    public int getLeftPointer() {
+        return leftPointer;
+    }
+
+    public int getRightPointer() {
+        return rightPointer;
+    }
+
     // Constructor used for testing
     public LevelController(LevelModel levelModel, Game game, PlayerController playerController) {
         super(levelModel, game);
         this.playerController = playerController;
-    }
-    public int getLeftPointer() {
-        return leftPointer;
-    }
-    public int getRightPointer() {
-        return rightPointer;
     }
 }
