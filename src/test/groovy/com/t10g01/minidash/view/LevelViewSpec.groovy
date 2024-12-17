@@ -12,13 +12,18 @@ import com.t10g01.minidash.model.Boost
 import com.t10g01.minidash.model.Vector2D
 import com.t10g01.minidash.utils.*
 import com.t10g01.minidash.model.LevelModel
+import spock.lang.Shared
 import spock.lang.Specification
 
 class LevelViewSpec extends Specification {
-    static LevelModel model
-    static IOAdapter ioAdapter
-    static GameSettings settings
-    static Player player
+    @Shared
+    LevelModel model
+    @Shared
+    IOAdapter ioAdapter
+    @Shared
+    GameSettings settings
+    @Shared
+    Player player
 
     def setup() {
         model = Mock(LevelModel)

@@ -4,11 +4,12 @@ package com.t10g01.minidash.controller
 import com.t10g01.minidash.model.Player
 import com.t10g01.minidash.model.Vector2D
 import com.t10g01.minidash.utils.GameSettings
+import spock.lang.Shared
 import spock.lang.Specification
 
 class PlayerControllerSpec extends Specification {
-
-    static GameSettings settings
+    @Shared
+    GameSettings settings
 
     def setup() {
         settings = Mock(GameSettings)

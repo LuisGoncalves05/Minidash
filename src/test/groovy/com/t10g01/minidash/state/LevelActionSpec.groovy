@@ -4,14 +4,18 @@ import com.t10g01.minidash.Game
 import com.t10g01.minidash.ioadapter.IOAdapter
 import com.t10g01.minidash.utils.GameSettings
 import com.t10g01.minidash.utils.LevelAction
+import spock.lang.Shared
 import spock.lang.Specification
 
 class LevelActionSpec extends Specification{
-
-    static IOAdapter ioAdapter
-    static GameSettings gameSettings
-    static Game game
-    static LevelState levelState
+    @Shared
+    IOAdapter ioAdapter
+    @Shared
+    GameSettings gameSettings
+    @Shared
+    Game game
+    @Shared
+    LevelState levelState
 
 
     def setup() {

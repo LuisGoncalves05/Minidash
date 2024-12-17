@@ -4,9 +4,12 @@ import spock.lang.Shared
 import spock.lang.Specification
 
 class BoostSpec extends Specification {
-    static BoxCollider boundingBox, collider1, collider2
-    static Boost boost
-    static Player player
+    @Shared
+    BoxCollider boundingBox, collider1, collider2
+    @Shared
+    Boost boost
+    @Shared
+    Player player
 
     def setup() {
         boundingBox = Mock(BoxCollider)

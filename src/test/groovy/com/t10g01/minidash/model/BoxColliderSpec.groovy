@@ -4,8 +4,10 @@ import spock.lang.Shared
 import spock.lang.Specification
 
 class BoxColliderSpec extends Specification {
-    static dx = 0.1d
-    static dy = 0.1d
+    @Shared
+    dx = 0.1d
+    @Shared
+    dy = 0.1d
 
     def "collides upperleft"() {
         given:

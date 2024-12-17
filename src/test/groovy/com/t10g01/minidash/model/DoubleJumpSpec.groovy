@@ -4,7 +4,6 @@ import spock.lang.Shared
 import spock.lang.Specification
 
 class DoubleJumpSpec extends Specification {
-
     @Shared
     BoxCollider boundingBox, collider1, collider2
     @Shared
