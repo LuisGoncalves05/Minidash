@@ -15,7 +15,6 @@ import com.t10g01.minidash.model.LevelModel
 import spock.lang.Specification
 
 class LevelViewSpec extends Specification {
-
     static LevelModel model
     static IOAdapter ioAdapter
     static GameSettings settings

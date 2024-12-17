@@ -20,7 +20,7 @@ class DoubleJumpSpec extends Specification {
         player = Mock(Player)
     }
 
-    def 'doublejump collision checks boundingBox first'() {
+    def 'doubleJump collision checks boundingBox first'() {
         given:
         boundingBox.collision(player) >> false
         collider1.collision(player) >> true
@@ -35,7 +35,7 @@ class DoubleJumpSpec extends Specification {
         0 * collider2.collision(player)
     }
 
-    def 'collision with doublejump colliders'() {
+    def 'collision with doubleJump colliders'() {
         given:
         boundingBox.collision(player) >> true
         collider1.collision(player) >> a

@@ -3,7 +3,6 @@ package com.t10g01.minidash.utils
 import spock.lang.Specification
 
 class ColorSpec extends Specification {
-
     def "get color pink"() {
         given:
         String hex = "#FFC0CB"
@@ -48,7 +47,5 @@ class ColorSpec extends Specification {
 
         then:
         thrown(StringIndexOutOfBoundsException)
-
     }
-
 }

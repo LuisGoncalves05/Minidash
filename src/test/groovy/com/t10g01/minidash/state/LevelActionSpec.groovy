@@ -22,7 +22,7 @@ class LevelActionSpec extends Specification{
     }
 
 
-    def "jumps when space pressed" (){
+    def "jumps when space pressed"() {
         given:
         ioAdapter.isPressed(' ' as Character) >> true
         ioAdapter.isPressed('e' as Character) >> true
