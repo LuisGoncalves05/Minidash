@@ -189,9 +189,4 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
     public void setCameraY(double cameraY) {
         this.cameraY = cameraY;
     }
-
-    //Used for testing
-    public void setCameraX(double cameraX) {
-        this.cameraX = cameraX;
-    }
 }

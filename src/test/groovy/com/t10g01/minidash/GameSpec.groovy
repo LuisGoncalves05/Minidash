@@ -2,6 +2,7 @@ package com.t10g01.minidash
 
 import com.t10g01.minidash.ioadapter.IOAdapter
 import com.t10g01.minidash.utils.GameSettings
+import com.t10g01.minidash.state.State
 import spock.lang.Specification
 
 class GameSpec extends Specification{
@@ -14,7 +15,7 @@ class GameSpec extends Specification{
         ioAdapter = Mock(IOAdapter)
     }
 
-    def "closes when state is null" (){
+    def "closes when state is null"() {
         given:
         def game = new Game(gameSettings, ioAdapter, null)
 
