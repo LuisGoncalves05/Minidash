@@ -17,7 +17,7 @@ class MenuActionSpec extends Specification {
         ioAdapter = Mock(IOAdapter)
         gameSettings = Mock(GameSettings)
         game = new Game(gameSettings, ioAdapter, null)
-        //menuState = new MenuState(game, ioAdapter, gameSettings)
+        menuState = new MainMenuState(game)
     }
 
     def "goes up when w pressed" () {

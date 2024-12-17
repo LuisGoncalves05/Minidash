@@ -31,6 +31,8 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
 
         if (model.getPlayer().getPosition().getY() < 0) game.resetState();
 
+        playerController.update(deltaTime);
+
         updatePointers();
         List<Element> elements = model.getElements();
         for (int i = leftPointer; i < rightPointer; i++) {

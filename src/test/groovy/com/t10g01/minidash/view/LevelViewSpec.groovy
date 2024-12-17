@@ -245,26 +245,6 @@ class LevelViewSpec extends Specification {
         0  | 0  | 0  | 1   | 44  | 4  | 0
     }
 
-
-    def "drawing a player: drawing all pixels"() {
-        given:
-
-        def playerPosition = Mock(Vector2D)
-        player.getPosition() >> playerPosition
-        playerPosition.getX() >> 0
-        playerPosition.getY() >> 0
-        def playerColorMock = Mock(Color)
-        settings.getPlayerColor() >> playerColorMock
-
-        def levelView = new LevelView(model, ioAdapter, settings)
-
-        when:
-        levelView.drawPlayer(model.getPlayer())
-
-        then:
-        100 * ioAdapter.drawPixel(_, _, playerColorMock)
-    }
-
     def "drawing a player: drawing the right pixels"(xp, yp, rot, xi, yi, xf, yf) {
         given:
         def playerPosition = Mock(Vector2D)

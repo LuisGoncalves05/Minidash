@@ -15,7 +15,7 @@ class MenuControllerSpec extends Specification {
     def setup() {
         model = Mock(MenuModel)
         game = Mock(Game)
-        controller = new MenuController(model, game)
+        controller = new MenuController(game, model)
     }
 
     def "step ignores null action"() {
@@ -67,6 +67,10 @@ class MenuControllerSpec extends Specification {
         given:
         def action = MenuAction.EXIT
         controller.setElapsedTime(0.25)
+
+        def option1 = Mock(MenuOption)
+        def option2 = Mock(MenuOption)
+        model.getOptions() >> Arrays.asList(option1, option2)
 
         when:
         controller.step(action, 0)

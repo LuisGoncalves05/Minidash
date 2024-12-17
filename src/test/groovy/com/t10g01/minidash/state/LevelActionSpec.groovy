@@ -18,7 +18,7 @@ class LevelActionSpec extends Specification{
         ioAdapter = Mock(IOAdapter)
         gameSettings = Mock(GameSettings)
         game = new Game(gameSettings, ioAdapter, null)
-        levelState = new LevelState(game, ioAdapter, gameSettings, -1)
+        levelState = new LevelState(game, -1)
     }
 
 
