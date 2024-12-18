@@ -40,8 +40,9 @@ public class Game {
         double lastFrame = System.currentTimeMillis();
         while (state != null) {
             double currentFrame = System.currentTimeMillis();
-            state.step((currentFrame - lastFrame) / 1000.0);
-            System.out.println("Instant FPS: " + 1000.0 / (currentFrame - lastFrame));
+            double frameTime = (currentFrame - lastFrame) / 1000.0;
+            state.step(frameTime);
+            System.out.println("FPS: " + 1 / frameTime);
             double elapsedTime = System.currentTimeMillis() - currentFrame;
             double sleepTime = Math.max(minFrameTime - elapsedTime, 0);
             lastFrame = currentFrame;

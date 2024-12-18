@@ -109,7 +109,10 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
 
     @Override
     public void visitLevelEnd(LevelEnd levelEnd) throws IOException {
-        if (levelEnd.collision(model.getPlayer())) game.setState(new LevelCompleteState(game));
+        if (levelEnd.collision(model.getPlayer())) {
+            game.setState(new LevelCompleteState(game));
+            wavPlayer.stopSound();
+        }
     }
 
     public void updatePointers() {
