@@ -22,7 +22,7 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
     private int leftPointer = 0;
     private int rightPointer = 0;
 
-    public LevelController(LevelModel levelModel, Game game) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+    public LevelController(LevelModel levelModel, Game game) {
        super(levelModel, game);
        playerController = new PlayerController(levelModel.getPlayer(), game.getGameSettings());
        this.wavPlayer = new WAVPlayer(levelModel.getLevelNumber());

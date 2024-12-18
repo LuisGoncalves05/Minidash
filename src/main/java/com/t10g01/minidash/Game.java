@@ -34,17 +34,17 @@ public class Game {
     }
 
     public void start() throws InterruptedException, IOException, URISyntaxException, UnsupportedAudioFileException, LineUnavailableException {
-        int maxFPS = 30;
+        int maxFPS = 60;
         double minFrameTime = 1000.0 / maxFPS; // milliseconds per frame
 
         double lastFrame = System.currentTimeMillis();
         while (state != null) {
             double currentFrame = System.currentTimeMillis();
             state.step((currentFrame - lastFrame) / 1000.0);
-            lastFrame = currentFrame;
-
+            System.out.println("Instant FPS: " + 1000.0 / (currentFrame - lastFrame));
             double elapsedTime = System.currentTimeMillis() - currentFrame;
-            double sleepTime = Math.max(elapsedTime - minFrameTime, 0);
+            double sleepTime = Math.max(minFrameTime - elapsedTime, 0);
+            lastFrame = currentFrame;
             Thread.sleep((int)sleepTime);
         }
 
