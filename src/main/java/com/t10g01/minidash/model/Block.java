@@ -1,5 +1,7 @@
 package com.t10g01.minidash.model;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -21,7 +23,7 @@ public class Block extends Element {
     }
 
     @Override
-    public void accept(ElementVisitor visitor) throws IOException {
+    public void accept(ElementVisitor visitor) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         visitor.visitBlock(this);
     }
 

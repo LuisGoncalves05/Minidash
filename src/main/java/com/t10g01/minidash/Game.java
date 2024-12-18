@@ -7,12 +7,15 @@ import com.t10g01.minidash.state.MainMenuState;
 import com.t10g01.minidash.state.MenuState;
 import com.t10g01.minidash.state.State;
 import com.t10g01.minidash.utils.GameSettings;
+
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
 public class Game {
-    public static void main(String[] args) throws IOException, URISyntaxException, FontFormatException, InterruptedException {
+    public static void main(String[] args) throws IOException, URISyntaxException, FontFormatException, InterruptedException, UnsupportedAudioFileException, LineUnavailableException {
         new Game().start();
     }
 
@@ -30,7 +33,7 @@ public class Game {
         this.state = new MainMenuState(this);
     }
 
-    public void start() throws InterruptedException, IOException, URISyntaxException {
+    public void start() throws InterruptedException, IOException, URISyntaxException, UnsupportedAudioFileException, LineUnavailableException {
         int maxFPS = 30;
         double minFrameTime = 1000.0 / maxFPS; // milliseconds per frame
 
@@ -48,7 +51,7 @@ public class Game {
         ioAdapter.close();
     }
 
-    public void resetState() throws IOException {
+    public void resetState() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         state = state.reset();
     }
 

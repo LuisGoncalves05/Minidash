@@ -7,6 +7,8 @@ import com.t10g01.minidash.state.LevelState;
 import com.t10g01.minidash.state.MainMenuState;
 import com.t10g01.minidash.utils.MenuAction;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
@@ -18,7 +20,7 @@ public class MenuController extends Controller<MenuModel, MenuAction> implements
     }
 
     @Override
-    public void step(MenuAction action, double deltaTime) throws URISyntaxException, IOException {
+    public void step(MenuAction action, double deltaTime) throws URISyntaxException, IOException, UnsupportedAudioFileException, LineUnavailableException {
         elapsedTime += deltaTime;
 
         if (action == MenuAction.NULL) return;
@@ -47,7 +49,7 @@ public class MenuController extends Controller<MenuModel, MenuAction> implements
     }
 
     @Override
-    public void visitLevelButton(LevelButton levelButton) throws IOException {
+    public void visitLevelButton(LevelButton levelButton) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         game.setState(new LevelState(game, levelButton.level() - 1));
     }
 
@@ -60,6 +62,7 @@ public class MenuController extends Controller<MenuModel, MenuAction> implements
     public double getElapsedTime() {
         return elapsedTime;
     }
+
     public void setElapsedTime(double elapsedTime) {
         this.elapsedTime = elapsedTime;
     }
