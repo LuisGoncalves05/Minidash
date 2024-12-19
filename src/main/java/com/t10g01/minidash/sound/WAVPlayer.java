@@ -7,7 +7,6 @@ import java.net.URL;
 public class WAVPlayer implements SoundPlayer {
     Clip clip;
     int levelNumber;
-    private boolean playing = false;
 
 
     public WAVPlayer(int levelNumber) {
@@ -16,18 +15,17 @@ public class WAVPlayer implements SoundPlayer {
 
     @Override
     public void playSound() throws LineUnavailableException, IOException, UnsupportedAudioFileException {
-        if (playing) return;
+        if (clip != null) return;
         URL resource = getClass().getClassLoader().getResource("lvl" + levelNumber + ".wav");
         assert resource != null;
         AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(resource);
         clip = AudioSystem.getClip();
         clip.open(audioInputStream);
         clip.start();
-        playing = true;
     }
 
     @Override
     public void stopSound() {
-        if (playing) clip.stop();
+        if (clip.isRunning()) clip.stop();
     }
 }

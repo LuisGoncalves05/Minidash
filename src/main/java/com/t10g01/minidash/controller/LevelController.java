@@ -22,16 +22,15 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
     private int leftPointer = 0;
     private int rightPointer = 0;
 
-    public LevelController(LevelModel levelModel, Game game) {
+    public LevelController(LevelModel levelModel, Game game) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
        super(levelModel, game);
        playerController = new PlayerController(levelModel.getPlayer(), game.getGameSettings());
        this.wavPlayer = new WAVPlayer(levelModel.getLevelNumber());
+       wavPlayer.playSound();
     }
 
     @Override
     public void step(LevelAction levelAction, double deltaTime) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
-        wavPlayer.playSound();
-
         if (levelAction == LevelAction.EXIT) {
             wavPlayer.stopSound();
             game.setState(new MainMenuState(game));
@@ -54,8 +53,8 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
     }
     
     public void reset() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        game.resetState();
         wavPlayer.stopSound();
+        game.resetState();
     }
 
     @Override
@@ -110,8 +109,8 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
     @Override
     public void visitLevelEnd(LevelEnd levelEnd) throws IOException {
         if (levelEnd.collision(model.getPlayer())) {
-            game.setState(new LevelCompleteState(game));
             wavPlayer.stopSound();
+            game.setState(new LevelCompleteState(game));
         }
     }
 
