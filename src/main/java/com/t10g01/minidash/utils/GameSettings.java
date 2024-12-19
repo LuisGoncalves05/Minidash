@@ -23,7 +23,7 @@ public class GameSettings {
     private final double rotationSpeed = -180d / jumpTime;
 
     public GameSettings() {
-        this.resolution = 8;
+        this.resolution = 10;
         this.cameraWidth = 20;
         this.cameraHeight = 10;
         this.cameraCutoff = 0.75;
