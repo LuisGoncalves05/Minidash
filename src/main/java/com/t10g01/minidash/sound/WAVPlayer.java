@@ -6,9 +6,7 @@ import java.net.URL;
 
 public class WAVPlayer implements SoundPlayer {
     Clip clip;
-
     int levelNumber;
-
 
     public WAVPlayer(int levelNumber) {
         this.levelNumber = levelNumber;
@@ -29,6 +27,9 @@ public class WAVPlayer implements SoundPlayer {
 
     @Override
     public void stopSound() {
-        if (clip.isRunning()) clip.stop();
+        if (clip == null) return;
+        clip.stop();
+        clip.close();
+        clip = null;
     }
 }
