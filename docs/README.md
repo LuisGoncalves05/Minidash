@@ -6,7 +6,7 @@
 
 MiniDash is a simple version of [Geometry Dash](https://geometrygame.org/), implemented using Java's Lanterna. We follow SOLID principles and integrate several programming patterns such as State, Game Loop, and Visitor.
 
-This project was developed by *Luís Barbosa* (up202303872), *Luís Gonçalves* (upXXXXXXXXX), and *Sofia Sousa* (up202303662) for LDTS 2024/25.
+This project was developed by *Luís Barbosa* (up202303872), *Luís Gonçalves* (up202305120), and *Sofia Sousa* (up202303662) for LDTS 2024/25.
 
 ### IMPLEMENTED FEATURES
 
@@ -31,7 +31,7 @@ This project was developed by *Luís Barbosa* (up202303872), *Luís Gonçalves* 
 
 ### PLANNED FEATURES
 
-We'd planned these additional features, that end up not being implemented due to time restraints:
+We'd planned these additional features, that ended up not being implemented due to time restraints:
 - Portals
 - Gravity Inversion
 - Color theme changing
@@ -46,7 +46,7 @@ Minidash follows an MVC structure. When we first created the LevelView class, we
 
 **The Pattern**
 
-To solve this, the **Visitor** pattern was incorporated. This pattern consists of a **visitor** class accessing a generic **element** through its **accept** method. Each of the subclasses of the element is responsible for choosing their appropriate handler in the visitor. For each new element, another method needs to be added in the visitor, but none of the existing ones are changed.
+To solve this, the **Visitor** pattern was incorporated. This pattern consists of a **visitor** class accessing a generic **element** through its `accept()` method. Each of the subclasses of the element is responsible for choosing their appropriate handler in the visitor.
 
 **Implementation**
 
@@ -68,7 +68,7 @@ The use of the Visitor Pattern in the current design allows:
 - A clear separation between view, model, and controller;
 - Following the Open-Closed Principle.
 
-However, since new interfaces were added, and the visitor is not perceived at first glance, using this pattern makes it slightly more difficult to track the elements' rendering and collision-checking. The whole pattern can be easily grasped if supported by a UML diagram.
+However, since new interfaces were added, and the visitor is not perceived at first glance, using this pattern makes it slightly more difficult to track the elements' rendering and collision-checking. The whole pattern can be easily grasped if supported by a UML diagram. Furthermore, for each new element, another method needs to be added in the visitor, but none of the existing ones are changed.
 
 #### CREATING MENUS
 
@@ -82,7 +82,7 @@ We chose to apply the **Factory Method**, where an abstract class implements mo
 
 **Implementation**
 
-We transformed the existing **MenuState** into an abstract class, containing the abstract method **createModel**, and created three other classes to extend it: **MainMenuState**, **LevelMenuState**, and **LevelCompleteState**.
+We transformed the existing **MenuState** into an abstract class, containing the abstract method `createModel()`, and created three other classes to extend it: **MainMenuState**, **LevelMenuState**, and **LevelCompleteState**.
 
 ![img](https://www.fe.up.pt/~arestivo/page/img/examples/lpoo/state.svg)
 
@@ -103,7 +103,7 @@ Using the Factory Method in the current design means that there is:
 
 **Problem in Context**
 
-Minidash uses Lanterna for its I/O operations. Lanterna has a rather complicated interface with more complexity and funcionality than what was needed for Minidash. Besides adding unnecessary I/O-related clutter where it didn't belong, it forced us to repeat code in many places and to tightly couple our implementation with Lanterna's.
+Minidash uses Lanterna for its I/O operations. Lanterna has a rather complicated interface with more complexity and functionality than what was needed for Minidash. Besides adding unnecessary I/O-related clutter where it didn't belong, it forced us to repeat code in many places and to tightly couple our implementation with Lanterna's.
 
 **The Pattern**
 
