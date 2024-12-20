@@ -99,6 +99,35 @@ The use of the Factory Method in the current design has the following consequenc
 - Better separation between different classes: the LevelController doesn't have to decide which options a menu should have - it suffices to choose a menu type and call its empty constructor.
 - Some additional complexity which is far outwheighed by the benefits.
 
+#### LEVELS AND MENUS
+
+**Problem in Context**
+
+Minidash has a menu mode and a level mode. As the game becomes more complex, it's likely that other modes are added. This raises the problem of how to manage mode switching and the interactions between different modes.
+
+**The Pattern**
+
+We have applied the **State Pattern**. This pattern enables an object to make different things at different moments (i.e., it has different **states**) and provides a way to manage interactions between them. A class **State** defines a public interface which should be followed by all of its subclasses.
+
+**Implementation**
+
+We defined a **State** class which is subclassed by **MenuState** and **LevelState**.
+
+![img](https://www.fe.up.pt/~arestivo/page/img/examples/lpoo/state.svg)
+
+These classes can be found in the following files:
+
+- [State](https://github.com/FEUP-LDTS-2024/project-t10g01/blob/master/src/main/java/com/t10g01/minidash/state/State.java)
+- [MenuState](https://github.com/FEUP-LDTS-2024/project-t10g01/blob/master/src/main/java/com/t10g01/minidash/state/MenuState.java)
+- [LevelState](https://github.com/FEUP-LDTS-2024/project-t10g01/blob/master/src/main/java/com/t10g01/minidash/state/LevelState.java)
+
+**Consequences**
+
+The use of the Factory Method in the current design has the following consequences:
+
+- Better separation between different classes: the LevelController doesn't have to decide which options a menu should have - it suffices to choose a menu type and call its empty constructor.
+- Some additional complexity which is far outwheighed by the benefits.
+
 ### TESTING
 
 - Screenshot of coverage report.
