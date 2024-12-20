@@ -13,7 +13,7 @@ public class LevelMenuState extends MenuState {
     }
 
     @Override
-    protected MenuModel createModel() throws IOException {
+    protected MenuModel createModel() {
         return new MenuModel(Arrays.asList(new LevelButton(1), new LevelButton(2), new LevelButton(3)));
     }
 }

@@ -5,6 +5,8 @@ import com.t10g01.minidash.ioadapter.IOAdapter;
 import com.t10g01.minidash.utils.Color;
 import com.t10g01.minidash.utils.GameSettings;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.IOException;
 import java.util.List;
 
@@ -28,12 +30,11 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
         this.cameraWidth = gameSettings.getCameraWidth();
         this.cameraXOffset = cameraWidth * 0.4;
         this.cameraYOffset = gameSettings.getCameraHeight() * gameSettings.getCameraCutoff();
-
         this.cameraX = model.getPlayer().getPosition().getX() - cameraXOffset;
     }
 
     @Override
-    public void draw() throws IOException {
+    public void draw() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         this.cameraX = model.getPlayer().getPosition().getX() - cameraXOffset;
         this.cameraY = Math.max(model.getPlayer().getPosition().getY() - cameraYOffset, 0);
 

@@ -22,6 +22,10 @@ dependencies {
     implementation 'com.googlecode.lanterna:lanterna:3.1.1'
     errorprone "com.google.errorprone:error_prone_core:2.20.0"
 
+    implementation "org.openjfx:javafx-controls:21.0.2"
+    implementation 'org.openjfx:javafx-media:21.0.2'
+    implementation "org.openjfx:javafx-graphics:21.0.2"
+
     testImplementation 'org.spockframework:spock-core:2.0-groovy-3.0'
     testImplementation 'org.codehaus.groovy:groovy-all:3.0.21'
 }

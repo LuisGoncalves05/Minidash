@@ -1,5 +1,7 @@
 package com.t10g01.minidash.model;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.IOException;
 
 public abstract class Element {
@@ -13,6 +15,6 @@ public abstract class Element {
         return position;
     }
 
-    public abstract void accept(ElementVisitor visitor) throws IOException;
+    public abstract void accept(ElementVisitor visitor) throws IOException, UnsupportedAudioFileException, LineUnavailableException;
     public abstract boolean collision(Player player);
 }

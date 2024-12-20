@@ -7,12 +7,15 @@ import com.t10g01.minidash.state.MainMenuState;
 import com.t10g01.minidash.state.MenuState;
 import com.t10g01.minidash.state.State;
 import com.t10g01.minidash.utils.GameSettings;
+
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
 public class Game {
-    public static void main(String[] args) throws IOException, URISyntaxException, FontFormatException, InterruptedException {
+    public static void main(String[] args) throws IOException, URISyntaxException, FontFormatException, InterruptedException, UnsupportedAudioFileException, LineUnavailableException {
         new Game().start();
     }
 
@@ -30,25 +33,25 @@ public class Game {
         this.state = new MainMenuState(this);
     }
 
-    public void start() throws InterruptedException, IOException, URISyntaxException {
-        int maxFPS = 30;
+    public void start() throws InterruptedException, IOException, URISyntaxException, UnsupportedAudioFileException, LineUnavailableException {
+        int maxFPS = 60;
         double minFrameTime = 1000.0 / maxFPS; // milliseconds per frame
 
         double lastFrame = System.currentTimeMillis();
         while (state != null) {
             double currentFrame = System.currentTimeMillis();
-            state.step((currentFrame - lastFrame) / 1000.0);
-            lastFrame = currentFrame;
-
+            double frameTime = (currentFrame - lastFrame) / 1000.0;
+            state.step(frameTime);
             double elapsedTime = System.currentTimeMillis() - currentFrame;
-            double sleepTime = Math.max(elapsedTime - minFrameTime, 0);
+            double sleepTime = Math.max(minFrameTime - elapsedTime, 0);
+            lastFrame = currentFrame;
             Thread.sleep((int)sleepTime);
         }
 
         ioAdapter.close();
     }
 
-    public void resetState() throws IOException {
+    public void resetState() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         state = state.reset();
     }
 

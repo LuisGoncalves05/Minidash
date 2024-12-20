@@ -105,7 +105,7 @@ public class LanternaIOAdapter implements IOAdapter {
         Font font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         ge.registerFont(font);
-        Font newfont = font.deriveFont(Font.PLAIN, 4);
+        Font newfont = font.deriveFont(Font.PLAIN, 3);
 
         AWTTerminalFontConfiguration cfg = AWTTerminalFontConfiguration.newInstance(newfont);
 
