@@ -37,7 +37,7 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
             return;
         }
 
-        if (model.getPlayer().getPosition().getY() < 0) reset();
+        if (model.getPlayer().getPosition().getY() < 0) resetLevel();
 
         playerController.update(deltaTime);
 
@@ -52,7 +52,7 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
         if (levelAction == LevelAction.JUMP) playerController.jump(3, 0.5);
     }
     
-    public void reset() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+    public void resetLevel() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         soundPlayer.stopSound();
         game.resetState();
     }
@@ -65,18 +65,18 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
             double height = block.getPosition().getY() + 1;
             playerController.groundPlayer(height);
         } else if (block.collision(player)) {
-            reset();
+            resetLevel();
         }
     }
 
     @Override
     public void visitSpike(Spike spike) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
-        if (spike.collision(model.getPlayer())) reset();
+        if (spike.collision(model.getPlayer())) resetLevel();
     }
 
     @Override
     public void visitReversedSpike(ReversedSpike reversedSpike) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
-        if (reversedSpike.collision(model.getPlayer())) reset();
+        if (reversedSpike.collision(model.getPlayer())) resetLevel();
     }
 
     @Override
@@ -86,7 +86,7 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
         if (platform.topCollision(player)) {
             double height = platform.getPosition().getY() + 1;
             playerController.groundPlayer(height);
-        } else if (platform.collision(player)) reset();
+        } else if (platform.collision(player)) resetLevel();
     }
 
     @Override

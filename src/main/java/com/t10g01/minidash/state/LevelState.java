@@ -96,4 +96,10 @@ public class LevelState extends State<LevelModel, LevelAction> {
         File levelFile = new File(level.getFile());
         return new Scanner(levelFile, UTF_8);
     }
+
+    // Constructor used for testing
+    public LevelState(Game game) throws IOException {
+        super(game);
+        this.levelNumber = -1;
+    }
 }

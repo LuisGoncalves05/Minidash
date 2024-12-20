@@ -33,7 +33,7 @@ class LevelControllerSpec extends Specification {
         game = Mock(Game)
         playerController = Mock(PlayerController)
         soundPlayer = Mock(SoundPlayer)
-        levelController = new LevelController(model, game, playerController, )
+        levelController = new LevelController(model, game, playerController, soundPlayer)
     }
 
     def "step updates player"(double dt) {
@@ -119,6 +119,7 @@ class LevelControllerSpec extends Specification {
         levelController.visitBlock(block)
 
         then:
+        1 * soundPlayer.stopSound()
         1 * game.resetState()
     }
 
@@ -133,6 +134,7 @@ class LevelControllerSpec extends Specification {
         then:
         0 * playerController.groundPlayer(_)
         0 * game.setState(_)
+        0 * soundPlayer.stopSound()
     }
 
     def "visitSpike restarts game"() {
@@ -144,6 +146,7 @@ class LevelControllerSpec extends Specification {
         levelController.visitSpike(spike)
 
         then:
+        1 * soundPlayer.stopSound()
         1 * game.resetState()
     }
 
@@ -158,6 +161,7 @@ class LevelControllerSpec extends Specification {
         then:
         0 * playerController.groundPlayer(_)
         0 * game.setState(_)
+        0 * soundPlayer.stopSound()
     }
 
     def "visitReversedSpike restarts game"() {
@@ -169,6 +173,7 @@ class LevelControllerSpec extends Specification {
         levelController.visitReversedSpike(spike)
 
         then:
+        1 * soundPlayer.stopSound()
         1 * game.resetState()
     }
 
@@ -184,6 +189,7 @@ class LevelControllerSpec extends Specification {
         then:
         0 * playerController.groundPlayer(_)
         0 * game.setState(_)
+        0 * soundPlayer.stopSound()
     }
 
     def "visitPlatform grounds player"(int h) {
@@ -216,6 +222,7 @@ class LevelControllerSpec extends Specification {
         levelController.visitPlatform(platform)
 
         then:
+        1 * soundPlayer.stopSound()
         1 * game.resetState()
     }
 
@@ -228,6 +235,7 @@ class LevelControllerSpec extends Specification {
         levelController.visitBoost(boost)
 
         then:
+        0 * soundPlayer.stopSound()
         0 * playerController.jump(_, _)
     }
 
@@ -253,6 +261,7 @@ class LevelControllerSpec extends Specification {
         levelController.visitLevelEnd(levelEnd)
 
         then:
+        0 * soundPlayer.stopSound()
         0 * game.setState(_)
     }
 
@@ -265,6 +274,7 @@ class LevelControllerSpec extends Specification {
         levelController.visitLevelEnd(levelEnd)
 
         then:
+        1 * soundPlayer.stopSound()
         1 * game.setState(_ as MenuState)
     }
 
@@ -291,7 +301,7 @@ class LevelControllerSpec extends Specification {
         player.getPosition() >> playerPosition
         model.getPlayer() >> player
 
-        def levelController = new LevelController(model, game, playerController)
+        def levelController = new LevelController(model, game, playerController, soundPlayer)
 
         when:
         levelController.updatePointers()
