@@ -7,6 +7,7 @@ import com.t10g01.minidash.model.MenuModel;
 import java.awt.*;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 
 public class LevelCompleteState extends MenuState {
     public LevelCompleteState(Game game) throws IOException {
@@ -15,6 +16,6 @@ public class LevelCompleteState extends MenuState {
 
     @Override
     protected MenuModel createModel() {
-        return new MenuModel(Arrays.asList(new LevelCompleteButton()));
+        return new MenuModel(List.of(new LevelCompleteButton()));
     }
 }

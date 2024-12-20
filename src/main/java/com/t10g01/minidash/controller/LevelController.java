@@ -1,33 +1,42 @@
 package com.t10g01.minidash.controller;
 
 import com.t10g01.minidash.Game;
+import com.t10g01.minidash.sound.SoundPlayer;
+import com.t10g01.minidash.sound.WAVPlayer;
 import com.t10g01.minidash.model.*;
 import com.t10g01.minidash.state.LevelCompleteState;
 import com.t10g01.minidash.state.MainMenuState;
 import com.t10g01.minidash.utils.GameSettings;
 import com.t10g01.minidash.utils.LevelAction;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.IOException;
 import java.util.List;
 
 public class LevelController extends Controller<LevelModel, LevelAction> implements ElementVisitor {
-    PlayerController playerController;
-    GameSettings gameSettings;
+
+    private final GameSettings gameSettings;
+    private final PlayerController playerController;
+    private final SoundPlayer soundPlayer;
 
     // These pointers are used to handle collisions more efficiently: the LevelController only visits elements if there
     // is a chance of collision
     private int leftPointer = 0;
     private int rightPointer = 0;
 
-    public LevelController(LevelModel levelModel, Game game) {
+    public LevelController(LevelModel levelModel, Game game) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
        super(levelModel, game);
        playerController = new PlayerController(levelModel.getPlayer(), game.getGameSettings());
        gameSettings = game.getGameSettings();
+       this.soundPlayer = new WAVPlayer(levelModel.getLevelNumber());
+       soundPlayer.playSound();
     }
 
     @Override
-    public void step(LevelAction levelAction, double deltaTime) throws IOException {
+    public void step(LevelAction levelAction, double deltaTime) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         if (levelAction == LevelAction.EXIT) {
+            soundPlayer.stopSound();
             game.setState(new MainMenuState(game));
             return;
         }
@@ -47,39 +56,42 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
 
         if (levelAction == LevelAction.JUMP) playerController.jump(gameSettings.getJumpHeight(), gameSettings.getJumpTime());
     }
+    
+    public void resetLevel() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+        soundPlayer.stopSound();
+        game.resetState();
+    }
 
     @Override
-    public void visitBlock(Block block) throws IOException {
+    public void visitBlock(Block block) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         Player player = model.getPlayer();
 
         if (block.topCollision(player)) {
             double height = block.getPosition().getY() + 1;
             playerController.groundPlayer(height);
         } else if (block.collision(player)) {
-            game.resetState();
+            resetLevel();
         }
     }
 
     @Override
-    public void visitSpike(Spike spike) throws IOException {
-        if (spike.collision(model.getPlayer())) game.resetState();
+    public void visitSpike(Spike spike) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+        if (spike.collision(model.getPlayer())) resetLevel();
     }
 
     @Override
-    public void visitReversedSpike(ReversedSpike reversedSpike) throws IOException {
-        if (reversedSpike.collision(model.getPlayer())) game.resetState();
+    public void visitReversedSpike(ReversedSpike reversedSpike) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+        if (reversedSpike.collision(model.getPlayer())) resetLevel();
     }
 
     @Override
-    public void visitPlatform(Platform platform) throws IOException {
+    public void visitPlatform(Platform platform) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         Player player = model.getPlayer();
 
         if (platform.topCollision(player)) {
             double height = platform.getPosition().getY() + 1;
             playerController.groundPlayer(height);
-        } else if (platform.collision(player)) {
-            game.resetState();
-        }
+        } else if (platform.collision(player)) resetLevel();
     }
 
     @Override
@@ -101,7 +113,10 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
 
     @Override
     public void visitLevelEnd(LevelEnd levelEnd) throws IOException {
-        if (levelEnd.collision(model.getPlayer())) game.setState(new LevelCompleteState(game));
+        if (levelEnd.collision(model.getPlayer())) {
+            soundPlayer.stopSound();
+            game.setState(new LevelCompleteState(game));
+        }
     }
 
     public void updatePointers() {
@@ -129,9 +144,10 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
     }
 
     // Constructor used for testing
-    public LevelController(LevelModel levelModel, Game game, PlayerController playerController) {
+    public LevelController(LevelModel levelModel, Game game, PlayerController playerController, SoundPlayer soundPlayer) {
         super(levelModel, game);
         this.playerController = playerController;
         this.gameSettings = game.getGameSettings();
+        this.soundPlayer = soundPlayer;
     }
 }

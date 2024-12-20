@@ -35,6 +35,14 @@ public class DoubleJump extends Element{
         this.colliders = colliders;
     }
 
+    public BoxCollider getBoundingBox() {
+        return boundingBox;
+    }
+
+    public List<BoxCollider> getColliders() {
+        return colliders;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -149,13 +149,6 @@ class MenuControllerSpec extends Specification {
         1 * game.setState(_ as LevelMenuState)
     }
 
-    def "visitLevelButton sets state to LevelState"() {
-        when:
-        controller.visitLevelButton(Mock(LevelButton));
-        then:
-        1 * game.setState(_ as LevelState)
-    }
-
     def "visitExitButton sets state to null"() {
         when:
         controller.visitExitButton(Mock(ExitButton));

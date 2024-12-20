@@ -6,6 +6,8 @@ import com.t10g01.minidash.utils.Color;
 import com.t10g01.minidash.utils.GameSettings;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -22,7 +24,7 @@ public class MenuView extends View<MenuModel> implements MenuOptionVisitor {
     }
 
     @Override
-    public void draw() throws URISyntaxException, IOException {
+    public void draw() throws URISyntaxException, IOException, UnsupportedAudioFileException, LineUnavailableException {
         renderedOptions = 0;
 
         ioAdapter.clear();

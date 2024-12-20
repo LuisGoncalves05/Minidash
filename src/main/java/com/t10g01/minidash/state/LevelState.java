@@ -1,15 +1,13 @@
 package com.t10g01.minidash.state;
 
 import com.t10g01.minidash.Game;
-import com.t10g01.minidash.controller.Controller;
 import com.t10g01.minidash.controller.LevelController;
-import com.t10g01.minidash.ioadapter.IOAdapter;
 import com.t10g01.minidash.model.*;
-import com.t10g01.minidash.utils.GameSettings;
 import com.t10g01.minidash.utils.LevelAction;
-import com.t10g01.minidash.view.View;
 import com.t10g01.minidash.view.LevelView;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -21,12 +19,13 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class LevelState extends State<LevelModel, LevelAction> {
     private final int levelNumber;
-    public LevelState(Game game, int levelNumber) throws IOException {
+
+    public LevelState(Game game, int levelNumber) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         super(game);
         this.levelNumber = levelNumber;
         this.model = createModel();
-        this.controller = new LevelController(model, this.game);;
-        this.view = new LevelView(model, this.ioAdapter, this.gameSettings);;
+        this.controller = new LevelController(model, this.game);
+        this.view = new LevelView(model, this.ioAdapter, this.gameSettings);
     }
 
     @Override
@@ -37,7 +36,7 @@ public class LevelState extends State<LevelModel, LevelAction> {
     }
 
     @Override
-    public LevelState reset() throws IOException {
+    public LevelState reset() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         return new LevelState(game, levelNumber);
     }
 
@@ -75,7 +74,7 @@ public class LevelState extends State<LevelModel, LevelAction> {
         int playerY = LevelScanner.nextInt();
 
         LevelScanner.close();
-        return new LevelModel(elements, playerX, playerY);
+        return new LevelModel(elements, playerX, playerY, levelNumber);
     }
 
     public static Element getElement(String data, int x, int y) throws IndexOutOfBoundsException {
@@ -96,5 +95,11 @@ public class LevelState extends State<LevelModel, LevelAction> {
         assert level != null;
         File levelFile = new File(level.getFile());
         return new Scanner(levelFile, UTF_8);
+    }
+
+    // Constructor used for testing
+    public LevelState(Game game) throws IOException {
+        super(game);
+        this.levelNumber = -1;
     }
 }

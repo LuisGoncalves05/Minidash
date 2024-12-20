@@ -6,6 +6,8 @@ import com.t10g01.minidash.ioadapter.IOAdapter;
 import com.t10g01.minidash.utils.GameSettings;
 import com.t10g01.minidash.view.View;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
@@ -24,12 +26,12 @@ public abstract class State<T, U> {
         this.ioAdapter = game.getIoAdapter();
     }
 
-    public void step(double deltaTime) throws IOException, URISyntaxException {
+    public void step(double deltaTime) throws IOException, URISyntaxException, UnsupportedAudioFileException, LineUnavailableException {
         controller.step(getAction(), deltaTime);
         view.draw();
     }
 
-    public abstract State<T, U> reset() throws IOException;
+    public abstract State<T, U> reset() throws IOException, UnsupportedAudioFileException, LineUnavailableException;
 
     protected abstract U getAction();
 }
