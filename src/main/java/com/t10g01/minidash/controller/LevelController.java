@@ -15,7 +15,7 @@ import java.util.List;
 
 public class LevelController extends Controller<LevelModel, LevelAction> implements ElementVisitor {
     private final PlayerController playerController;
-    private final SoundPlayer wavPlayer;
+    private final SoundPlayer soundPlayer;
 
     // These pointers are used to handle collisions more efficiently: the LevelController only visits elements if there
     // is a chance of collision
@@ -25,14 +25,14 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
     public LevelController(LevelModel levelModel, Game game) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
        super(levelModel, game);
        playerController = new PlayerController(levelModel.getPlayer(), game.getGameSettings());
-       this.wavPlayer = new WAVPlayer(levelModel.getLevelNumber());
-       wavPlayer.playSound();
+       this.soundPlayer = new WAVPlayer(levelModel.getLevelNumber());
+       soundPlayer.playSound();
     }
 
     @Override
     public void step(LevelAction levelAction, double deltaTime) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         if (levelAction == LevelAction.EXIT) {
-            wavPlayer.stopSound();
+            soundPlayer.stopSound();
             game.setState(new MainMenuState(game));
             return;
         }
@@ -53,7 +53,7 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
     }
     
     public void reset() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        wavPlayer.stopSound();
+        soundPlayer.stopSound();
         game.resetState();
     }
 
@@ -109,7 +109,7 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
     @Override
     public void visitLevelEnd(LevelEnd levelEnd) throws IOException {
         if (levelEnd.collision(model.getPlayer())) {
-            wavPlayer.stopSound();
+            soundPlayer.stopSound();
             game.setState(new LevelCompleteState(game));
         }
     }
@@ -131,10 +131,10 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
     }
 
     // Constructor used for testing
-    public LevelController(LevelModel levelModel, Game game, PlayerController playerController, WAVPlayer wavPlayer) {
+    public LevelController(LevelModel levelModel, Game game, PlayerController playerController, SoundPlayer soundPlayer) {
         super(levelModel, game);
         this.playerController = playerController;
-        this.wavPlayer = wavPlayer;
+        this.soundPlayer = soundPlayer;
     }
 
     public int getLeftPointer() {
