@@ -4,19 +4,20 @@
 
 ## LDTS_t10g01 - Minidash
 
-MiniDash is a simple version of [Geometry Dash](https://geometrygame.org/), implemented using Java's Lanterna. We follow SOLID principles and integrate several programming patterns such as State, Game Loop and Visitor.
+MiniDash is a simple version of [Geometry Dash](https://geometrygame.org/), implemented using Java's Lanterna. We follow SOLID principles and integrate several programming patterns such as State, Game Loop, and Visitor.
 
-This project was developed by *Luís Barbosa* (up202303872), *Luís Gonçalves* (upXXXXXXXXX) and *Sofia Sousa* (up202303662) for LDTS 2024/25.
+This project was developed by *Luís Barbosa* (up202303872), *Luís Gonçalves* (up202305120), and *Sofia Sousa* (up202303662) for LDTS 2024/25.
 
 ### IMPLEMENTED FEATURES
 
-- **Blocks & Platforms** - Game elements used by the player to move and jump. Colliding with a block from the side causes the game to end.
-- **Spikes** - Colliding with a spike will kill the player.
-- **Boosts** - Colliding with a bost makes the player jump higher than normal. The player is forced to jump, even without jump button action.
-- **Double jumpers** - Double jumpers give the player the option to jump mid-air.
-- **Physics** - The above features require some realistic physics for jumping and collision detection.
-- **Player rotation** - This required some non-trivial trigonometry and clever thinking.
-- **Menus & Music**
+- **Blocks & Platforms** - Game elements the player uses to move and jump. Colliding with a block sideways kills the player;
+- **Spikes** - Colliding with a spike kills the player;
+- **Boosts** - Colliding with a bost makes the player jump higher and further than normal. The player is forced to jump upon collision, even without jump-button action;
+- **Double jumpers** - Double jumps allow the player to jump mid-air if there is jump-button action. Otherwise, the player falls through them;
+- **Physics** - The above features require realistic physics for jumping and collision detection;
+- **Player rotation** - This required some non-trivial trigonometry and clever thinking;
+- **Menus** - Allow the user to select a level or quit the game;
+- **Music** - There is one track for each level, as per the original game.
 
 <p align="center">
     <img align='center' src='./minidash1.png' width='50%' />
@@ -30,7 +31,7 @@ This project was developed by *Luís Barbosa* (up202303872), *Luís Gonçalves* 
 
 ### PLANNED FEATURES
 
-We'd planned for some additional features if time was available, but time, of course, failed to obey us:
+We'd planned these additional features, that ended up not being implemented due to time restraints:
 - Portals
 - Gravity Inversion
 - Color theme changing
@@ -41,11 +42,11 @@ We'd planned for some additional features if time was available, but time, of co
 
 **Problem in Context**
 
-Minidash follows an MVC structure. When we first created the LevelView, we intended to check the type of an element and render it accordingly. This, however, violated the open-closed principle, since adding more game elements would require modificating the `draw()` method of the LevelView. The same problem appeared again while creating the LevelController and the menu logic.
+Minidash follows an MVC structure. When we first created the LevelView class, we intended to check the type of each Element and render it accordingly. This, however, violated the Open-Closed Principle, since adding more game elements would require modifying the `draw()` method in LevelView. The same problem emerged again while creating the LevelController and the menu logic.
 
 **The Pattern**
 
-We have applied the **Visitor** pattern. This pattern makes a **visitor** visit a generic **element** through its **accept** method. Each of the subclasses of the element will then choose the appropriate handler in the visitor. For each new element, another method needs to be added in the visitor, but none of the existing ones are changed.
+To solve this, the **Visitor** pattern was incorporated. This pattern consists of a **visitor** class accessing a generic **element** through its `accept()` method. Each of the subclasses of the element is responsible for choosing their appropriate handler in the visitor.
 
 **Implementation**
 
@@ -65,25 +66,25 @@ These classes can be found in the following files (only a few are provided for b
 
 **Consequences**
 
-The use of the Visitor Pattern in the current design allows the following benefits:
+The use of the Visitor Pattern in the current design allows:
+- A clear separation between view, model, and controller;
+- Following the Open-Closed Principle.
 
-- A clear separation between view, model and controller
-- Not violating the open-closed principle
-- It is now slightly more difficult to track the rendering of the elements since new interfaces were added and the visitor is not something to perceive at a first glance. These problems, though, are outweighed by the benefits, and the whole patter can easily be grasped if supported by some UML.
+However, since new interfaces were added, and the visitor is not perceived at first glance, using this pattern makes it slightly more difficult to track the elements' rendering and collision-checking. The whole pattern can be easily grasped if supported by a UML diagram. Furthermore, for each new element, another method needs to be added in the visitor, but none of the existing ones are changed.
 
 #### CREATING MENUS
 
 **Problem in Context**
 
-Menus were implemented incrementally in Minidash. At first, when only the main menu existed, it was represented by a MenuModel with a list of available options. When more menus were added, which required different MenuModels with a different set of options, we modified the constructor to require a list of available options. This, however, required classes that had nothing whatsoever to do with menus to decide which options to make available in a menu.
+Menus were implemented incrementally in Minidash. Firstly, only the main menu existed, implemented in a MenuModel class with a list of available options. As we added more menus, different menu models with their own sets of options were needed. We modified the constructor to require a list of available options. However, classes that had nothing whatsoever to do with menus now had to decide which options to make available in a menu.
 
 **The Pattern**
 
-We have applied the **Factory Method**. This pattern has an abstract class that implements most of the logic but delegates the creation of one or more objects to its subclasses.
+We chose to apply the **Factory Method**, where an abstract class implements most of the logic but delegates the creation of one or more objects to its subclasses.
 
 **Implementation**
 
-We transformed the existing **MenuState** into an abstract class with the abstract method **createModel** and created three other classes to extend it: **MainMenuState**, **LevelMenuState** and **LevelCompleteState**.
+We transformed the existing **MenuState** into an abstract class, containing the abstract method `createModel()`, and created three other classes to extend it: **MainMenuState**, **LevelMenuState**, and **LevelCompleteState**.
 
 ![](./factory.png)
 
@@ -96,24 +97,23 @@ These classes can be found in the following files:
 
 **Consequences**
 
-The use of the Factory Method in the current design has the following consequences:
-
-- Better separation between different classes: the LevelController doesn't have to decide which options a menu should have - it suffices to choose a menu type and call its empty constructor.
-- Some additional complexity which is far outwheighed by the benefits.
+Using the Factory Method in the current design means that there is:
+- Better separation between different classes: the LevelController doesn't have to decide which options a menu should have - it suffices to choose a menu type and call its empty constructor;
+- Some additional complexity, far outweighed by the benefits.
 
 #### I/O
 
 **Problem in Context**
 
-Minidash uses Lanterna for its I/O operations. Lanterna has a rather complicated interface with more complexity and funcionality than what was needed for Minidash. Besides adding unnecessary I/O-related clutter where it didn't belong, it forced us to repeat code in many places and to tightly couple our implementation with Lanterna's.
+Minidash uses Lanterna for its I/O operations, which has a rather complicated interface with more complexity and functionality than what was needed for Minidash. Besides adding unnecessary I/O-related clutter where it wasn't necessary, it forced us to often repeat code and tightly couple our implementation with Lanterna's.
 
 **The Pattern**
 
-We solved this problem with the **Facade Pattern**. This pattern requires creating a new class that provides only the features needed in another more complex class and abstracts away the repeated code.
+We solved this problem using the **Facade Pattern**, which requires creating a new class that provides only the features needed from another more complex class, abstracting repeated code.
 
 **Implementation**
 
-While the original implementation of this pattern relied on a single interface, **IOAdapter**, which was implemented by the **LanternaIOAdapter** class, we latter realized that this violated the Interface Segregation Principle. As such, we decided to create two new interfaces, **InputAdapter** and **OutputAdapter**, which are both implemented by LanternaIOAdapter:
+While the original implementation of this pattern relied on a single interface, **IOAdapter**, which was implemented by the **LanternaIOAdapter** class, we later realized that this violated the Interface Segregation Principle. As such, we decided to create two new interfaces, **InputAdapter** and **OutputAdapter**, which are both implemented by LanternaIOAdapter:
 
 ![](./facade.png)
 
@@ -127,23 +127,23 @@ These classes can be found in the following files:
 
 Using the Facade Pattern resulted in:
 
-- A simplified interface for I/O.
-- Less repeated code
-- Not violating the Interface Segregation Principle
+- A simplified interface for I/O;
+- Less repeated code;
+- Not violating the Interface Segregation Principle.
 
 #### LEVELS AND MENUS
 
 **Problem in Context**
 
-Minidash has a menu mode and a level mode. As the game becomes more complex, it's likely that other modes are added. This raises the problem of how to manage mode switching and the interactions between different modes.
+Minidash has a menu mode and a level mode. As the game becomes more complex, other modes will likely be added. This raises the problem of managing mode switching and the interactions between different modes.
 
 **The Pattern**
 
-We have applied the **State Pattern**. This pattern enables an object to make different things at different moments (i.e., it has different **states**) and provides a way to manage interactions between them. A class **State** defines a public interface which should be followed by all of its subclasses.
+We have applied the **State Pattern**. This pattern enables the same object to act differently at distinct moments (i.e., it has different **states**) and provides a way to manage interactions between them. A class **State** defines a public interface that should be followed by all of its subclasses.
 
 **Implementation**
 
-We defined a **State** class which is subclassed by **MenuState** and **LevelState**.
+We defined a **State** class, and its subclasses **MenuState** and **LevelState**.
 
 ![](./state.png)
 
@@ -155,10 +155,10 @@ These classes can be found in the following files:
 
 **Consequences**
 
-The use of the Factory Method in the current design has the following consequences:
+Applying the Factory Method in the current design means:
 
 - Better separation between different classes: the LevelController doesn't have to decide which options a menu should have - it suffices to choose a menu type and call its empty constructor.
-- Some additional complexity which is far outwheighed by the benefits.
+- Some additional complexity, far outweighed by the benefits.
 
 ### TESTING
 
