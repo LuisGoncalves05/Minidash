@@ -13,6 +13,7 @@ import com.t10g01.minidash.model.Boost
 import com.t10g01.minidash.model.Player
 import com.t10g01.minidash.model.Vector2D
 import com.t10g01.minidash.state.MenuState
+import com.t10g01.minidash.utils.GameSettings
 import com.t10g01.minidash.utils.LevelAction
 import spock.lang.Shared
 import spock.lang.Specification
@@ -28,6 +29,8 @@ class LevelControllerSpec extends Specification {
     PlayerController playerController
     @Shared
     LevelController levelController
+    @Shared
+    GameSettings gameSettings
 
     def setup() {
         model = Mock(LevelModel)
@@ -35,6 +38,8 @@ class LevelControllerSpec extends Specification {
         player = Mock(Player)
         model.getPlayer() >> player
         game = Mock(Game)
+        gameSettings = new GameSettings()
+        game.getGameSettings() >> gameSettings
         playerController = Mock(PlayerController)
         levelController = new LevelController(model, game, playerController)
     }

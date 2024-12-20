@@ -4,7 +4,7 @@ public class Player {
     private Vector2D position;
     private Vector2D previousPosition;
 
-    private Vector2D speed = new Vector2D(9, 0);
+    private Vector2D speed = new Vector2D(0, 0);
     private double rotation = 0d;
 
     private boolean grounded = false;

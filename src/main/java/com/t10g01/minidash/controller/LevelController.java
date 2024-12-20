@@ -4,6 +4,7 @@ import com.t10g01.minidash.Game;
 import com.t10g01.minidash.model.*;
 import com.t10g01.minidash.state.LevelCompleteState;
 import com.t10g01.minidash.state.MainMenuState;
+import com.t10g01.minidash.utils.GameSettings;
 import com.t10g01.minidash.utils.LevelAction;
 
 import java.io.IOException;
@@ -11,6 +12,7 @@ import java.util.List;
 
 public class LevelController extends Controller<LevelModel, LevelAction> implements ElementVisitor {
     PlayerController playerController;
+    GameSettings gameSettings;
 
     // These pointers are used to handle collisions more efficiently: the LevelController only visits elements if there
     // is a chance of collision
@@ -20,6 +22,7 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
     public LevelController(LevelModel levelModel, Game game) {
        super(levelModel, game);
        playerController = new PlayerController(levelModel.getPlayer(), game.getGameSettings());
+       gameSettings = game.getGameSettings();
     }
 
     @Override
@@ -42,7 +45,7 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
             elements.get(i).accept(this);
         }
 
-        if (levelAction == LevelAction.JUMP) playerController.jump(3, 0.5);
+        if (levelAction == LevelAction.JUMP) playerController.jump(gameSettings.getJumpHeight(), gameSettings.getJumpTime());
     }
 
     @Override
@@ -84,7 +87,7 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
         Player player = model.getPlayer();
 
         if (boost.collision(player)) {
-            playerController.jump(5, 0.7);
+            playerController.jump(gameSettings.getBoostJumpHeight(), gameSettings.getBoostJumpTime());
             player.setGrounded(false);
             player.setOnBoost(true);
         }
@@ -129,5 +132,6 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
     public LevelController(LevelModel levelModel, Game game, PlayerController playerController) {
         super(levelModel, game);
         this.playerController = playerController;
+        this.gameSettings = game.getGameSettings();
     }
 }
