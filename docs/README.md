@@ -103,15 +103,15 @@ Using the Factory Method in the current design means that there is:
 
 **Problem in Context**
 
-Minidash uses Lanterna for its I/O operations. Lanterna has a rather complicated interface with more complexity and functionality than what was needed for Minidash. Besides adding unnecessary I/O-related clutter where it didn't belong, it forced us to repeat code in many places and to tightly couple our implementation with Lanterna's.
+Minidash uses Lanterna for its I/O operations, which has a rather complicated interface with more complexity and functionality than what was needed for Minidash. Besides adding unnecessary I/O-related clutter where it wasn't necessary, it forced us to often repeat code and tightly couple our implementation with Lanterna's.
 
 **The Pattern**
 
-We solved this problem with the **Facade Pattern**. This pattern requires creating a new class that provides only the features needed in another more complex class and abstracts away the repeated code.
+We solved this problem using the **Facade Pattern**, which requires creating a new class that provides only the features needed from another more complex class, abstracting repeated code.
 
 **Implementation**
 
-While the original implementation of this pattern relied on a single interface, **IOAdapter**, which was implemented by the **LanternaIOAdapter** class, we latter realized that this violated the Interface Segregation Principle. As such, we decided to create two new interfaces, **InputAdapter** and **OutputAdapter**, which are both implemented by LanternaIOAdapter:
+While the original implementation of this pattern relied on a single interface, **IOAdapter**, which was implemented by the **LanternaIOAdapter** class, we later realized that this violated the Interface Segregation Principle. As such, we decided to create two new interfaces, **InputAdapter** and **OutputAdapter**, which are both implemented by LanternaIOAdapter:
 
 ![img](https://www.fe.up.pt/~arestivo/page/img/examples/lpoo/state.svg)
 
@@ -125,23 +125,23 @@ These classes can be found in the following files:
 
 Using the Facade Pattern resulted in:
 
-- A simplified interface for I/O.
-- Less repeated code
-- Not violating the Interface Segregation Principle
+- A simplified interface for I/O;
+- Less repeated code;
+- Not violating the Interface Segregation Principle.
 
 #### LEVELS AND MENUS
 
 **Problem in Context**
 
-Minidash has a menu mode and a level mode. As the game becomes more complex, it's likely that other modes will be added. This raises the problem of managing mode switching and the interactions between different modes.
+Minidash has a menu mode and a level mode. As the game becomes more complex, other modes will likely be added. This raises the problem of managing mode switching and the interactions between different modes.
 
 **The Pattern**
 
-We have applied the **State Pattern**. This pattern enables the same object to act differently at distinct moments (i.e., it has different **states**) and provides a way to manage interactions between them. A class **State** defines a public interface which should be followed by all of its subclasses.
+We have applied the **State Pattern**. This pattern enables the same object to act differently at distinct moments (i.e., it has different **states**) and provides a way to manage interactions between them. A class **State** defines a public interface that should be followed by all of its subclasses.
 
 **Implementation**
 
-We defined a **State** class which is subclassed by **MenuState** and **LevelState**.
+We defined a **State** class, and its subclasses **MenuState** and **LevelState**.
 
 ![img](https://www.fe.up.pt/~arestivo/page/img/examples/lpoo/state.svg)
 
@@ -153,7 +153,7 @@ These classes can be found in the following files:
 
 **Consequences**
 
-The use of the Factory Method in the current design has the following consequences:
+Applying the Factory Method in the current design means:
 
 - Better separation between different classes: the LevelController doesn't have to decide which options a menu should have - it suffices to choose a menu type and call its empty constructor.
 - Some additional complexity, far outweighed by the benefits.
