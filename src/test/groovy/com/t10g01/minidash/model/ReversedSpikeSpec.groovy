@@ -42,7 +42,7 @@ class ReversedSpikeSpec extends Specification {
         when:
         def spike = new ReversedSpike(x, y);
         def colliders = spike.getColliders()
-        def d = 1e-3;
+        def d = 1e-3
 
         then:
         colliders.size() == 4
