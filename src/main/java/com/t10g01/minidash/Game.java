@@ -1,10 +1,9 @@
 package com.t10g01.minidash;
 
-import com.t10g01.minidash.ioadapter.IOAdapter;
+import com.t10g01.minidash.ioadapter.InputAdapter;
 import com.t10g01.minidash.ioadapter.LanternaIOAdapter;
-import com.t10g01.minidash.state.LevelState;
+import com.t10g01.minidash.ioadapter.OutputAdapter;
 import com.t10g01.minidash.state.MainMenuState;
-import com.t10g01.minidash.state.MenuState;
 import com.t10g01.minidash.state.State;
 import com.t10g01.minidash.utils.GameSettings;
 
@@ -20,16 +19,19 @@ public class Game {
     }
 
     private final GameSettings gameSettings;
-    private final IOAdapter ioAdapter;
+    private final InputAdapter inputAdapter;
+    private final OutputAdapter outputAdapter;
     private State state;
 
     public Game() throws IOException, URISyntaxException, FontFormatException {
         this.gameSettings = new GameSettings();
-        this.ioAdapter = new LanternaIOAdapter(
+        LanternaIOAdapter ioAdapter = new LanternaIOAdapter(
                 gameSettings.getCameraHeight() * gameSettings.getResolution(),
                 gameSettings.getCameraWidth() * gameSettings.getResolution(),
                 gameSettings.getBackgroundColor()
         );
+        this.inputAdapter = ioAdapter;
+        this.outputAdapter = ioAdapter;
         this.state = new MainMenuState(this);
     }
 
@@ -48,7 +50,7 @@ public class Game {
             Thread.sleep((int)sleepTime);
         }
 
-        ioAdapter.close();
+        outputAdapter.close();
     }
 
     public void resetState() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
@@ -59,8 +61,12 @@ public class Game {
         this.state = state;
     }
 
-    public IOAdapter getIoAdapter() {
-        return ioAdapter;
+    public InputAdapter getiAdapter() {
+        return inputAdapter;
+    }
+
+    public OutputAdapter getoAdapter() {
+        return outputAdapter;
     }
 
     public GameSettings getGameSettings() {
@@ -68,9 +74,10 @@ public class Game {
     }
 
     // Constructor used for testing
-    public Game(GameSettings gameSettings, IOAdapter ioAdapter, State state) {
+    public Game(GameSettings gameSettings, InputAdapter inputAdapter, OutputAdapter outputAdapter, State state) {
         this.gameSettings = gameSettings;
-        this.ioAdapter = ioAdapter;
+        this.inputAdapter = inputAdapter;
+        this.outputAdapter = outputAdapter;
         this.state = state;
     }
 }

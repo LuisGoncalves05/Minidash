@@ -1,6 +1,6 @@
 package com.t10g01.minidash.view;
 
-import com.t10g01.minidash.ioadapter.IOAdapter;
+import com.t10g01.minidash.ioadapter.OutputAdapter;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
@@ -9,11 +9,11 @@ import java.net.URISyntaxException;
 
 public abstract class View<T> {
     protected final T model;
-    protected final IOAdapter ioAdapter;
+    protected final OutputAdapter outputAdapter;
 
-    public View(T model, IOAdapter ioAdapter) {
+    public View(T model, OutputAdapter outputAdapter) {
         this.model = model;
-        this.ioAdapter = ioAdapter;
+        this.outputAdapter = outputAdapter;
     }
 
     public abstract void draw() throws IOException, URISyntaxException, UnsupportedAudioFileException, LineUnavailableException;

@@ -1,6 +1,6 @@
 package com.t10g01.minidash.view;
 
-import com.t10g01.minidash.ioadapter.IOAdapter;
+import com.t10g01.minidash.ioadapter.OutputAdapter;
 import com.t10g01.minidash.model.*;
 import com.t10g01.minidash.utils.Color;
 import com.t10g01.minidash.utils.GameSettings;
@@ -18,8 +18,8 @@ public class MenuView extends View<MenuModel> implements MenuOptionVisitor {
     private final GameSettings gameSettings;
     private int renderedOptions;
 
-    public MenuView(MenuModel model, IOAdapter ioAdapter, GameSettings gameSettings) {
-        super(model, ioAdapter);
+    public MenuView(MenuModel model, OutputAdapter outputAdapter, GameSettings gameSettings) {
+        super(model, outputAdapter);
         this.gameSettings = gameSettings;
     }
 
@@ -27,9 +27,9 @@ public class MenuView extends View<MenuModel> implements MenuOptionVisitor {
     public void draw() throws URISyntaxException, IOException, UnsupportedAudioFileException, LineUnavailableException {
         renderedOptions = 0;
 
-        ioAdapter.clear();
+        outputAdapter.clear();
         for (MenuOption option : model.getOptions()) option.accept(this);
-        ioAdapter.refresh();
+        outputAdapter.refresh();
     }
 
     @Override
@@ -59,15 +59,15 @@ public class MenuView extends View<MenuModel> implements MenuOptionVisitor {
 
         int numberOptions = model.getOptions().size();
         // Option sprites are assumed to be 30px tall and there is a 20px margin to the top of the screen
-        int offsetY = (renderedOptions + 1) * (ioAdapter.getScreenHeight() - numberOptions * 30) / (numberOptions + 1) + renderedOptions * 30;
-        int offsetX = (ioAdapter.getScreenWidth() - sprite.getWidth()) / 2;
+        int offsetY = (renderedOptions + 1) * (outputAdapter.getScreenHeight() - numberOptions * 30) / (numberOptions + 1) + renderedOptions * 30;
+        int offsetX = (outputAdapter.getScreenWidth() - sprite.getWidth()) / 2;
 
         Color color = model.getSelected() == renderedOptions? gameSettings.getSelectedOptionColor() : gameSettings.getMenuOptionColor();
 
         for (int i = 0; i < sprite.getHeight(); i++) {
             for (int j = 0; j < sprite.getWidth(); j++) {
                 if (sprite.getRGB(j, i) != 0) {
-                    ioAdapter.drawPixel(offsetX + j, ioAdapter.getScreenHeight() - i - offsetY, color);
+                    outputAdapter.drawPixel(offsetX + j, outputAdapter.getScreenHeight() - i - offsetY, color);
                 }
             }
         }

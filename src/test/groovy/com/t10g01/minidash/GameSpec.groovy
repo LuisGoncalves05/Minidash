@@ -1,29 +1,31 @@
 package com.t10g01.minidash
 
-import com.t10g01.minidash.ioadapter.IOAdapter
+import com.t10g01.minidash.ioadapter.InputAdapter
+import com.t10g01.minidash.ioadapter.OutputAdapter
 import com.t10g01.minidash.utils.GameSettings
-import com.t10g01.minidash.state.State
 import spock.lang.Specification
 
 class GameSpec extends Specification{
 
     static GameSettings gameSettings
-    static IOAdapter ioAdapter
+    static InputAdapter inputAdapter
+    static OutputAdapter outputAdapter
 
     def setup()  {
         gameSettings = Mock(GameSettings)
-        ioAdapter = Mock(IOAdapter)
+        inputAdapter = Mock(InputAdapter)
+        outputAdapter = Mock(OutputAdapter)
     }
 
     def "closes when state is null"() {
         given:
-        def game = new Game(gameSettings, ioAdapter, null)
+        def game = new Game(gameSettings, inputAdapter, outputAdapter, null)
 
         when:
         game.start()
 
         then:
-        1 * ioAdapter.close()
+        1 * outputAdapter.close()
         0 * _
     }
 }

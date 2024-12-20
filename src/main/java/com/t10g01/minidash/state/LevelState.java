@@ -24,14 +24,14 @@ public class LevelState extends State<LevelModel, LevelAction> {
         super(game);
         this.levelNumber = levelNumber;
         this.model = createModel();
-        this.controller = new LevelController(model, this.game);
-        this.view = new LevelView(model, this.ioAdapter, this.gameSettings);
+        this.controller = new LevelController(model, game);
+        this.view = new LevelView(model, game.getoAdapter(), game.getGameSettings());
     }
 
     @Override
     protected LevelAction getAction() {
-        if (ioAdapter.isPressed(' ')) return LevelAction.JUMP;
-        if (ioAdapter.isPressed('q')) return LevelAction.EXIT;
+        if (inputAdapter.isPressed(' ')) return LevelAction.JUMP;
+        if (inputAdapter.isPressed('q')) return LevelAction.EXIT;
         return LevelAction.NULL;
     }
 

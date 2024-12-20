@@ -1,46 +1,55 @@
 package com.t10g01.minidash.state
 
 import com.t10g01.minidash.Game
-import com.t10g01.minidash.ioadapter.IOAdapter
+import com.t10g01.minidash.ioadapter.InputAdapter
+import com.t10g01.minidash.ioadapter.OutputAdapter
 import com.t10g01.minidash.utils.GameSettings
 import com.t10g01.minidash.utils.LevelAction
+import spock.lang.Shared
 import spock.lang.Specification
 
 class LevelActionSpec extends Specification{
 
-    static IOAdapter ioAdapter
-    static GameSettings gameSettings
-    static Game game
-    static LevelState levelState
+    @Shared
+    InputAdapter inputAdapter
+    @Shared
+    OutputAdapter outputAdapter
+    @Shared
+    GameSettings gameSettings
+    @Shared
+    Game game
+    @Shared
+    LevelState levelState
 
 
     def setup() {
-        ioAdapter = Mock(IOAdapter)
+        inputAdapter = Mock(InputAdapter)
+        outputAdapter = Mock(OutputAdapter)
         gameSettings = Mock(GameSettings)
-        game = new Game(gameSettings, ioAdapter, null)
+        game = new Game(gameSettings, inputAdapter, outputAdapter, null)
         levelState = new LevelState(game)
     }
 
 
-    def "jumps when space pressed" (){
+    def "jumps when space pressed"() {
         given:
-        ioAdapter.isPressed(' ') >> true
-        ioAdapter.isPressed('e') >> true
-        ioAdapter.isPressed('x') >> true
-        ioAdapter.isPressed('b') >> true
-        ioAdapter.isPressed('a') >> true
+        inputAdapter.isPressed(' ') >> true
+        inputAdapter.isPressed('e') >> true
+        inputAdapter.isPressed('x') >> true
+        inputAdapter.isPressed('b') >> true
+        inputAdapter.isPressed('a') >> true
 
         expect:
         levelState.getAction() == LevelAction.JUMP
     }
 
-    def "does nothing if random keys pressed" (){
+    def "does nothing if random keys pressed"() {
         given:
-        ioAdapter.isPressed('w') >> true
-        ioAdapter.isPressed('e') >> true
-        ioAdapter.isPressed('x') >> true
-        ioAdapter.isPressed('b') >> true
-        ioAdapter.isPressed('a') >> true
+        inputAdapter.isPressed('w') >> true
+        inputAdapter.isPressed('e') >> true
+        inputAdapter.isPressed('x') >> true
+        inputAdapter.isPressed('b') >> true
+        inputAdapter.isPressed('a') >> true
 
         expect:
         levelState.getAction() == LevelAction.NULL
@@ -48,7 +57,7 @@ class LevelActionSpec extends Specification{
 
     def "exits if q pressed" (){
         given:
-        ioAdapter.isPressed('q') >> true
+        inputAdapter.isPressed('q') >> true
 
         expect:
         levelState.getAction() == LevelAction.EXIT

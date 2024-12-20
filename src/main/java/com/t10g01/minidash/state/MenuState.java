@@ -1,12 +1,10 @@
 package com.t10g01.minidash.state;
 
 import com.t10g01.minidash.Game;
-import com.t10g01.minidash.controller.Controller;
 import com.t10g01.minidash.controller.MenuController;
 import com.t10g01.minidash.model.MenuModel;
 import com.t10g01.minidash.utils.MenuAction;
 import com.t10g01.minidash.view.MenuView;
-import com.t10g01.minidash.view.View;
 
 import java.io.IOException;
 
@@ -14,8 +12,8 @@ public abstract class MenuState extends State<MenuModel, MenuAction> {
     public MenuState(Game game) throws IOException {
         super(game);
         this.model = createModel();
-        this.controller = new MenuController(this.game, model);;
-        this.view = new MenuView(model, ioAdapter, gameSettings);
+        this.controller = new MenuController(this.game, model);
+        this.view = new MenuView(model, outputAdapter, gameSettings);
     }
 
     @Override
@@ -26,13 +24,13 @@ public abstract class MenuState extends State<MenuModel, MenuAction> {
 
     @Override
     protected MenuAction getAction() {
-        if (ioAdapter.isPressed('w') || ioAdapter.isPressed('k'))
+        if (inputAdapter.isPressed('w') || inputAdapter.isPressed('k'))
             return MenuAction.UP;
-        if (ioAdapter.isPressed('s') || ioAdapter.isPressed('j'))
+        if (inputAdapter.isPressed('s') || inputAdapter.isPressed('j'))
             return MenuAction.DOWN;
-        if (ioAdapter.isPressed('q'))
+        if (inputAdapter.isPressed('q'))
             return MenuAction.EXIT;
-        if (ioAdapter.isPressed(' '))
+        if (inputAdapter.isPressed(' '))
             return MenuAction.SELECT;
         return MenuAction.NULL;
     }

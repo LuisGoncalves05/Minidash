@@ -22,7 +22,7 @@ import com.googlecode.lanterna.terminal.swing.AWTTerminalFrame;
 import com.t10g01.minidash.utils.Color;
 
 
-public class LanternaIOAdapter implements IOAdapter {
+public class LanternaIOAdapter implements InputAdapter, OutputAdapter {
 
     private final int screenHeight;
     private final int screenWidth;
