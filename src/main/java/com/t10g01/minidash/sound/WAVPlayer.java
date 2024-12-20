@@ -6,6 +6,7 @@ import java.net.URL;
 
 public class WAVPlayer implements SoundPlayer {
     Clip clip;
+
     int levelNumber;
 
 
@@ -18,10 +19,12 @@ public class WAVPlayer implements SoundPlayer {
         if (clip != null) return;
         URL resource = getClass().getClassLoader().getResource("lvl" + levelNumber + ".wav");
         assert resource != null;
-        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(resource);
-        clip = AudioSystem.getClip();
-        clip.open(audioInputStream);
-        clip.start();
+
+        try (AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(resource)) {
+            clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+        }
     }
 
     @Override
