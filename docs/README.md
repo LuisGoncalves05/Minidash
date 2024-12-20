@@ -51,7 +51,9 @@ We have applied the **Visitor** pattern. This pattern makes a **visitor** visit 
 
 The following figure shows how the pattern’s roles were mapped to the application classes.
 
-![img](https://www.fe.up.pt/~arestivo/page/img/examples/lpoo/state.svg)
+![](./visitor.png)
+
+> Please note that the UML diagram for MenuOptionVisitor was ommitted for simplicity. The structure is very similar.
 
 These classes can be found in the following files (only a few are provided for brevity, all the others follow a similar structure):
 
@@ -83,7 +85,7 @@ We have applied the **Factory Method**. This pattern has an abstract class that 
 
 We transformed the existing **MenuState** into an abstract class with the abstract method **createModel** and created three other classes to extend it: **MainMenuState**, **LevelMenuState** and **LevelCompleteState**.
 
-![img](https://www.fe.up.pt/~arestivo/page/img/examples/lpoo/state.svg)
+![](./factory.png)
 
 These classes can be found in the following files:
 
