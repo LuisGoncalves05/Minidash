@@ -115,7 +115,7 @@ We solved this problem with the **Facade Pattern**. This pattern requires creati
 
 While the original implementation of this pattern relied on a single interface, **IOAdapter**, which was implemented by the **LanternaIOAdapter** class, we latter realized that this violated the Interface Segregation Principle. As such, we decided to create two new interfaces, **InputAdapter** and **OutputAdapter**, which are both implemented by LanternaIOAdapter:
 
-![img](https://www.fe.up.pt/~arestivo/page/img/examples/lpoo/state.svg)
+![](./facade.png)
 
 These classes can be found in the following files:
 
@@ -145,7 +145,7 @@ We have applied the **State Pattern**. This pattern enables an object to make di
 
 We defined a **State** class which is subclassed by **MenuState** and **LevelState**.
 
-![img](https://www.fe.up.pt/~arestivo/page/img/examples/lpoo/state.svg)
+![](./state.png)
 
 These classes can be found in the following files:
 
