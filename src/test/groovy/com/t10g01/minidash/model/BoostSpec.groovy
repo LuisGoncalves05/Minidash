@@ -24,7 +24,7 @@ class BoostSpec extends Specification {
         when:
         def boost = new Boost(x, y);
         def boundingBox = boost.getBoundingBox()
-        def d = 1e-3;
+        def d = 1e-3
 
         then:
         Math.abs(boundingBox.getLowerLeft().getX() - xl) < d
@@ -42,7 +42,7 @@ class BoostSpec extends Specification {
         when:
         def boost = new Boost(x, y);
         def colliders = boost.getColliders()
-        def d = 1e-3;
+        def d = 1e-3
 
         then:
         colliders.size() == 2
