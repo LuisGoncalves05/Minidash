@@ -12,8 +12,8 @@ class Vector2DSpec extends Specification {
         vector.rotate(angle)
 
         then:
-        Math.abs(vector.getX() - xf) < 1E-5;
-        Math.abs(vector.getY() - yf) < 1E-5;
+        Math.abs(vector.getX() - xf) < 1E-5
+        Math.abs(vector.getY() - yf) < 1E-5
 
         where:
         xi | yi | angle | xf                | yf
