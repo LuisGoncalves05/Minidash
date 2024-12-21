@@ -5,17 +5,12 @@ import java.io.IOException;
 import java.net.URL;
 
 public class WAVPlayer implements SoundPlayer {
-    Clip clip;
-    int levelNumber;
-
-    public WAVPlayer(int levelNumber) {
-        this.levelNumber = levelNumber;
-    }
+    private Clip clip;
 
     @Override
-    public void playSound() throws LineUnavailableException, IOException, UnsupportedAudioFileException {
+    public void playSound(String path) throws LineUnavailableException, IOException, UnsupportedAudioFileException {
         if (clip != null) return;
-        URL resource = getClass().getClassLoader().getResource("lvl" + levelNumber + ".wav");
+        URL resource = getClass().getClassLoader().getResource(path);
         assert resource != null;
 
         try (AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(resource)) {

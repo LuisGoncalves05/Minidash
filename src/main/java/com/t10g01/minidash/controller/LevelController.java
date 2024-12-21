@@ -25,8 +25,8 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
     public LevelController(LevelModel levelModel, Game game) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
        super(levelModel, game);
        playerController = new PlayerController(levelModel.getPlayer(), game.getGameSettings());
-       this.soundPlayer = new WAVPlayer(levelModel.getLevelNumber());
-       soundPlayer.playSound();
+       this.soundPlayer = new WAVPlayer();
+       soundPlayer.playSound("lvl" + levelModel.getLevelNumber() + ".wav");
     }
 
     @Override
