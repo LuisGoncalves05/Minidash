@@ -13,7 +13,7 @@ public abstract class MenuState extends State<MenuModel, MenuAction> {
         super(game);
         this.model = createModel();
         this.controller = new MenuController(this.game, model);
-        this.view = new MenuView(model, outputAdapter, gameSettings);
+        this.view = new MenuView(model, output, gameSettings);
     }
 
     @Override
@@ -24,13 +24,13 @@ public abstract class MenuState extends State<MenuModel, MenuAction> {
 
     @Override
     protected MenuAction getAction() {
-        if (inputAdapter.isPressed('w') || inputAdapter.isPressed('k'))
+        if (input.isPressed('w') || input.isPressed('k'))
             return MenuAction.UP;
-        if (inputAdapter.isPressed('s') || inputAdapter.isPressed('j'))
+        if (input.isPressed('s') || input.isPressed('j'))
             return MenuAction.DOWN;
-        if (inputAdapter.isPressed('q'))
+        if (input.isPressed('q'))
             return MenuAction.EXIT;
-        if (inputAdapter.isPressed(' '))
+        if (input.isPressed(' '))
             return MenuAction.SELECT;
         return MenuAction.NULL;
     }

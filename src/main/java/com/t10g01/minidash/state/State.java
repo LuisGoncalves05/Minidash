@@ -2,8 +2,8 @@ package com.t10g01.minidash.state;
 
 import com.t10g01.minidash.Game;
 import com.t10g01.minidash.controller.Controller;
-import com.t10g01.minidash.ioadapter.InputAdapter;
-import com.t10g01.minidash.ioadapter.OutputAdapter;
+import com.t10g01.minidash.io.Input;
+import com.t10g01.minidash.io.Output;
 import com.t10g01.minidash.utils.GameSettings;
 import com.t10g01.minidash.view.View;
 
@@ -17,16 +17,16 @@ public abstract class State<T, U> {
     protected Controller<T, U> controller;
     protected View<T> view;
 
-    protected final InputAdapter inputAdapter;
-    protected final OutputAdapter outputAdapter;
+    protected final Input input;
+    protected final Output output;
     protected final Game game;
     protected final GameSettings gameSettings;
 
     public State(Game game) throws IOException {
         this.game = game;
         this.gameSettings = game.getGameSettings();
-        this.inputAdapter = game.getiAdapter();
-        this.outputAdapter = game.getoAdapter();
+        this.input = game.getInput();
+        this.output = game.getOutput();
     }
 
     public void step(double deltaTime) throws IOException, URISyntaxException, UnsupportedAudioFileException, LineUnavailableException {

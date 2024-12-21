@@ -1,5 +1,5 @@
-package com.t10g01.minidash.ioadapter;
+package com.t10g01.minidash.io;
 
-public interface InputAdapter {
+public interface Input {
     boolean isPressed(char key);
 }

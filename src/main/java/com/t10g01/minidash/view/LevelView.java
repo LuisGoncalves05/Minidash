@@ -1,6 +1,6 @@
 package com.t10g01.minidash.view;
 
-import com.t10g01.minidash.ioadapter.OutputAdapter;
+import com.t10g01.minidash.io.Output;
 import com.t10g01.minidash.model.*;
 import com.t10g01.minidash.utils.Color;
 import com.t10g01.minidash.utils.GameSettings;
@@ -24,8 +24,8 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
     private int leftPointer = 0;
     private int rightPointer = 0;
 
-    public LevelView(LevelModel model, OutputAdapter outputAdapter, GameSettings gameSettings) {
-        super(model, outputAdapter);
+    public LevelView(LevelModel model, Output output, GameSettings gameSettings) {
+        super(model, output);
         this.gameSettings = gameSettings;
         this.cameraWidth = gameSettings.getCameraWidth();
         this.cameraXOffset = cameraWidth * 0.4;
@@ -38,7 +38,7 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
         this.cameraX = model.getPlayer().getPosition().getX() - cameraXOffset;
         this.cameraY = Math.max(model.getPlayer().getPosition().getY() - cameraYOffset, 0);
 
-        outputAdapter.clear();
+        output.clear();
 
         drawPlayer(model.getPlayer());
 
@@ -48,7 +48,7 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
             elements.get(i).accept(this);
         }
 
-        outputAdapter.refresh();
+        output.refresh();
     }
 
     @Override
@@ -62,7 +62,7 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
         int x_pixels = (int)(x * resolution);
         int y_pixels = (int)(y * resolution);
 
-        outputAdapter.drawRectangle(x_pixels, y_pixels, resolution, resolution, gameSettings.getBlockColor());
+        output.drawRectangle(x_pixels, y_pixels, resolution, resolution, gameSettings.getBlockColor());
     }
 
     @Override
@@ -77,7 +77,7 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
             int left = x + i;
             int right = x + resolution - i;
 
-            outputAdapter.drawRectangle(x + i, y + i, right - left, 1, gameSettings.getSpikeColor());
+            output.drawRectangle(x + i, y + i, right - left, 1, gameSettings.getSpikeColor());
         }
     }
 
@@ -93,7 +93,7 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
             int left = x + i;
             int right = x + resolution - i;
 
-            outputAdapter.drawRectangle(x + i, y + resolution - i - 1, right - left, 1, gameSettings.getSpikeColor());
+            output.drawRectangle(x + i, y + resolution - i - 1, right - left, 1, gameSettings.getSpikeColor());
         }
     }
 
@@ -106,7 +106,7 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
         int y = (int) ((position.getY() + 0.75 - cameraY) * resolution);
         int height = (int) Math.ceil(0.25 * resolution);
 
-        outputAdapter.drawRectangle(x, y, resolution, height, gameSettings.getPlatformColor());
+        output.drawRectangle(x, y, resolution, height, gameSettings.getPlatformColor());
     }
 
     @Override
@@ -118,8 +118,8 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
         int y = (int)((position.getY() - cameraY) * resolution);
 
         Color color  = gameSettings.getBoostColor();
-        outputAdapter.drawRectangle(x + 1, y, resolution - 2, 1, color);
-        outputAdapter.drawRectangle(x + 2, y + 1, resolution - 4, 1, color);
+        output.drawRectangle(x + 1, y, resolution - 2, 1, color);
+        output.drawRectangle(x + 2, y + 1, resolution - 4, 1, color);
     }
 
     @Override
@@ -134,7 +134,7 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
         int x = (int) (((position.getX() - cameraX) * resolution) + (resolution - 1) / 2.0);
         int y = (int) (((position.getY() - cameraY) * resolution) + (resolution - 1) / 2.0);
 
-        outputAdapter.drawCircle(x, y, resolution >> 2, gameSettings.getDoubleJumpColor());
+        output.drawCircle(x, y, resolution >> 2, gameSettings.getDoubleJumpColor());
     }
 
     public void drawPlayer(Player player) {
@@ -158,7 +158,7 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
                 if (Math.abs(centerToPixel.getX()) > 0.5) continue;
                 if (Math.abs(centerToPixel.getY()) > 0.5) continue;
 
-                outputAdapter.drawPixel(x_center + i, y_center + j, playerColor);
+                output.drawPixel(x_center + i, y_center + j, playerColor);
             }
         }
     }

@@ -1,6 +1,6 @@
 package com.t10g01.minidash.view
 
-import com.t10g01.minidash.ioadapter.OutputAdapter
+import com.t10g01.minidash.io.Output
 import com.t10g01.minidash.model.DoubleJump
 import com.t10g01.minidash.model.Element
 import com.t10g01.minidash.model.Player
@@ -19,7 +19,7 @@ class LevelViewSpec extends Specification {
     @Shared
     LevelModel model
     @Shared
-    OutputAdapter outputAdapter
+    Output output
     @Shared
     GameSettings settings
     @Shared
@@ -30,7 +30,7 @@ class LevelViewSpec extends Specification {
         player = Mock(Player)
         model.getPlayer() >> player
 
-        outputAdapter = Mock(OutputAdapter)
+        output = Mock(Output)
 
         settings = Mock(GameSettings)
         settings.getResolution() >> 10
@@ -54,14 +54,14 @@ class LevelViewSpec extends Specification {
         playerPosition.getX() >> xp
         playerPosition.getY() >> yp
 
-        def levelView = new LevelView(model, outputAdapter, settings)
+        def levelView = new LevelView(model, output, settings)
         levelView.setCameraY(cy)
 
         when:
         levelView.visitBlock(block)
 
         then: 
-        1 * outputAdapter.drawRectangle(xf, yf, 10, 10, blockColorMock)
+        1 * output.drawRectangle(xf, yf, 10, 10, blockColorMock)
 
         where:
 
@@ -91,18 +91,18 @@ class LevelViewSpec extends Specification {
         playerPosition.getX() >> xp
         playerPosition.getY() >> yp
 
-        def levelView = new LevelView(model, outputAdapter, settings)
+        def levelView = new LevelView(model, output, settings)
         levelView.setCameraY(cy)
 
         when:
         levelView.visitSpike(spike)
 
         then:
-        1 * outputAdapter.drawRectangle(xf, yf, 10, 1, spikeColor)
-        1 * outputAdapter.drawRectangle(xf + 1, yf + 1, 8, 1, spikeColor)
-        1 * outputAdapter.drawRectangle(xf + 2, yf + 2, 6, 1, spikeColor)
-        1 * outputAdapter.drawRectangle(xf + 3, yf + 3, 4, 1, spikeColor)
-        1 * outputAdapter.drawRectangle(xf + 4, yf + 4, 2, 1, spikeColor)
+        1 * output.drawRectangle(xf, yf, 10, 1, spikeColor)
+        1 * output.drawRectangle(xf + 1, yf + 1, 8, 1, spikeColor)
+        1 * output.drawRectangle(xf + 2, yf + 2, 6, 1, spikeColor)
+        1 * output.drawRectangle(xf + 3, yf + 3, 4, 1, spikeColor)
+        1 * output.drawRectangle(xf + 4, yf + 4, 2, 1, spikeColor)
 
         where:
         x  | y  | xp   | yp  | xf  | yf  | cy
@@ -129,18 +129,18 @@ class LevelViewSpec extends Specification {
         playerPosition.getX() >> xp
         playerPosition.getY() >> yp
 
-        def levelView = new LevelView(model, outputAdapter, settings)
+        def levelView = new LevelView(model, output, settings)
         levelView.setCameraY(cy)
 
         when:
         levelView.visitReversedSpike(spike)
 
         then:
-        1 * outputAdapter.drawRectangle(xf, yf + 9, 10, 1, spikeColor)
-        1 * outputAdapter.drawRectangle(xf + 1, yf + 8, 8, 1, spikeColor)
-        1 * outputAdapter.drawRectangle(xf + 2, yf + 7, 6, 1, spikeColor)
-        1 * outputAdapter.drawRectangle(xf + 3, yf + 6, 4, 1, spikeColor)
-        1 * outputAdapter.drawRectangle(xf + 4, yf + 5, 2, 1, spikeColor)
+        1 * output.drawRectangle(xf, yf + 9, 10, 1, spikeColor)
+        1 * output.drawRectangle(xf + 1, yf + 8, 8, 1, spikeColor)
+        1 * output.drawRectangle(xf + 2, yf + 7, 6, 1, spikeColor)
+        1 * output.drawRectangle(xf + 3, yf + 6, 4, 1, spikeColor)
+        1 * output.drawRectangle(xf + 4, yf + 5, 2, 1, spikeColor)
 
         where:
         x  | y  | xp   | yp  | xf  | yf  | cy
@@ -167,14 +167,14 @@ class LevelViewSpec extends Specification {
         playerPosition.getX() >> xp
         playerPosition.getY() >> yp
 
-        def levelView = new LevelView(model, outputAdapter, settings)
+        def levelView = new LevelView(model, output, settings)
         levelView.setCameraY(cy)
 
         when:
         levelView.visitPlatform(platform)
 
         then:
-        1 * outputAdapter.drawRectangle(xf, yf + 7, 10, 3, platformColor)
+        1 * output.drawRectangle(xf, yf + 7, 10, 3, platformColor)
 
         where:
         x  | y  | xp   | yp  | xf  | yf | cy
@@ -200,15 +200,15 @@ class LevelViewSpec extends Specification {
         playerPosition.getX() >> xp
         playerPosition.getY() >> yp
 
-        def levelView = new LevelView(model, outputAdapter, settings)
+        def levelView = new LevelView(model, output, settings)
         levelView.setCameraY(cy)
 
         when:
         levelView.visitBoost(boost)
 
         then:
-        1 * outputAdapter.drawRectangle(xf + 1, yf, 8, 1, boostColor)
-        1 * outputAdapter.drawRectangle(xf + 2, yf + 1, 6, 1, boostColor)
+        1 * output.drawRectangle(xf + 1, yf, 8, 1, boostColor)
+        1 * output.drawRectangle(xf + 2, yf + 1, 6, 1, boostColor)
 
         where:
         x  | y  | xp   | yp  | xf  | yf | cy
@@ -235,14 +235,14 @@ class LevelViewSpec extends Specification {
         playerPosition.getX() >> xp
         playerPosition.getY() >> yp
 
-        def levelView = new LevelView(model, outputAdapter, settings)
+        def levelView = new LevelView(model, output, settings)
         levelView.setCameraY(cy)
 
         when:
         levelView.visitDoubleJump(doubleJump)
 
         then:
-        1 * outputAdapter.drawCircle(xf, yf, 2, doubleJumpColor)
+        1 * output.drawCircle(xf, yf, 2, doubleJumpColor)
 
         where:
         x  | y   | xp  | yp  | xf  | yf | cy
@@ -268,13 +268,13 @@ class LevelViewSpec extends Specification {
         def playerColorMock = Mock(Color)
         settings.getPlayerColor() >> playerColorMock
 
-        def levelView = new LevelView(model, outputAdapter, settings)
+        def levelView = new LevelView(model, output, settings)
 
         when:
         levelView.drawPlayer(model.getPlayer())
 
         then:
-        1 * outputAdapter.drawPixel(xf, yf, playerColorMock)
+        1 * output.drawPixel(xf, yf, playerColorMock)
 
         where:
         xp | yp | rot | xi | yi | xf | yf
@@ -298,13 +298,13 @@ class LevelViewSpec extends Specification {
         def playerColorMock = Mock(Color)
         settings.getPlayerColor() >> playerColorMock
 
-        def levelView = new LevelView(model, outputAdapter, settings)
+        def levelView = new LevelView(model, output, settings)
 
         when:
         levelView.drawPlayer(model.getPlayer())
 
         then:
-        0 * outputAdapter.drawPixel(xi, yi, xf, yf, playerColorMock)
+        0 * output.drawPixel(xi, yi, xf, yf, playerColorMock)
 
         where:
         xp | yp | rot | xi | yi | xf | yf
@@ -336,7 +336,7 @@ class LevelViewSpec extends Specification {
         def playerPosition = new Vector2D(playerX, 0)
         player.getPosition() >> playerPosition
 
-        def levelView = new LevelView(model, outputAdapter, settings)
+        def levelView = new LevelView(model, output, settings)
 
         when:
         levelView.updatePointers()

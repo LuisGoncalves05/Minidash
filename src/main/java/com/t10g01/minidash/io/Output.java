@@ -1,10 +1,10 @@
-package com.t10g01.minidash.ioadapter;
+package com.t10g01.minidash.io;
 
 import com.t10g01.minidash.utils.Color;
 
 import java.io.IOException;
 
-public interface OutputAdapter {
+public interface Output {
     void clear();
     void refresh() throws IOException;
     void close() throws IOException;

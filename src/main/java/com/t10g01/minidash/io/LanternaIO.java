@@ -1,4 +1,4 @@
-package com.t10g01.minidash.ioadapter;
+package com.t10g01.minidash.io;
 
 import java.awt.*;
 import java.io.File;
@@ -22,7 +22,7 @@ import com.googlecode.lanterna.terminal.swing.AWTTerminalFrame;
 import com.t10g01.minidash.utils.Color;
 
 
-public class LanternaIOAdapter implements InputAdapter, OutputAdapter {
+public class LanternaIO implements Input, Output {
 
     private final int screenHeight;
     private final int screenWidth;
@@ -35,7 +35,7 @@ public class LanternaIOAdapter implements InputAdapter, OutputAdapter {
 
     private static final String FONT_PATH = "square.ttf";
 
-    public LanternaIOAdapter(int screenHeight, int screenWidth, Color backgroundColor) throws IOException, FontFormatException, URISyntaxException {
+    public LanternaIO(int screenHeight, int screenWidth, Color backgroundColor) throws IOException, FontFormatException, URISyntaxException {
         this.screenHeight = screenHeight;
         this.screenWidth = screenWidth;
         this.backgroundColor = backgroundColor;
@@ -130,12 +130,12 @@ public class LanternaIOAdapter implements InputAdapter, OutputAdapter {
         return new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                LanternaIOAdapter.this.keyPressed(e.getKeyChar());
+                LanternaIO.this.keyPressed(e.getKeyChar());
             }
 
             @Override
             public void keyReleased(KeyEvent e) {
-                LanternaIOAdapter.this.keyReleased(e.getKeyChar());
+                LanternaIO.this.keyReleased(e.getKeyChar());
             }
         };
     }
@@ -159,7 +159,7 @@ public class LanternaIOAdapter implements InputAdapter, OutputAdapter {
     }
 
     // Constructor used for testing
-    public LanternaIOAdapter(Terminal terminal, Screen screen, TextGraphics graphics, int screenHeight, int screenWidth, Color backgroundColor) {
+    public LanternaIO(Terminal terminal, Screen screen, TextGraphics graphics, int screenHeight, int screenWidth, Color backgroundColor) {
         this.screenHeight = screenHeight;
         this.screenWidth = screenWidth;
         this.backgroundColor = backgroundColor;

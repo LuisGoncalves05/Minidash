@@ -1,8 +1,8 @@
 package com.t10g01.minidash;
 
-import com.t10g01.minidash.ioadapter.InputAdapter;
-import com.t10g01.minidash.ioadapter.LanternaIOAdapter;
-import com.t10g01.minidash.ioadapter.OutputAdapter;
+import com.t10g01.minidash.io.Input;
+import com.t10g01.minidash.io.LanternaIO;
+import com.t10g01.minidash.io.Output;
 import com.t10g01.minidash.state.MainMenuState;
 import com.t10g01.minidash.state.State;
 import com.t10g01.minidash.utils.GameSettings;
@@ -19,19 +19,19 @@ public class Game {
     }
 
     private final GameSettings gameSettings;
-    private final InputAdapter inputAdapter;
-    private final OutputAdapter outputAdapter;
+    private final Input input;
+    private final Output output;
     private State state;
 
     public Game() throws IOException, URISyntaxException, FontFormatException {
         this.gameSettings = new GameSettings();
-        LanternaIOAdapter ioAdapter = new LanternaIOAdapter(
+        LanternaIO lanternaIO = new LanternaIO(
                 gameSettings.getCameraHeight() * gameSettings.getResolution(),
                 gameSettings.getCameraWidth() * gameSettings.getResolution(),
                 gameSettings.getBackgroundColor()
         );
-        this.inputAdapter = ioAdapter;
-        this.outputAdapter = ioAdapter;
+        this.input = lanternaIO;
+        this.output = lanternaIO;
         this.state = new MainMenuState(this);
     }
 
@@ -50,7 +50,7 @@ public class Game {
             Thread.sleep((int)sleepTime);
         }
 
-        outputAdapter.close();
+        output.close();
     }
 
     public void resetState() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
@@ -61,12 +61,12 @@ public class Game {
         this.state = state;
     }
 
-    public InputAdapter getiAdapter() {
-        return inputAdapter;
+    public Input getInput() {
+        return input;
     }
 
-    public OutputAdapter getoAdapter() {
-        return outputAdapter;
+    public Output getOutput() {
+        return output;
     }
 
     public GameSettings getGameSettings() {
@@ -74,10 +74,10 @@ public class Game {
     }
 
     // Constructor used for testing
-    public Game(GameSettings gameSettings, InputAdapter inputAdapter, OutputAdapter outputAdapter, State state) {
+    public Game(GameSettings gameSettings, Input input, Output output, State state) {
         this.gameSettings = gameSettings;
-        this.inputAdapter = inputAdapter;
-        this.outputAdapter = outputAdapter;
+        this.input = input;
+        this.output = output;
         this.state = state;
     }
 }
