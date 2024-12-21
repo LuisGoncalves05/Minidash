@@ -1,4 +1,4 @@
-package com.t10g01.minidash.ioadapter
+package com.t10g01.minidash.io
 
 import com.googlecode.lanterna.TerminalPosition
 import com.googlecode.lanterna.TerminalSize
@@ -9,12 +9,10 @@ import com.googlecode.lanterna.terminal.Terminal
 import com.googlecode.lanterna.screen.Screen
 import com.googlecode.lanterna.graphics.TextGraphics
 
-import java.awt.event.KeyEvent;
-
-class LanternaIOAdapterSpec extends Specification {
+class LanternaIOSpec extends Specification {
     def "isPressed test"() {
         given:
-        def lanternaIOAdapter = new LanternaIOAdapter(Mock(Terminal), Mock(Screen), Mock(TextGraphics), 0, 0, new Color("#000000"))
+        def lanternaIOAdapter = new LanternaIO(Mock(Terminal), Mock(Screen), Mock(TextGraphics), 0, 0, new Color("#000000"))
 
         expect:
         !lanternaIOAdapter.isPressed(' ' as char)
@@ -39,7 +37,7 @@ class LanternaIOAdapterSpec extends Specification {
         given:
         def screen = Mock(Screen)
         def graphics = Mock(TextGraphics)
-        def lanternaIOAdapter = new LanternaIOAdapter(Mock(Terminal), screen, graphics, 0, 0, new Color("#000000"))
+        def lanternaIOAdapter = new LanternaIO(Mock(Terminal), screen, graphics, 0, 0, new Color("#000000"))
 
         when:
         lanternaIOAdapter.clear()
@@ -53,7 +51,7 @@ class LanternaIOAdapterSpec extends Specification {
     def "close test"() {
         given:
         def screen = Mock(Screen)
-        def lanternaIOAdapter = new LanternaIOAdapter(Mock(Terminal), screen, Mock(TextGraphics), 0, 0, new Color("#000000"))
+        def lanternaIOAdapter = new LanternaIO(Mock(Terminal), screen, Mock(TextGraphics), 0, 0, new Color("#000000"))
 
         when:
         lanternaIOAdapter.close()
@@ -65,7 +63,7 @@ class LanternaIOAdapterSpec extends Specification {
     def "refresh test"() {
         given:
         def screen = Mock(Screen);
-        def lanternaIOAdapter = new LanternaIOAdapter(Mock(Terminal), screen, Mock(TextGraphics), 0, 0, new Color("#000000"))
+        def lanternaIOAdapter = new LanternaIO(Mock(Terminal), screen, Mock(TextGraphics), 0, 0, new Color("#000000"))
 
         when:
         lanternaIOAdapter.refresh()
@@ -77,7 +75,7 @@ class LanternaIOAdapterSpec extends Specification {
     def "drawPixel test"(x, y, xf, yf, color, colorf) {
         given:
         def graphics = Mock(TextGraphics)
-        def lanternaIOAdapter = new LanternaIOAdapter(Mock(Terminal), Mock(Screen), graphics, 10, 10, new Color("#000000"))
+        def lanternaIOAdapter = new LanternaIO(Mock(Terminal), Mock(Screen), graphics, 10, 10, new Color("#000000"))
 
         when:
         lanternaIOAdapter.drawPixel(x, y, color)
@@ -96,7 +94,7 @@ class LanternaIOAdapterSpec extends Specification {
     def "drawRectangle test"(height, width, x, y, xf, yf, color, colorf) {
         given:
         def graphics = Mock(TextGraphics)
-        def lanternaIOAdapter = new LanternaIOAdapter(Mock(Terminal), Mock(Screen), graphics, 10, 10, new Color("#000000"))
+        def lanternaIOAdapter = new LanternaIO(Mock(Terminal), Mock(Screen), graphics, 10, 10, new Color("#000000"))
 
         when:
         lanternaIOAdapter.drawRectangle(x, y, width, height, color)
