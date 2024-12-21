@@ -8,6 +8,13 @@ MiniDash is a simple version of [Geometry Dash](https://geometrygame.org/), impl
 
 This project was developed by *Luís Barbosa* (up202303872), *Luís Gonçalves* (up202305120), and *Sofia Sousa* (up202303662) for LDTS 2024/25.
 
+### Controls
+
+- `space` - jump and enter
+- `w` & `k` - up
+- `s` & `j` - down
+- `q` - quit
+
 ### IMPLEMENTED FEATURES
 
 - **Blocks & Platforms** - Game elements the player uses to move and jump. Colliding with a block sideways kills the player;
@@ -37,6 +44,12 @@ We'd planned these additional features, that ended up not being implemented due 
 - Color theme changing
 
 ### DESIGN
+
+#### STRUCTURE OVERVIEW
+
+![](./overview.png)
+
+> This UML ommits some information that will be discussed below
 
 #### DRAWING AND INTERATING WITH GAME ELEMENTS
 
