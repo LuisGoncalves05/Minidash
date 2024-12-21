@@ -26,7 +26,6 @@ public class BoxCollider {
     }
 
     // Methods used for testing
-
     public Vector2D getLowerLeft() {
         return lowerLeft;
     }

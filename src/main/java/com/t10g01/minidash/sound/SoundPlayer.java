@@ -5,7 +5,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.IOException;
 
 public interface SoundPlayer {
-    void playSound() throws UnsupportedAudioFileException, IOException, LineUnavailableException;
+    void playSound(String path) throws UnsupportedAudioFileException, IOException, LineUnavailableException;
 
     void stopSound();
 }
