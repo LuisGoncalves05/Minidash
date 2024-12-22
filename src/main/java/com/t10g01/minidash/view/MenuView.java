@@ -58,7 +58,7 @@ public class MenuView extends View<MenuModel> implements MenuOptionVisitor {
         BufferedImage sprite = ImageIO.read(new File(resource.toURI()));
 
         int numberOptions = model.getOptions().size();
-        // Option sprites are assumed to be 30px tall and there is a 20px margin to the top of the screen
+        // Option sprites are assumed to be 30px tall
         int offsetY = (renderedOptions + 1) * (ioAdapter.getScreenHeight() - numberOptions * 30) / (numberOptions + 1) + renderedOptions * 30;
         int offsetX = (ioAdapter.getScreenWidth() - sprite.getWidth()) / 2;
 
@@ -67,7 +67,7 @@ public class MenuView extends View<MenuModel> implements MenuOptionVisitor {
         for (int i = 0; i < sprite.getHeight(); i++) {
             for (int j = 0; j < sprite.getWidth(); j++) {
                 if (sprite.getRGB(j, i) != 0) {
-                    ioAdapter.drawPixel(offsetX + j, ioAdapter.getScreenHeight() - i - offsetY, color);
+                    ioAdapter.drawPixel(offsetX + j, ioAdapter.getScreenHeight() - i - offsetY - 1, color);
                 }
             }
         }
