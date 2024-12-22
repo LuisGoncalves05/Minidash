@@ -130,7 +130,7 @@ class MenuControllerSpec extends Specification {
         controller.step(action, 0)
 
         then:
-        model.setSelected(sf)
+        1 * model.setSelected(sf)
 
         where:
         l | si | action          | sf
@@ -139,7 +139,7 @@ class MenuControllerSpec extends Specification {
         2 | 1  | MenuAction.UP   | 0
         2 | 0  | MenuAction.UP   | 1
         3 | 2  | MenuAction.DOWN | 0
-        2 | 0  | MenuAction.UP   | 2
+        3 | 0  | MenuAction.UP   | 2
     }
 
     def "visitLevelsButton sets state to LevelMenuState"() {
