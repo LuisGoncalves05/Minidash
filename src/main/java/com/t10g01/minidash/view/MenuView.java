@@ -24,7 +24,7 @@ public class MenuView extends View<MenuModel> implements MenuOptionVisitor {
     }
 
     @Override
-    public void draw() throws URISyntaxException, IOException, UnsupportedAudioFileException, LineUnavailableException {
+    public void draw() throws IOException, UnsupportedAudioFileException, LineUnavailableException, URISyntaxException {
         renderedOptions = 0;
 
         ioAdapter.clear();

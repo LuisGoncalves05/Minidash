@@ -33,6 +33,11 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
        soundPlayer.playSound();
     }
 
+    public void resetLevel() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+        soundPlayer.stopSound();
+        game.resetState();
+    }
+
     @Override
     public void step(LevelAction levelAction, double deltaTime) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         if (levelAction == LevelAction.EXIT) {
@@ -42,7 +47,10 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
         }
 
         Vector2D playerPosition = model.getPlayer().getPosition();
-        if (playerPosition.getX() < 0 || playerPosition.getY() < 0) game.resetState();
+        if (playerPosition.getX() < 0 || playerPosition.getY() < 0) {
+            resetLevel();
+            return;
+        }
 
         playerController.update(deltaTime);
 
@@ -55,11 +63,6 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
         }
 
         if (levelAction == LevelAction.JUMP) playerController.jump(gameSettings.getJumpHeight(), gameSettings.getJumpTime());
-    }
-    
-    public void resetLevel() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        soundPlayer.stopSound();
-        game.resetState();
     }
 
     @Override
@@ -76,12 +79,16 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
 
     @Override
     public void visitSpike(Spike spike) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
-        if (spike.collision(model.getPlayer())) resetLevel();
+        if (spike.collision(model.getPlayer())) {
+            resetLevel();
+        }
     }
 
     @Override
     public void visitReversedSpike(ReversedSpike reversedSpike) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
-        if (reversedSpike.collision(model.getPlayer())) resetLevel();
+        if (reversedSpike.collision(model.getPlayer())) {
+            resetLevel();
+        }
     }
 
     @Override
@@ -91,7 +98,9 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
         if (platform.topCollision(player)) {
             double height = platform.getPosition().getY() + 1;
             playerController.groundPlayer(height);
-        } else if (platform.collision(player)) resetLevel();
+        } else if (platform.collision(player)) {
+            resetLevel();
+        }
     }
 
     @Override

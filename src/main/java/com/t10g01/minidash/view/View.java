@@ -16,6 +16,6 @@ public abstract class View<T> {
         this.ioAdapter = ioAdapter;
     }
 
-    public abstract void draw() throws IOException, URISyntaxException, UnsupportedAudioFileException, LineUnavailableException;
+    public abstract void draw() throws IOException, UnsupportedAudioFileException, LineUnavailableException, URISyntaxException;
 
 }

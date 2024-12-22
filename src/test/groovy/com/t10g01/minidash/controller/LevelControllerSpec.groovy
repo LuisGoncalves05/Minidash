@@ -19,6 +19,8 @@ import com.t10g01.minidash.utils.LevelAction
 import spock.lang.Shared
 import spock.lang.Specification
 
+import javax.swing.text.Position
+
 class LevelControllerSpec extends Specification {
     @Shared
     LevelModel model
@@ -48,10 +50,9 @@ class LevelControllerSpec extends Specification {
         levelController = new LevelController(model, game, playerController, soundPlayer)
     }
 
-    def "step updates player in valid position"(double dt) {
+    def "step updates player in valid position"(double dt, LevelAction action, int px, int py) {
         given:
-        player.getPosition() >> new Vector2D(0, 0)
-        LevelAction action = LevelAction.NULL
+        player.getPosition() >> new Vector2D(px, py)
 
         when:
         levelController.step(action, dt)
@@ -61,28 +62,49 @@ class LevelControllerSpec extends Specification {
         0 * game.resetState()
 
         where:
-        dt | _
-        1  | _
-        2  | _
+        dt | action           | px | py
+        1  | LevelAction.JUMP | 19 | 1
+        2  | LevelAction.NULL | 42 | 42
     }
 
-    def "step makes player jump in valid position"() {
+
+    def "step makes player jump in valid position"(Vector2D position, double dt) {
         given:
-        player.getPosition() >> new Vector2D(0, 0)
-        LevelAction action = LevelAction.JUMP
+        player.getPosition() >> position
 
         when:
-        levelController.step(action, 0)
+        levelController.step(LevelAction.JUMP, dt)
 
         then:
         1 * playerController.jump(_, _)
         1 * playerController.update(_)
         0 * game.resetState()
+
+        where:
+        dt | px | py
+        1  | 19 | 1
+        2  | 42 | 42
     }
 
-    def "step ends game on exit in valid position"() {
+    def "step ends game on exit in valid position" (dt, int px, int py) {
         given:
-        player.getPosition() >> new Vector2D(0, 0)
+        player.getPosition() >> position
+
+        when:
+        levelController.step(LevelAction.EXIT, dt)
+
+        then:
+        1 * game.setState({it instanceof MenuState})
+
+        where:
+        dt | px | py
+        1  | 19 | 1
+        2  | 42 | 42
+    }
+
+    def "step ends game on exit in invalid position"() {
+        given:
+        player.getPosition() >> new Vector2D(0, -2)
         LevelAction action = LevelAction.EXIT
 
         when:
@@ -106,7 +128,7 @@ class LevelControllerSpec extends Specification {
         0 * game.resetState()
     }
 
-    def "step restarts game in invalid position"() {
+    def "step restarts game in invalid position"(int px, int py, LevelAction action) {
         given:
         player.getPosition() >> new Vector2D(px, py)
 
@@ -115,6 +137,7 @@ class LevelControllerSpec extends Specification {
 
         then:
         1 * game.resetState()
+        1 * soundPlayer.stopSound()
 
         where:
         px  | py | action
@@ -150,7 +173,7 @@ class LevelControllerSpec extends Specification {
         levelController.visitBlock(block)
 
         then:
-        playerController.groundPlayer(h + 1)
+        1 * playerController.groundPlayer(h + 1)
 
         where:
         h | _

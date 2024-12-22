@@ -23,7 +23,7 @@ public class Block extends Element {
     }
 
     @Override
-    public void accept(ElementVisitor visitor) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+    public void accept(ElementVisitor visitor) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         visitor.visitBlock(this);
     }
 
