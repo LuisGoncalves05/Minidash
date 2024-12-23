@@ -2,10 +2,13 @@ package com.t10g01.minidash.view
 
 import com.t10g01.minidash.ioadapter.IOAdapter
 import com.t10g01.minidash.model.MenuOption
+import com.t10g01.minidash.utils.Color
 import com.t10g01.minidash.utils.GameSettings
 import com.t10g01.minidash.model.MenuModel
 import spock.lang.Shared
 import spock.lang.Specification
+
+import java.awt.Menu
 
 
 class MenuViewSpec extends Specification {
@@ -15,29 +18,89 @@ class MenuViewSpec extends Specification {
     MenuModel menuModel
     @Shared
     MenuView menuView
+    @Shared
+    MenuOption menuOption1
+    @Shared
+    MenuOption menuOption2
+    @Shared
+    GameSettings settings
 
     def setup() {
         ioAdapter = Mock(IOAdapter)
-        ioAdapter.getScreenHeight() >> 30
-        ioAdapter.getScreenWidth() >> 4
+        ioAdapter.getScreenHeight() >> 90
+        ioAdapter.getScreenWidth() >> 6
+
         menuModel = Mock(MenuModel)
-        def options = Mock(List<MenuOption>)
-        options.size() >> 1
+        menuModel.getSelected() >> 1;
+
+        menuOption1 = Mock(MenuOption)
+        menuOption2 = Mock(MenuOption)
+
+        def options = Arrays.asList(menuOption1, menuOption2)
         menuModel.getOptions() >> options
-        menuView = new MenuView(menuModel, ioAdapter, Mock(GameSettings))
+
+        settings = Mock(GameSettings)
+
+        def colorNS = Mock(Color)
+        colorNS.red >> 255
+        colorNS.green >> 0
+        colorNS.blue >> 0
+        settings.getMenuOptionColor() >> colorNS
+
+        def colorS = Mock(Color)
+        colorS.red >> 2
+        colorS.green >> 3
+        colorS.blue >> 4
+        settings.getSelectedOptionColor() >> colorS
+
+        menuView = new MenuView(menuModel, ioAdapter, settings)
     }
 
-    def "drawOption draws correct pixels"() {
+    def "draw sets rendered options"() {
+        when:
+        menuView.draw()
+
+        then:
+        1 * menuOption1.accept(menuView)
+        1 * menuOption2.accept(menuView)
+        1 * ioAdapter.clear()
+        1 * ioAdapter.refresh()
+    }
+
+    def "drawOption draws correct pixels and updates renderedOptions"() {
+        given:
+        def colorNotSelected = settings.getMenuOptionColor()
+        def colorSelected = settings.getSelectedOptionColor()
+
+        expect:
+        menuView.renderedOptions == 0
+
+        when:
+        menuView.drawOption("test.png")
+
+        then: "all pixels drawn (test has width 4 but only 3 visible pixels)"
+        1 * ioAdapter.drawPixel(1, 79, colorNotSelected)
+        1 * ioAdapter.drawPixel(2, 79, colorNotSelected)
+        1 * ioAdapter.drawPixel(3, 79, colorNotSelected)
+        1 * ioAdapter.drawPixel(1, 78, colorNotSelected)
+        1 * ioAdapter.drawPixel(2, 78, colorNotSelected)
+        1 * ioAdapter.drawPixel(1, 77, colorNotSelected)
+        0 * ioAdapter.drawPixel(_, _, colorNotSelected)
+
+        menuView.renderedOptions == 1
+
         when:
         menuView.drawOption("test.png")
 
         then:
-        1 * ioAdapter.drawPixel(0, 29, _)
-        1 * ioAdapter.drawPixel(1, 29, _)
-        1 * ioAdapter.drawPixel(2, 29, _)
-        1 * ioAdapter.drawPixel(0, 28, _)
-        1 * ioAdapter.drawPixel(1, 28, _)
-        1 * ioAdapter.drawPixel(0, 27, _)
-        0 * ioAdapter.drawPixel(_, _, _)
+        1 * ioAdapter.drawPixel(1, 39, colorSelected)
+        1 * ioAdapter.drawPixel(2, 39, colorSelected)
+        1 * ioAdapter.drawPixel(3, 39, colorSelected)
+        1 * ioAdapter.drawPixel(1, 38, colorSelected)
+        1 * ioAdapter.drawPixel(2, 38, colorSelected)
+        1 * ioAdapter.drawPixel(1, 37, colorSelected)
+        0 * ioAdapter.drawPixel(_, _, colorSelected)
+
+        menuView.renderedOptions == 2
     }
 }
