@@ -137,6 +137,10 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
     }
 
     public void drawPlayer(Player player) {
+        // The player's pixels are worked out in reverse: for each pixel that a rotated player could range, we apply the
+        // inverse of the true rotation and check if it is within the non-rotated player's bounds. This prevents the
+        // holes that would appear if the player were drawn in a forward manner.
+
         Vector2D position = player.getPosition();
         int resolution = gameSettings.getResolution();
 

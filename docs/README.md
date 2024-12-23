@@ -4,7 +4,7 @@
 
 ## LDTS_t10g01 - Minidash
 
-MiniDash is a simple version of [Geometry Dash](https://geometrygame.org/), implemented using Java's Lanterna. We follow SOLID principles and integrate several programming patterns such as State, Game Loop, and Visitor.
+MiniDash is a simple version of [Geometry Dash](https://geometrygame.org/), implemented using Java's Lanterna. We follow SOLID principles and integrate several programming patterns such as State, Game Loop, Visitor and Facade.
 
 This project was developed by *Luís Barbosa* (up202303872), *Luís Gonçalves* (up202305120), and *Sofia Sousa* (up202303662) for LDTS 2024/25.
 
