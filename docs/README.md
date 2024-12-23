@@ -122,19 +122,19 @@ Minidash uses Lanterna for its I/O operations, which has a rather complicated in
 
 **The Pattern**
 
-We solved this problem using the **Facade Pattern**, which requires creating a new class that provides only the features needed from another more complex class, abstracting repeated code.
+We solved this problem using the **Facade Pattern**, which requires creating a new class that provides only the features needed from another more complex class, abstracting repeated code and providing greater flexibility towards the underlying technology while offering a uniform interface.
 
 **Implementation**
 
-While the original implementation of this pattern relied on a single interface, **IOAdapter**, which was implemented by the **LanternaIOAdapter** class, we later realized that this violated the Interface Segregation Principle. As such, we decided to create two new interfaces, **InputAdapter** and **OutputAdapter**, which are both implemented by LanternaIOAdapter:
+While the original implementation of this pattern relied on a single interface, **IOAdapter**, which was implemented by the **LanternaIOAdapter** class, we later realized that this violated the Interface Segregation Principle. As such, we decided to create two new interfaces, **Input** and **Output**, which are both implemented by LanternaIO:
 
 ![](./facade.png)
 
 These classes can be found in the following files:
 
-- [InputAdapter](https://github.com/FEUP-LDTS-2024/project-t10g01/blob/master/src/main/java/com/t10g01/minidash/ioadapter/InputAdapter.java)
-- [OutputAdapter](https://github.com/FEUP-LDTS-2024/project-t10g01/blob/master/src/main/java/com/t10g01/minidash/ioadapter/OutputAdapter.java)
-- [LanternaIOAdapter](https://github.com/FEUP-LDTS-2024/project-t10g01/blob/master/src/main/java/com/t10g01/minidash/ioadapter/LanternaIOAdapter.java)
+- [Input](https://github.com/FEUP-LDTS-2024/project-t10g01/blob/master/src/main/java/com/t10g01/minidash/ioadapter/Input.java)
+- [Output](https://github.com/FEUP-LDTS-2024/project-t10g01/blob/master/src/main/java/com/t10g01/minidash/ioadapter/Output.java)
+- [LanternaIO](https://github.com/FEUP-LDTS-2024/project-t10g01/blob/master/src/main/java/com/t10g01/minidash/ioadapter/LanternaIO.java)
 
 **Consequences**
 
@@ -168,10 +168,10 @@ These classes can be found in the following files:
 
 **Consequences**
 
-Applying the Factory Method in the current design means:
+Applying the State pattern in the current design means:
 
-- Better separation between different classes: the LevelController doesn't have to decide which options a menu should have - it suffices to choose a menu type and call its empty constructor.
-- Some additional complexity, far outweighed by the benefits.
+- Alternating between menu and level modes with ease
+- Greater flexiblity for future addition of more modes.
 
 ### TESTING
 
