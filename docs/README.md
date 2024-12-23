@@ -17,10 +17,10 @@ This project was developed by *Luís Barbosa* (up202303872), *Luís Gonçalves* 
 
 ### IMPLEMENTED FEATURES
 
-- **Blocks & Platforms** - Game elements the player uses to move and jump. Colliding with a block sideways kills the player;
+- **Blocks & Platforms** - Game elements the player uses to move and jump. Colliding with the sides or bottom of a block kills the player;
 - **Spikes** - Colliding with a spike kills the player;
-- **Boosts** - Colliding with a bost makes the player jump higher and further than normal. The player is forced to jump upon collision, even without jump-button action;
-- **Double jumpers** - Double jumps allow the player to jump mid-air if there is jump-button action. Otherwise, the player falls through them;
+- **Boosts** - Colliding with a boost makes the player jump higher and further than normal. The player is forced to jump upon collision, even without jump-button action;
+- **Double jumps** - Double jumps allow the player to jump midair if there is jump-button action. Otherwise, the player falls through them;
 - **Physics** - The above features require realistic physics for jumping and collision detection;
 - **Player rotation** - This required some non-trivial trigonometry and clever thinking;
 - **Menus** - Allow the user to select a level or quit the game;
@@ -51,7 +51,7 @@ We'd planned these additional features, that ended up not being implemented due 
 
 > This UML ommits some information that will be discussed below
 
-#### DRAWING AND INTERATING WITH GAME ELEMENTS
+#### DRAWING AND INTERACTING WITH GAME ELEMENTS
 
 **Problem in Context**
 
@@ -67,7 +67,7 @@ The following figure shows how the pattern’s roles were mapped to the applicat
 
 ![](./visitor.png)
 
-> Please note that the UML diagram for MenuOptionVisitor was ommitted for simplicity. The structure is very similar.
+> Please note that the UML diagram for MenuOptionVisitor was omitted for simplicity. The structure is very similar.
 
 These classes can be found in the following files (only a few are provided for brevity, all the others follow a similar structure):
 
@@ -171,7 +171,7 @@ These classes can be found in the following files:
 Applying the State pattern in the current design means:
 
 - Alternating between menu and level modes with ease
-- Greater flexiblity for future addition of more modes.
+- Greater flexibility for future addition of more modes.
 
 ### TESTING
 
