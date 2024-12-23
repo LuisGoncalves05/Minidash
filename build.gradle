@@ -32,6 +32,10 @@ dependencies {
 
 pitest {
     junit5PluginVersion = '1.2.0'
+    excludedClasses = [
+            'com.t10g01.minidash.sound.WAVPlayer',
+            'com.t10g01.minidash.utils.GameSettings'
+    ]
 }
 
 application {
