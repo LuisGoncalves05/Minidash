@@ -24,7 +24,7 @@ public class MenuView extends View<MenuModel> implements MenuOptionVisitor {
     }
 
     @Override
-    public void draw() throws URISyntaxException, IOException, UnsupportedAudioFileException, LineUnavailableException {
+    public void draw() throws IOException, UnsupportedAudioFileException, LineUnavailableException, URISyntaxException {
         renderedOptions = 0;
 
         output.clear();
@@ -44,7 +44,7 @@ public class MenuView extends View<MenuModel> implements MenuOptionVisitor {
 
     @Override
     public void visitLevelButton(LevelButton levelButton) throws IOException, URISyntaxException {
-        drawOption("level" + levelButton.level() + ".png");
+        drawOption("level" + levelButton.getLevelNumber() + ".png");
     }
 
     @Override
@@ -52,7 +52,7 @@ public class MenuView extends View<MenuModel> implements MenuOptionVisitor {
         drawOption("complete.png");
     }
 
-    void drawOption(String spritePath) throws URISyntaxException, IOException {
+    private void drawOption(String spritePath) throws URISyntaxException, IOException {
         URL resource = getClass().getClassLoader().getResource(spritePath);
         assert resource != null;
         BufferedImage sprite = ImageIO.read(new File(resource.toURI()));
@@ -67,7 +67,7 @@ public class MenuView extends View<MenuModel> implements MenuOptionVisitor {
         for (int i = 0; i < sprite.getHeight(); i++) {
             for (int j = 0; j < sprite.getWidth(); j++) {
                 if (sprite.getRGB(j, i) != 0) {
-                    output.drawPixel(offsetX + j, output.getScreenHeight() - i - offsetY, color);
+                    output.drawPixel(offsetX + j, output.getScreenHeight() - i - offsetY - 1, color);
                 }
             }
         }

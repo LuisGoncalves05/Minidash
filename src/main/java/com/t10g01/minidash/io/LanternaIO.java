@@ -50,7 +50,7 @@ public class LanternaIO implements Input, Output {
     }
 
     @Override
-    public boolean isPressed(char c) {
+    public boolean isPressed(Character c) {
         return pressedKeys.contains(c);
     }
 
@@ -140,11 +140,11 @@ public class LanternaIO implements Input, Output {
         };
     }
 
-    private void keyPressed(char c) {
+    private void keyPressed(Character c) {
         pressedKeys.add(c);
     }
 
-    private void keyReleased(char c) {
+    private void keyReleased(Character c) {
         pressedKeys.remove(c);
     }
 

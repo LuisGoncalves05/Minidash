@@ -1,5 +1,5 @@
 package com.t10g01.minidash.io;
 
 public interface Input {
-    boolean isPressed(char key);
+    boolean isPressed(Character key);
 }

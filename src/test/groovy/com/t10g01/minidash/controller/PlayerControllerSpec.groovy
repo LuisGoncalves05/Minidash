@@ -4,11 +4,12 @@ package com.t10g01.minidash.controller
 import com.t10g01.minidash.model.Player
 import com.t10g01.minidash.model.Vector2D
 import com.t10g01.minidash.utils.GameSettings
+import spock.lang.Shared
 import spock.lang.Specification
 
 class PlayerControllerSpec extends Specification {
-
-    static GameSettings settings
+    @Shared
+    GameSettings settings
 
     def setup() {
         settings = Mock(GameSettings)
@@ -16,13 +17,14 @@ class PlayerControllerSpec extends Specification {
         settings.getCameraWidth() >> 10
         settings.getCameraHeight() >> 5
         settings.getRotationSpeed() >> -360
+        settings.getPlayerSpeedX() >> 9
     }
 
-    def "update updates position and speed"(xi, yi, vx, vy, g, dt, xf, yf, vxf, vyf) {
+    def "update updates position and speed"(xi, yi, vy, g, dt, xf, yf, vyf) {
         given:
         def player = Mock(Player)
         player.getPosition() >> new Vector2D(xi, yi)
-        player.getSpeed() >> new Vector2D(vx, vy)
+        player.getSpeed() >> new Vector2D(0, vy)
         player.getG() >> g
         def controller = new PlayerController(player, settings)
 
@@ -30,14 +32,14 @@ class PlayerControllerSpec extends Specification {
         controller.update(dt)
 
         then:
-        1 * player.setSpeed(new Vector2D(vxf, vyf))
+        1 * player.setSpeed(new Vector2D(9, vyf))
         1 * player.setPosition(new Vector2D(xf, yf))
 
         where:
-        xi  | yi  | vx  | vy  | g    | dt  | xf  | yf  | vxf | vyf
-        0   | 1   | 1   | 0   | 10   | 0.1 | 0.1 | 0.9 | 1   |-1
-        0   | 1   | 0   | 1   | 20   | 0.1 | 0   | 0.9 | 0   |-1
-        2   | 2   |-0.5 | 2   | 4    | 0.5 | 1.75| 2   |-0.5 | 0
+        xi  | yi  | vy  | g    | dt  | xf  | yf  | vyf
+        0   | 1   | 0   | 10   | 0.1 | 0.9 | 0.9 |-1
+        0   | 1   | 1   | 20   | 0.1 | 0.9 | 0.9 |-1
+        2   | 2   | 2   | 4    | 0.5 | 6.5 | 2   | 0
     }
 
     def "update correctly sets previousPosition"(x, y) {

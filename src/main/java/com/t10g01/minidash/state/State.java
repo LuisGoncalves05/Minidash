@@ -22,7 +22,7 @@ public abstract class State<T, U> {
     protected final Game game;
     protected final GameSettings gameSettings;
 
-    public State(Game game) throws IOException {
+    public State(Game game) {
         this.game = game;
         this.gameSettings = game.getGameSettings();
         this.input = game.getInput();

@@ -4,7 +4,6 @@ import spock.lang.Shared
 import spock.lang.Specification
 
 class DoubleJumpSpec extends Specification {
-
     @Shared
     BoxCollider boundingBox, collider1, collider2
     @Shared
@@ -79,7 +78,7 @@ class DoubleJumpSpec extends Specification {
         0 * collider2.collision(player)
     }
 
-    def 'collision with doublejump colliders'() {
+    def 'collision with doubleJump colliders'() {
         given:
         boundingBox.collision(player) >> true
         collider1.collision(player) >> a

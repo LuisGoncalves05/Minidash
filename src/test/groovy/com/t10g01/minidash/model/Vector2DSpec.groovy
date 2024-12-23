@@ -3,7 +3,6 @@ package com.t10g01.minidash.model
 import spock.lang.Specification
 
 class Vector2DSpec extends Specification {
-
     def 'vector rotation around (0, 0)'(xi, yi, angle, xf, yf) {
         given:
         def vector = new Vector2D(xi, yi)

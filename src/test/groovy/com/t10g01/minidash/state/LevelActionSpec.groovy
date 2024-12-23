@@ -33,11 +33,11 @@ class LevelActionSpec extends Specification{
 
     def "jumps when space pressed"() {
         given:
-        input.isPressed(' ') >> true
-        input.isPressed('e') >> true
-        input.isPressed('x') >> true
-        input.isPressed('b') >> true
-        input.isPressed('a') >> true
+        input.isPressed(' ' as Character) >> true
+        input.isPressed('e' as Character) >> true
+        input.isPressed('x' as Character) >> true
+        input.isPressed('b' as Character) >> true
+        input.isPressed('a' as Character) >> true
 
         expect:
         levelState.getAction() == LevelAction.JUMP
@@ -45,11 +45,11 @@ class LevelActionSpec extends Specification{
 
     def "does nothing if random keys pressed"() {
         given:
-        input.isPressed('w') >> true
-        input.isPressed('e') >> true
-        input.isPressed('x') >> true
-        input.isPressed('b') >> true
-        input.isPressed('a') >> true
+        input.isPressed('w' as Character) >> true
+        input.isPressed('e' as Character) >> true
+        input.isPressed('x' as Character) >> true
+        input.isPressed('b' as Character) >> true
+        input.isPressed('a' as Character) >> true
 
         expect:
         levelState.getAction() == LevelAction.NULL
@@ -57,7 +57,7 @@ class LevelActionSpec extends Specification{
 
     def "exits if q pressed" (){
         given:
-        input.isPressed('q') >> true
+        input.isPressed('q' as Character) >> true
 
         expect:
         levelState.getAction() == LevelAction.EXIT

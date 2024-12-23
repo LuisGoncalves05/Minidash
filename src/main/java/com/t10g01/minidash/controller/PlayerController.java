@@ -7,15 +7,17 @@ import com.t10g01.minidash.utils.GameSettings;
 public class PlayerController {
     private final Player player;
     private final double rotationSpeed;
+    private final double playerSpeedX;
 
     public PlayerController(Player player, GameSettings settings) {
         this.player = player;
         this.rotationSpeed = settings.getRotationSpeed();
+        this.playerSpeedX = settings.getPlayerSpeedX();
     }
 
     public void update(double deltaTime) {
         Vector2D speed = player.getSpeed();
-        Vector2D newSpeed = new Vector2D(speed.getX(), speed.getY() - player.getG() * deltaTime);
+        Vector2D newSpeed = new Vector2D(playerSpeedX, speed.getY() - player.getG() * deltaTime);
 
         Vector2D position = player.getPosition();
         player.setPreviousPosition(position);

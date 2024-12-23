@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.net.URL;
 
 public class WAVPlayer implements SoundPlayer {
-    private Clip clip;
+    private static Clip clip;
 
     @Override
     public void playSound(String path) throws LineUnavailableException, IOException, UnsupportedAudioFileException {
@@ -22,8 +22,13 @@ public class WAVPlayer implements SoundPlayer {
 
     @Override
     public void stopSound() {
-        if (clip == null) return;
-        clip.stop();
+        if (clip == null) {
+            return;
+        }
+        if (clip.isRunning()) {
+            clip.stop();
+        }
+        clip.flush();
         clip.close();
         clip = null;
     }

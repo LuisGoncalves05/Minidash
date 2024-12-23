@@ -86,7 +86,8 @@ public class LevelState extends State<LevelModel, LevelAction> {
             case ')' -> new Boost(x, y);
             case '_' -> new LevelEnd(x, y);
             case '*' -> new DoubleJump(x, y);
-            default -> null;
+            case ' ' -> null;
+            default -> throw new IllegalArgumentException(y + " unknown character " + data.charAt(y));
         };
     }
 
@@ -101,5 +102,6 @@ public class LevelState extends State<LevelModel, LevelAction> {
     public LevelState(Game game) throws IOException {
         super(game);
         this.levelNumber = -1;
+        this.model = createModel();
     }
 }

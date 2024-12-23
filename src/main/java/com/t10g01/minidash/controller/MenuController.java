@@ -44,13 +44,13 @@ public class MenuController extends Controller<MenuModel, MenuAction> implements
     }
 
     @Override
-    public void visitExitButton(ExitButton exitButton) {
-        game.setState(null);
+    public void visitLevelButton(LevelButton levelButton) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+        game.setState(new LevelState(game, levelButton.getLevelNumber() - 1));
     }
 
     @Override
-    public void visitLevelButton(LevelButton levelButton) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
-        game.setState(new LevelState(game, levelButton.level() - 1));
+    public void visitExitButton(ExitButton exitButton) {
+        game.setState(null);
     }
 
     @Override

@@ -19,7 +19,11 @@ public class GameSettings {
     private final Color boostColor;
     private final Color doubleJumpColor;
 
+    private final double playerSpeedX = 9;
     private final double jumpTime = 0.5;
+    private final double jumpHeight = 3;
+    private final double boostJumpTime = 0.7;
+    private final double boostJumpHeight = 5;
     private final double rotationSpeed = -180d / jumpTime;
 
     public GameSettings() {
@@ -86,6 +90,26 @@ public class GameSettings {
 
     public Color getPlatformColor() {
         return platformColor;
+    }
+
+    public double getPlayerSpeedX() {
+        return playerSpeedX;
+    }
+
+    public double getJumpTime() {
+        return jumpTime;
+    }
+
+    public double getJumpHeight() {
+        return jumpHeight;
+    }
+
+    public double getBoostJumpTime() {
+        return boostJumpTime;
+    }
+
+    public double getBoostJumpHeight() {
+        return boostJumpHeight;
     }
 
     public double getRotationSpeed() {

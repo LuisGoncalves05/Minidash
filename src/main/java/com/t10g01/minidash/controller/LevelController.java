@@ -6,6 +6,7 @@ import com.t10g01.minidash.sound.WAVPlayer;
 import com.t10g01.minidash.model.*;
 import com.t10g01.minidash.state.LevelCompleteState;
 import com.t10g01.minidash.state.MainMenuState;
+import com.t10g01.minidash.utils.GameSettings;
 import com.t10g01.minidash.utils.LevelAction;
 
 import javax.sound.sampled.LineUnavailableException;
@@ -14,6 +15,8 @@ import java.io.IOException;
 import java.util.List;
 
 public class LevelController extends Controller<LevelModel, LevelAction> implements ElementVisitor {
+
+    private final GameSettings gameSettings;
     private final PlayerController playerController;
     private final SoundPlayer soundPlayer;
 
@@ -27,6 +30,12 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
        playerController = new PlayerController(levelModel.getPlayer(), game.getGameSettings());
        this.soundPlayer = new WAVPlayer();
        soundPlayer.playSound("lvl" + levelModel.getLevelNumber() + ".wav");
+       gameSettings = game.getGameSettings();
+    }
+
+    public void resetLevel() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+        soundPlayer.stopSound();
+        game.resetState();
     }
 
     @Override
@@ -37,7 +46,11 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
             return;
         }
 
-        if (model.getPlayer().getPosition().getY() < 0) resetLevel();
+        Vector2D playerPosition = model.getPlayer().getPosition();
+        if (playerPosition.getX() < 0 || playerPosition.getY() < 0) {
+            resetLevel();
+            return;
+        }
 
         playerController.update(deltaTime);
 
@@ -49,12 +62,7 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
             elements.get(i).accept(this);
         }
 
-        if (levelAction == LevelAction.JUMP) playerController.jump(3, 0.5);
-    }
-    
-    public void resetLevel() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        soundPlayer.stopSound();
-        game.resetState();
+        if (levelAction == LevelAction.JUMP) playerController.jump(gameSettings.getJumpHeight(), gameSettings.getJumpTime());
     }
 
     @Override
@@ -71,12 +79,16 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
 
     @Override
     public void visitSpike(Spike spike) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
-        if (spike.collision(model.getPlayer())) resetLevel();
+        if (spike.collision(model.getPlayer())) {
+            resetLevel();
+        }
     }
 
     @Override
     public void visitReversedSpike(ReversedSpike reversedSpike) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
-        if (reversedSpike.collision(model.getPlayer())) resetLevel();
+        if (reversedSpike.collision(model.getPlayer())) {
+            resetLevel();
+        }
     }
 
     @Override
@@ -86,7 +98,9 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
         if (platform.topCollision(player)) {
             double height = platform.getPosition().getY() + 1;
             playerController.groundPlayer(height);
-        } else if (platform.collision(player)) resetLevel();
+        } else if (platform.collision(player)) {
+            resetLevel();
+        }
     }
 
     @Override
@@ -94,7 +108,7 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
         Player player = model.getPlayer();
 
         if (boost.collision(player)) {
-            playerController.jump(5, 0.7);
+            playerController.jump(gameSettings.getBoostJumpHeight(), gameSettings.getBoostJumpTime());
             player.setGrounded(false);
             player.setOnBoost(true);
         }
@@ -130,18 +144,19 @@ public class LevelController extends Controller<LevelModel, LevelAction> impleme
         }
     }
 
-    // Constructor used for testing
-    public LevelController(LevelModel levelModel, Game game, PlayerController playerController, SoundPlayer soundPlayer) {
-        super(levelModel, game);
-        this.playerController = playerController;
-        this.soundPlayer = soundPlayer;
-    }
-
     public int getLeftPointer() {
         return leftPointer;
     }
 
     public int getRightPointer() {
         return rightPointer;
+    }
+
+    // Constructor used for testing
+    public LevelController(LevelModel levelModel, Game game, PlayerController playerController, SoundPlayer soundPlayer) {
+        super(levelModel, game);
+        this.playerController = playerController;
+        this.gameSettings = game.getGameSettings();
+        this.soundPlayer = soundPlayer;
     }
 }

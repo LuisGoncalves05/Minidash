@@ -4,7 +4,6 @@ import spock.lang.Shared
 import spock.lang.Specification
 
 class ReversedSpikeSpec extends Specification {
-
     @Shared
     BoxCollider boundingBox, collider1, collider2, collider3
     @Shared

@@ -10,6 +10,8 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.IOException;
 import java.util.List;
 
+import static java.lang.Math.ceil;
+
 public class LevelView extends View<LevelModel> implements ElementVisitor {
     private final GameSettings gameSettings;
     private final double cameraWidth;
@@ -35,12 +37,15 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
 
     @Override
     public void draw() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
-        this.cameraX = model.getPlayer().getPosition().getX() - cameraXOffset;
-        this.cameraY = Math.max(model.getPlayer().getPosition().getY() - cameraYOffset, 0);
+        Player player = model.getPlayer();
+        Vector2D position = player.getPosition();
+
+        this.cameraX = position.getX() - cameraXOffset;
+        this.cameraY = Math.max(position.getY() - cameraYOffset, 0);
 
         output.clear();
 
-        drawPlayer(model.getPlayer());
+        drawPlayer(player);
 
         updatePointers();
         List<Element> elements = model.getElements();
@@ -104,7 +109,7 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
 
         int x = (int) ((position.getX() - cameraX) * resolution);
         int y = (int) ((position.getY() + 0.75 - cameraY) * resolution);
-        int height = (int) Math.ceil(0.25 * resolution);
+        int height = (int) ceil(0.25 * resolution);
 
         output.drawRectangle(x, y, resolution, height, gameSettings.getPlatformColor());
     }
@@ -148,7 +153,7 @@ public class LevelView extends View<LevelModel> implements ElementVisitor {
 
         double rotation = player.getRotation();
         Color playerColor = gameSettings.getPlayerColor();
-        int biggestDeltaCenter = (int) Math.ceil(resolution * 0.70710678118) + 1;
+        int biggestDeltaCenter = (int) (resolution * 0.70710678118);
 
         for (int i = -biggestDeltaCenter; i <= biggestDeltaCenter; i++) {
             for (int j = -biggestDeltaCenter; j <= biggestDeltaCenter; j++) {

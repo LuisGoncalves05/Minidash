@@ -4,7 +4,6 @@ import spock.lang.Shared
 import spock.lang.Specification
 
 class BoostSpec extends Specification {
-
     @Shared
     BoxCollider boundingBox, collider1, collider2
     @Shared
@@ -95,5 +94,4 @@ class BoostSpec extends Specification {
         true  | false | true
         true  | true  | true
     }
-
 }
