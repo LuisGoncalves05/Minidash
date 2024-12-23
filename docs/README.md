@@ -175,8 +175,9 @@ Applying the State pattern in the current design means:
 
 ### TESTING
 
-- Screenshot of coverage report.
-- Link to mutation testing report.
+![](./coverage.png)
+
+![](./pitest.png)
 
 ### SELF-EVALUATION
 
