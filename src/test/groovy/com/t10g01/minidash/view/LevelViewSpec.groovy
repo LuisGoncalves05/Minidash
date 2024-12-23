@@ -40,7 +40,7 @@ class LevelViewSpec extends Specification {
         settings.getCameraCutoff() >> 0.5
     }
 
-    def "block visitor"(x, y, xp, yp, xf, yf, cy) {
+    def "block visitor"(double x, double y, double xp, double yp, int xf, int yf, int cy) {
         given:
         def block = Mock(Block)
         def blockPosition = Mock(Vector2D)
@@ -75,7 +75,7 @@ class LevelViewSpec extends Specification {
         11 | 3  | 10   | 4   | 50  | 20  | 1
     }
 
-    def "spike visitor"(x, y, xp, yp, xf, yf, cy) {
+    def "spike visitor"(double x, double y, double xp, double yp, int xf, int yf, int cy) {
         given:
         def spike = Mock(Spike)
         def spikePosition = Mock(Vector2D)
@@ -102,6 +102,7 @@ class LevelViewSpec extends Specification {
         1 * ioAdapter.drawRectangle(xf + 2, yf + 2, 6, 1, spikeColor)
         1 * ioAdapter.drawRectangle(xf + 3, yf + 3, 4, 1, spikeColor)
         1 * ioAdapter.drawRectangle(xf + 4, yf + 4, 2, 1, spikeColor)
+        0 * ioAdapter.drawRectangle(_, _, _, _, _)
 
         where:
         x  | y  | xp   | yp  | xf  | yf  | cy
@@ -113,7 +114,7 @@ class LevelViewSpec extends Specification {
         50 | 1  | 48   | 3   | 60  | 10  | 0
     }
 
-    def 'reversedSpike visitor'(x, y, xp, yp, xf, yf, cy) {
+    def 'reversedSpike visitor'(double x, double y, double xp, double yp, int xf, int yf, int cy) {
         given:
         def spike = Mock(ReversedSpike)
         def spikePosition = Mock(Vector2D)
@@ -140,6 +141,7 @@ class LevelViewSpec extends Specification {
         1 * ioAdapter.drawRectangle(xf + 2, yf + 7, 6, 1, spikeColor)
         1 * ioAdapter.drawRectangle(xf + 3, yf + 6, 4, 1, spikeColor)
         1 * ioAdapter.drawRectangle(xf + 4, yf + 5, 2, 1, spikeColor)
+        0 * ioAdapter.drawRectangle(_, _, _, _, _)
 
         where:
         x  | y  | xp   | yp  | xf  | yf  | cy
@@ -151,7 +153,7 @@ class LevelViewSpec extends Specification {
         50 | 1  | 48   | 3   | 60  | 10  | 0
     }
 
-    def "platform visitor"() {
+    def "platform visitor"(double x, double y, double xp, double yp, int xf, int yf, int cy) {
         given:
         def platform = Mock(Platform)
         def platformPosition = Mock(Vector2D)
@@ -174,6 +176,7 @@ class LevelViewSpec extends Specification {
 
         then:
         1 * ioAdapter.drawRectangle(xf, yf + 7, 10, 3, platformColor)
+        0 * ioAdapter.drawRectangle(_, _, _, _, _)
 
         where:
         x  | y  | xp   | yp  | xf  | yf | cy
@@ -184,7 +187,7 @@ class LevelViewSpec extends Specification {
         50 | 1  | 48   | 4   | 60  | 0  | 1
     }
 
-    def 'boost visitor'(x, y, xp, yp, cy) {
+    def 'boost visitor'(double x, double y, double xp, double yp, int xf, int yf, int cy) {
         given:
         def boost = Mock(Boost)
         def boostPosition = Mock(Vector2D)
@@ -208,6 +211,7 @@ class LevelViewSpec extends Specification {
         then:
         1 * ioAdapter.drawRectangle(xf + 1, yf, 8, 1, boostColor)
         1 * ioAdapter.drawRectangle(xf + 2, yf + 1, 6, 1, boostColor)
+        0 * ioAdapter.drawRectangle(_, _, _, _)
 
         where:
         x  | y  | xp   | yp  | xf  | yf | cy
@@ -219,7 +223,7 @@ class LevelViewSpec extends Specification {
         50 | 1  | 48   | 3   | 60  | 10 | 0
     }
 
-    def 'doubleJump visitor'() {
+    def 'doubleJump visitor'(double x, double y, double xp, double yp, int xf, int yf, int cy) {
         given:
         def doubleJump = Mock(DoubleJump)
         def doubleJumpPosition = Mock(Vector2D)
@@ -254,7 +258,8 @@ class LevelViewSpec extends Specification {
         0  | 0   | 2   | 0   | 24  | 4  | 0
         0  | 0.5 | 2   | 0   | 24  | 9  | 0
     }
-    def "levelEnd visitor" () {
+
+    def "levelEnd visitor"() {
         given:
         def block = Mock(Block)
         def blockPosition = Mock(Vector2D)
@@ -276,7 +281,7 @@ class LevelViewSpec extends Specification {
         0 * _
     }
 
-    def "drawing a player: drawing the right pixels"(xp, yp, rot, xf, yf) {
+    def "drawing a player: drawing the right pixels"(double xp, double yp, int xf, int yf, double rot) {
         given:
         def playerPosition = Mock(Vector2D)
         player.getPosition() >> playerPosition
@@ -298,18 +303,22 @@ class LevelViewSpec extends Specification {
 
         where:
         xp | yp | rot | xf | yf
-        0  | 0  | 0   | 40 | 0
+        0  | 0  | 0   | 50 | 0
         10 | 0  | 0   | 40 | 0
         0  | 1  | 0   | 40 | 10
         50 | 3  | 0   | 40 | 30
         50 | 4  | 0   | 40 | 30
+        0  | 0  | 10  | 48 | 10
+        0  | 0  | 10  | 50 | 2
+        0  | 0  | 10  | 40 | 9
+        0  | 0  | 10  | 41 | 0
         1  | 1  | 45  | 38 | 15
         1  | 1  | 45  | 52 | 15
         1  | 1  | 45  | 45 | 22
-        1  | 1  | 45  | 45 | 18
+        1  | 1  | 45  | 45 | 8
     }
 
-    def "drawing a player: not drawing the wrong pixels"(xp, yp, rot, xf, yf) {
+    def "drawing a player: not drawing the wrong pixels"(double xp, double yp, int xf, int yf) {
         given:
         def playerPosition = Mock(Vector2D)
         player.getPosition() >> playerPosition
@@ -338,7 +347,7 @@ class LevelViewSpec extends Specification {
         50 | 4  | 30  | 40 | 30
     }
 
-    def "update pointers"() {
+    def "update pointers"(double playerX, int left, int right) {
         given:
         def element1 = Mock(Element)
         def position1 = new Vector2D(1, 0)
@@ -374,6 +383,9 @@ class LevelViewSpec extends Specification {
         6       | 1    | 3
         6.5     | 1    | 3
         5.5     | 0    | 3
-        10       | 2    | 4
+        10      | 2    | 4
+        19      | 3    | 4
+        20      | 4    | 4
+        42      | 4    | 4
     }
 }
