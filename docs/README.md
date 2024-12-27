@@ -36,6 +36,10 @@ This project was developed by *Luís Barbosa* (up202303872), *Luís Gonçalves* 
     <img align='center' src='./minidash3.png' width='50%' />
 </p>
 
+<p align="center">
+    <img align='center' src='./minidash.gif' width='50%' />
+</p>
+
 ### PLANNED FEATURES
 
 We'd planned these additional features, that ended up not being implemented due to time restraints:
