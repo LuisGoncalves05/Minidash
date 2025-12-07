@@ -39,8 +39,9 @@ pitest {
 }
 
 application {
-    mainClass.set("Game")
+    mainClass.set("com.t10g01.minidash.Game")
 }
+
 
 configurations {
     testImplementation {
